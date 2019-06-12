@@ -107,7 +107,7 @@ class TabMainNavigator extends Component {
   };
 
   render() {
-    console.log(this.props.navigation.state.params, " params => TapNavigations.js line:144");
+    console.log(this.props.navigation.state.params, " 지금 이값으로 database에서 다른 팀들에 대한 프로필을 불러온다. TapNavigations.js line:144--------------------------------------------------");
     return <AppTabContainer />; // AppTabContainet 컴포넌트를 리턴한다.
   }
 }
