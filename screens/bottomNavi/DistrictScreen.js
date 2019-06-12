@@ -307,7 +307,7 @@ export default class DistrictScreen extends Component {
             key={item.id}
             style={[
               this.rotateAndTranslate,
-              { flex: 1, height: "100%", height: SCREEN_HEIGHT*3/4, width: SCREEN_WIDTH, margin: 0, paddingBottom:20, position: "absolute" }
+              { height: SCREEN_HEIGHT*4/4, width: SCREEN_WIDTH, margin: 0, paddingBottom:20, position: "absolute" }
             ]}
           >
             <Animated.View style={{ opacity: this.likeOpacity, ...styles.likeBorder }}>
@@ -367,7 +367,7 @@ export default class DistrictScreen extends Component {
   render() {
     return (
       <View style={{ ...styles.backGround }}>
-        <View style={{ flex: 1,flexDirection:'column', justifyContent:'space-between', height:'100%' }}>
+        {/* <View style={{ flexDirection:'column', justifyContent:'space-between', height:'100%' }}> */}
           <View style={{ flex: 0.9, height:'100%', flexDirection:'column' }}>{this.renderUsers()}</View>
           <View style={styles.arrow}>
             <AntDesign
@@ -376,16 +376,16 @@ export default class DistrictScreen extends Component {
               style={styles.leftArrow}
               onPress={() => this._onChangeIndex("leftArrow")}
             />
-            <View>
+            
               <Ionicons name="md-refresh" style={styles.refreshButton} onPress={() => this._onPresRefresh()} />
-            </View>
+          
             <AntDesign
               id="rightArrow"
               name="rightcircleo"
               style={styles.rigthArrow}
               onPress={() => this._onChangeIndex("rightArrow")}
             />
-          </View>
+          {/* </View>  */}
         </View>
       </View>
     );
@@ -394,9 +394,9 @@ export default class DistrictScreen extends Component {
 
 const styles = StyleSheet.create({
   backGround: {
-    flex: 1,
+    flex:1,
     flexDirection: "column",
-    justifyContent: "center",
+    alignItems:'flex-start',
     height:'100%',
     width: "100%",
     color: "#F9F9F8"
@@ -453,8 +453,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignContent:'center',
     alignItems: "center",
-    paddingRight: "10%",
-    paddingLeft: "10%"
+    padding:'5%',
   },
   rigthArrow: {
     height:'100%',
