@@ -13,13 +13,13 @@ export default class TopBarRightIcons extends React.Component {
         <Icon
           type="font-awesome"
           iconStyle={styles.headerRightIcon}
-          name="bell"
+          name="bell-o"
           onPress={() => alert("This is a button!")}
         />
         <Icon
           type="font-awesome"
           iconStyle={styles.headerRightIcon}
-          name="comments"
+          name="comment-o"
           onPress={() => alert("This is a button!")}
         />
       </View>
@@ -29,6 +29,7 @@ export default class TopBarRightIcons extends React.Component {
 
 const styles = StyleSheet.create({
   headerRightIcon: {
-    marginRight: 15
+    marginRight: 15,
+    color: 'grey',
   }
 });

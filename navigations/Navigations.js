@@ -12,6 +12,7 @@ import SetTeamInfoScreen2 from "../screens/setPrivateInfo/setTeamInfo2";
 import SetTeamPictureScreen1 from "../screens/setPrivateInfo/setTeamPicture1";
 import SetTeamPictureScreen2 from "../screens/setPrivateInfo/setTeamPicture2";
 import SetTeamPictureScreen3 from "../screens/setPrivateInfo/setTeamPicture3";
+import TestScreen from "../screens/setPrivateInfo/blurTest";
 import GetPictureScreen from "../components/getPicture/getPicture";
 
 import ChatScreen from "../screens/chat/Chat";
@@ -20,6 +21,24 @@ import TabNavigator from "./TapNavigations";
 
 const RootStack = createStackNavigator(
   {
+  //   Test: {
+  //   screen: TestScreen,
+  //   navigationOptions: {
+  //     header: null
+  //   }
+  // },
+  Home: {
+    screen: TabNavigator,
+    navigationOptions: {
+      header: null
+    }
+  },
+    Main: {
+    screen: MainScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
     ChatList: {
       screen: ChatListScreen,
       navigationOptions: {

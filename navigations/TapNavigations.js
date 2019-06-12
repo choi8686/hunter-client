@@ -64,10 +64,10 @@ DistrictStack.navigationOptions = {
   // ({ tintColor }) => <AntDesign name="run" color={tintColor} size={24} />
   tabBarOptions: {
     showLabel: false, // hide labels
-    activeTintColor: "#F8F8F8", // active icon color
-    inactiveTintColor: "#586589", // inactive icon color
+    activeTintColor: "hotpink", // active icon color
+    inactiveTintColor: "darkgray", // inactive icon color
     style: {
-      backgroundColor: "black" // TabBar background
+      backgroundColor: "ghostwhite" // TabBar background
     }
   }
 };
@@ -78,10 +78,10 @@ StoreStack.navigationOptions = {
   tabBarIcon: ({ tintColor }) => <FontAwesome size={24} name={"thermometer-full"} color={tintColor} />,
   tabBarOptions: {
     showLabel: false, // hide labels
-    activeTintColor: "#F8F8F8", // active icon color
-    inactiveTintColor: "#586589", // inactive icon color
+    activeTintColor: "hotpink", // active icon color
+    inactiveTintColor: "darkgray", // inactive icon color
     style: {
-      backgroundColor: "black" // TabBar background
+      backgroundColor: "ghostwhite" // TabBar background
     }
   }
 };
@@ -91,10 +91,10 @@ SettingStack.navigationOptions = {
   tabBarIcon: ({ tintColor }) => <FontAwesome size={24} name={"info"} color={tintColor} />,
   tabBarOptions: {
     showLabel: false, // hide labels
-    activeTintColor: "#F8F8F8", // active icon color
-    inactiveTintColor: "#586589", // inactive icon color
+    activeTintColor: "hotpink", // active icon color
+    inactiveTintColor: "darkgray", // inactive icon color
     style: {
-      backgroundColor: "black" // TabBar background
+      backgroundColor: "ghostwhite" // TabBar background
     }
   }
 };
@@ -107,7 +107,7 @@ class TabMainNavigator extends Component {
   };
 
   render() {
-    console.log(this.props.navigation.state.params, " params => TapNavigations.js line:144");
+    console.log(this.props.navigation.state.params, " 지금 이값으로 database에서 다른 팀들에 대한 프로필을 불러온다. TapNavigations.js line:144--------------------------------------------------");
     return <AppTabContainer />; // AppTabContainet 컴포넌트를 리턴한다.
   }
 }
