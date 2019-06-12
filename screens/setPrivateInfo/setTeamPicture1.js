@@ -105,7 +105,7 @@ _uploadImageAsync= async (uri)=> {
 
   componentDidMount = () => {};
   render() {
-    console.log(this.props.navigation.state.params, 'setTeamPicture1.js 108line this.props.navigation.state.params')
+    // console.log(this.props.navigation.state.params, 'setTeamPicture1.js 108line this.props.navigation.state.params')
     
     const { sex, teamname, count, averageAge, comment, image, userId } = this.state;
     firstImage = image[0];
@@ -155,7 +155,7 @@ _uploadImageAsync= async (uri)=> {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={this._pickImage}>
-              <Image source={{ uri: firstImage }} style={{ width: 320, height: 320 }} />
+              <Image source={{ uri: firstImage }} style={{ width: 320, height: 320, resizeMode: 'contain'  }} />
             </TouchableOpacity>
           )}
 

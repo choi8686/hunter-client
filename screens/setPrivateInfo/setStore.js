@@ -58,7 +58,7 @@ export default class SetStore extends Component {
   _goDistrict = () => {
     
     const data = this.state.data;
-    this.props.navigation.navigate("SetTeamPicture1", { data });
+    this.props.navigation.navigate("Home", { data });
   };
 
   _submit = () => {
@@ -69,23 +69,27 @@ export default class SetStore extends Component {
       },
 
       body: JSON.stringify(this.state.data)
-    }).then(res => {
+    }).then( async res => {
       console.log(res, "resBody setStore 73 line");
       if (res.ok) {
         console.log("--------Set Information success---------", res.ok);
 
         flag = true;
-        //팀정보를 모두 AsyncStorage에 토큰에 저장한다.
+       //팀정보를 모두 AsyncStorage에 토큰에 저장한다.
         // 그래야 어플껐다가 재접속해도 데이터베이스에 locationId를 보내주고 그 값을 비교하여 District로 바로 접근할 수 있다.
         // console.log( JSON.parse(res._bodyInit), ' JSON.parse setStore line:79 ')
         const Obj = JSON.parse(res._bodyInit);
-        // const tokenData = "aasertetdbc";
+        console.log(Obj, 'setStore Obj 82lines')
+        let tokenData = "aasertetdbc";
 
-        // for(let keys in Obj){
-        //   toKenData += '-' + Obj[keys];
-        // }
-        
-        // await AsyncStorage.setItem("userToken", "aasertetdbc" + "-" + userId);
+        for(let keys in Obj){
+          tokenData += '-' + Obj[keys];
+        }
+
+        //userToken에 들어가는 순서 sex, count, age, comment, teamname, locationId, userId
+       AsyncStorage.setItem("userToken", tokenData);
+        let userToken = await AsyncStorage.getItem("userToken")
+        //사진 제출하면 District로 보내고 data안에 있는 teamuserId를 이용하여 관련 데이터를 가져온다. 
 
         this._goDistrict();
       } else {
