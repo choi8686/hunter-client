@@ -34,6 +34,9 @@ const Teams = [
     },
     teamimages: [
       {
+        imgUrl: {uri:"https://i.pinimg.com/564x/25/5a/ec/255aecbaaa04fab4fc27d5461ec49fd9.jpg" }
+      },
+      {
         imgUrl: require("../../assets/team1-1.jpg")
       },
       {
@@ -195,13 +198,13 @@ export default class DistrictScreen extends Component {
 
     this.nextCardScale = this.position.x.interpolate({
       inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-      outputRange: [0.98, 0.6, 0.98],
+      outputRange: [1, 0.6, 1],
       extrapolate: "clamp"
     });
   }
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "라운지",
+      title: "저기어때",
       headerRight: <TopBarRightIcons />
     };
   };
@@ -304,7 +307,7 @@ export default class DistrictScreen extends Component {
             key={item.id}
             style={[
               this.rotateAndTranslate,
-              { height: SCREEN_HEIGHT - 160, width: SCREEN_WIDTH, padding: 10, position: "absolute" }
+              { flex: 1, height: "100%", height: SCREEN_HEIGHT*3/4, width: SCREEN_WIDTH, margin: 0, paddingBottom:20, position: "absolute" }
             ]}
           >
             <Animated.View style={{ opacity: this.likeOpacity, ...styles.likeBorder }}>
@@ -325,7 +328,7 @@ export default class DistrictScreen extends Component {
                 opacity: this.titleOpacity,
                 zIndex: 1000,
                 position: "absolute",
-                marginTop: "95%",
+                marginTop: "96%",
                 height: 100,
                 marginLeft: "5%"
               }}
@@ -343,9 +346,10 @@ export default class DistrictScreen extends Component {
               {
                 opacity: this.nextCardOpacity,
                 transform: [{ scale: this.nextCardScale }],
-                height: SCREEN_HEIGHT - 160,
+                height: SCREEN_HEIGHT*3/4,
                 width: SCREEN_WIDTH,
                 padding: 10,
+                paddingBottom:20,
                 position: "absolute"
               }
             ]}
@@ -363,8 +367,8 @@ export default class DistrictScreen extends Component {
   render() {
     return (
       <View style={{ ...styles.backGround }}>
-        <View style={{ flex: 1 }}>
-          <View style={{ flex: 0.9 }}>{this.renderUsers()}</View>
+        <View style={{ flex: 1,flexDirection:'column', justifyContent:'space-between', height:'100%' }}>
+          <View style={{ flex: 0.9, height:'100%', flexDirection:'column' }}>{this.renderUsers()}</View>
           <View style={styles.arrow}>
             <AntDesign
               id="leftArrow"
@@ -382,18 +386,6 @@ export default class DistrictScreen extends Component {
               onPress={() => this._onChangeIndex("rightArrow")}
             />
           </View>
-          {/* <View style={{ ...styles.likeButton }}>
-            <Text onPress={() => this._onPressLike()} style={styles.likeText}>
-              LIKE
-            </Text>
-          </View>
-
-          <View style={{ ...styles.disLikeButton }}>
-            <Text onPress={() => this._onPressNope()} style={styles.dislikeText}>
-              NOPE
-            </Text>
-          </View>
-          <View style={{ height: 10 }} /> */}
         </View>
       </View>
     );
@@ -405,6 +397,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
+    height:'100%',
     width: "100%",
     color: "#F9F9F8"
   },
@@ -456,21 +449,25 @@ const styles = StyleSheet.create({
     flex: 0.1,
     flexDirection: "row",
     justifyContent: "space-between",
-    height: "100%",
+    height:'100%',
     width: "100%",
+    alignContent:'center',
     alignItems: "center",
     paddingRight: "10%",
     paddingLeft: "10%"
   },
   rigthArrow: {
-    fontSize: 30
+    height:'100%',
+    fontSize: 23
   },
   leftArrow: {
-    fontSize: 30
+    height:'100%',
+    fontSize: 23
   },
   refreshButton: {
+    height:'100%',
     color: "mediumturquoise",
-    fontSize: 40
+    fontSize: 28
   },
   headerRightIcon: {
     marginRight: 15
