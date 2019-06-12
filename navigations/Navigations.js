@@ -21,12 +21,12 @@ import TabNavigator from "./TapNavigations";
 
 const RootStack = createStackNavigator(
   {
-    Test: {
-    screen: TestScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
+  //   Test: {
+  //   screen: TestScreen,
+  //   navigationOptions: {
+  //     header: null
+  //   }
+  // },
     Main: {
     screen: MainScreen,
     navigationOptions: {

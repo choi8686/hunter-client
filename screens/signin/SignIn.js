@@ -142,6 +142,7 @@ export default class SignUp extends Component {
   }
 
   render() {
+
     return (
       <View style={styles.container}>
         <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
