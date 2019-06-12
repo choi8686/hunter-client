@@ -1,22 +1,41 @@
 import React from "react";
-import { Image, StyleSheet, View, StatusBar } from "react-native";
-import { BlurView } from "expo";
+import { Image, StyleSheet, View, StatusBar,Text } from "react-native";
+import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
 
-const uri = "https://s3.amazonaws.com/exp-icon-assets/ExpoEmptyManifest_192.png";
+
+
 
 export default class BlurViewExample extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Image style={{ width: 192, height: 192 }} source={{ uri }} />
+        <View>
+  <Avatar
+    rounded
+    source={{
+      uri: 'https://randomuser.me/api/portraits/men/41.jpg',
+    }}
+    size="large"
+  />
+<Icon type="ionicon" name="md-cart" />
+  <Badge status="warning" />
+{/* <Badge value={<Text>My Custom Badge</Text>}/> */}
 
-        {/* Adjust the tint and intensity */}
-        <BlurView tint="light" intensity={50} style={StyleSheet.absoluteFill}>
-          <Image style={{ width: 96, height: 96 }} source={{ uri }} />
-        </BlurView>
 
-        <StatusBar hidden />
+    </View>
+
       </View>
     );
   }
 }
+
+{/* <Badge
+    status="success"
+    containerStyle={{ position: 'absolute', top: -4, right: -4 }}
+  /> */}
+
+  {/* <Badge status="success" /> */}
+{/* <Badge status="error" /> */}
+{/* <Badge status="primary" /> */}
+
+{/* <Badge value="99+" status="error" /> */}
