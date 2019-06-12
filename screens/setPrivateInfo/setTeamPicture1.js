@@ -34,21 +34,21 @@ const Dot = props => {
 
 export default class TeamPicture1 extends Component {
   state = {
-    // image: this.props.navigation.state.params.image || { 0: null, 1: null, 2: null },
-    // sex: this.props.navigation.state.params.sex,
-    // teamname: this.props.navigation.state.params.teamname,
-    // count: this.props.navigation.state.params.count,
-    // averageAge: this.props.navigation.state.params.averageAge,
-    // comment: this.props.navigation.state.params.comment,
-    // userId: this.props.navigation.state.params.data.userId
+    image: this.props.navigation.state.params.image || { 0: null, 1: null, 2: null },
+    sex: this.props.navigation.state.params.sex,
+    teamname: this.props.navigation.state.params.teamname,
+    count: this.props.navigation.state.params.count,
+    averageAge: this.props.navigation.state.params.averageAge,
+    comment: this.props.navigation.state.params.comment,
+    userId: this.props.navigation.state.params.data.userId
 
-    image: { 0: null, 1: null, 2: null },
-    sex: 1,
-    teamname: "FBing",
-    count: 4,
-    averageAge: 30,
-    comment: "do you know gangnamstyle",
-    userId: 5
+    // image: { 0: null, 1: null, 2: null },
+    // sex: 1,
+    // teamname: "FBing",
+    // count: 4,
+    // averageAge: 30,
+    // comment: "do you know gangnamstyle",
+    // userId: 5
   };
 
   _uploadImageAsync = async uri => {
@@ -163,7 +163,7 @@ export default class TeamPicture1 extends Component {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={this._pickImage}>
-              <Image source={{ uri: firstImage }} style={{ width: 320, height: 320 }} />
+              <Image source={{ uri: firstImage }} style={{ width: 320, height: 320, resizeMode: "contain" }} />
             </TouchableOpacity>
           )}
 

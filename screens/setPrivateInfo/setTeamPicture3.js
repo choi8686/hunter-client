@@ -150,7 +150,7 @@ export default class TeamPicture3 extends Component {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={this._pickImage}>
-              <Image source={{ uri: thirdImage }} style={{ width: 320, height: 320 }} />
+              <Image source={{ uri: thirdImage }} style={{ width: 320, height: 240, resizeMode: "contain" }} />
             </TouchableOpacity>
           )}
 
