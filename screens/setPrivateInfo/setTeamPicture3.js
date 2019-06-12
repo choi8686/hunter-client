@@ -1,7 +1,8 @@
 import React, { Fragment, Component } from "react";
-import { LinearGradient, ImagePicker } from "expo";
+import { LinearGradient, ImagePicker, Permissions } from "expo";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
+import { url } from "../../url";
 
 class Title extends Component {
   render() {
@@ -14,7 +15,7 @@ class Title extends Component {
 }
 const NextButton = props => {
   return (
-    <TouchableOpacity style={styles.nextButton} onPress={props.nextNavi}>
+    <TouchableOpacity style={styles.nextButton} onPress={props.handleImagePicked}>
       <Text style={styles.nextButtonText}>Next</Text>
     </TouchableOpacity>
   );
@@ -31,7 +32,7 @@ const Dot = props => {
 };
 
 export default class TeamPicture3 extends Component {
-  state = ({
+  state = {
     image: this.props.navigation.state.params.image,
     sex: this.props.navigation.state.params.sex,
     teamname: this.props.navigation.state.params.teamname,
@@ -39,19 +40,66 @@ export default class TeamPicture3 extends Component {
     averageAge: this.props.navigation.state.params.averageAge,
     comment: this.props.navigation.state.params.comment,
     userId: this.props.navigation.state.params.userId
-  });
+  };
+
+  _uploadImageAsync = async uri => {
+    let apiUrl = `${url}/upload`;
+    let uriParts = uri.split(".");
+    let fileType = uriParts[uriParts.length - 1];
+
+    let formData = new FormData();
+    formData.append("photo", {
+      uri,
+      name: `photo.${fileType}`,
+      type: `image/${fileType}`
+    });
+    let options = {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+        userId: this.props.navigation.state.params.userId
+      }
+    };
+    console.log("fetch=================>", apiUrl, options);
+    return await fetch(apiUrl, options);
+  };
 
   _pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3]
-    });
-    if (result.cancelled) {
-      return;
+    const { status: cameraRollPerm } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+    if (cameraRollPerm === "granted") {
+      let pickerResult = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3]
+      });
+
+      let image = this.state.image;
+      image[2] = pickerResult.uri;
+      this.setState({ image: image });
     }
-    let image = this.state.image;
-    image[2] = result.uri;
-    this.setState({ image: image });
+  };
+
+  _handleImagePicked = async pickerResult => {
+    let uploadResponse, uploadResult;
+    console.log("URL===========>", this.state.image[2]);
+    try {
+      if (!pickerResult.cancelled) {
+        uploadResponse = await this._uploadImageAsync(this.state.image[2]);
+        uploadResult = await uploadResponse.json();
+      }
+      console.log(uploadResult);
+    } catch (e) {
+      console.log({ uploadResponse });
+      console.log({ uploadResult });
+      console.log({ e });
+      alert(" 또안되네시발 ");
+    } finally {
+      const { sex, teamname, count, averageAge, comment, image, userId } = this.state;
+      this.props.navigation.navigate("Home", { sex, teamname, count, averageAge, comment, image, userId });
+      console.log("upload!");
+    }
   };
 
   componentDidMount = () => {};
@@ -102,24 +150,11 @@ export default class TeamPicture3 extends Component {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={this._pickImage}>
-              <Image source={{ uri: thirdImage }} style={{ width: 320, height: 240 }} />
+              <Image source={{ uri: thirdImage }} style={{ width: 320, height: 320 }} />
             </TouchableOpacity>
           )}
-          <NextButton
-            nextNavi={() => {
-              
-                this.props.navigation.navigate("ChooseDistrict", {
-                    sex,
-                    teamname,
-                    count,
-                    averageAge,
-                    comment,
-                    image,
-                    userId
-                  })
-                
-            }}
-          />
+
+          <NextButton handleImagePicked={this._handleImagePicked} />
         </View>
       </LinearGradient>
     );

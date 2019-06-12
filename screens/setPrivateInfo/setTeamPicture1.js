@@ -34,39 +34,47 @@ const Dot = props => {
 
 export default class TeamPicture1 extends Component {
   state = {
-    image: this.props.navigation.state.params.image || { 0: null, 1: null, 2: null },
-    sex: this.props.navigation.state.params.sex,
-    teamname: this.props.navigation.state.params.teamname,
-    count: this.props.navigation.state.params.count,
-    averageAge: this.props.navigation.state.params.averageAge,
-    comment: this.props.navigation.state.params.comment,
-    userId: this.props.navigation.state.params.userId
+    // image: this.props.navigation.state.params.image || { 0: null, 1: null, 2: null },
+    // sex: this.props.navigation.state.params.sex,
+    // teamname: this.props.navigation.state.params.teamname,
+    // count: this.props.navigation.state.params.count,
+    // averageAge: this.props.navigation.state.params.averageAge,
+    // comment: this.props.navigation.state.params.comment,
+    // userId: this.props.navigation.state.params.data.userId
+
+    image: { 0: null, 1: null, 2: null },
+    sex: 1,
+    teamname: "FBing",
+    count: 4,
+    averageAge: 30,
+    comment: "do you know gangnamstyle",
+    userId: 5
   };
 
+  _uploadImageAsync = async uri => {
+    let apiUrl = `${url}/upload`;
+    let uriParts = uri.split(".");
+    let fileType = uriParts[uriParts.length - 1];
 
-_uploadImageAsync= async (uri)=> {
-  let apiUrl = `${url}/upload`;
-  let uriParts = uri.split(".");
-  let fileType = uriParts[uriParts.length - 1];
+    let formData = new FormData();
+    formData.append("photo", {
+      uri,
+      name: `photo.${fileType}`,
+      type: `image/${fileType}`
+    });
 
-  let formData = new FormData();
-  formData.append("photo", {
-    uri,
-    name: `photo.${fileType}`,
-    type: `image/${fileType}`
-  });
-
-  let options = {
-    method: "POST",
-    body: formData,
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "multipart/form-data",
-      userId : this.props.navigation.state.params.data.userId,
-    }
+    let options = {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+        userId: this.props.navigation.state.params.data.userId
+        // userId: 5
+      }
+    };
+    return await fetch(apiUrl, options);
   };
-  return await fetch(apiUrl, options);
-}
 
   _pickImage = async () => {
     const { status: cameraRollPerm } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -91,13 +99,15 @@ _uploadImageAsync= async (uri)=> {
         uploadResponse = await this._uploadImageAsync(this.state.image[0]);
         uploadResult = await uploadResponse.json();
       }
+      console.log(uploadResult);
     } catch (e) {
       console.log({ uploadResponse });
       console.log({ uploadResult });
       console.log({ e });
-      alert(" Upload failed, sorry :( ");
+      alert(" 또안되네시발 ");
     } finally {
       const { sex, teamname, count, averageAge, comment, image, userId } = this.state;
+      console.log(this.state);
       this.props.navigation.navigate("SetTeamPicture2", { sex, teamname, count, averageAge, comment, image, userId });
       console.log("upload!");
     }
@@ -105,8 +115,6 @@ _uploadImageAsync= async (uri)=> {
 
   componentDidMount = () => {};
   render() {
-    console.log(this.props.navigation.state.params, 'setTeamPicture1.js 108line this.props.navigation.state.params')
-    
     const { sex, teamname, count, averageAge, comment, image, userId } = this.state;
     firstImage = image[0];
     return (
@@ -165,7 +173,6 @@ _uploadImageAsync= async (uri)=> {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   backGround: {

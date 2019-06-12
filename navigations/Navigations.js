@@ -20,6 +20,18 @@ import TabNavigator from "./TapNavigations";
 
 const RootStack = createStackNavigator(
   {
+    // Main: {
+    //   screen: MainScreen,
+    //   navigationOptions: {
+    //     header: null
+    //   }
+    // },
+    SetTeamPicture1: {
+      screen: SetTeamPictureScreen1,
+      navigationOptions: {
+        header: null
+      }
+    },
     ChatList: {
       screen: ChatListScreen,
       navigationOptions: {
