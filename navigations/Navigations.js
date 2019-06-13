@@ -21,24 +21,6 @@ import TabNavigator from "./TapNavigations";
 
 const RootStack = createStackNavigator(
   {
-    //   Test: {
-    //   screen: TestScreen,
-    //   navigationOptions: {
-    //     header: null
-    //   }
-    // },
-    Home: {
-      screen: TabNavigator,
-      navigationOptions: {
-        header: null
-      }
-    },
-    Main: {
-      screen: MainScreen,
-      navigationOptions: {
-        header: null
-      }
-    },
     ChatList: {
       screen: ChatListScreen,
       navigationOptions: {
@@ -53,15 +35,6 @@ const RootStack = createStackNavigator(
       navigationOptions: {
         header: null
       }
-    },
-    ChatList: {
-      screen: ChatListScreen,
-      navigationOptions: {
-        title: "채팅"
-      }
-    },
-    Chat: {
-      screen: ChatScreen
     },
     Main: {
       screen: MainScreen,
