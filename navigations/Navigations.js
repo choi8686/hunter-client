@@ -27,12 +27,13 @@ const RootStack = createStackNavigator(
     //     header: null
     //   }
     // },
-    SignIn: {
-      screen: SignInScreen,
+    Home: {
+      screen: TabNavigator,
       navigationOptions: {
         header: null
       }
     },
+    
     Main: {
       screen: MainScreen,
       navigationOptions: {

@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19004,
-  "packagerPid": 9093,
-  "expoServerNgrokUrl": "https://hp-p75.anonymous.hunter-client-new.exp.direct",
-  "packagerNgrokUrl": "https://packager.hp-p75.anonymous.hunter-client-new.exp.direct",
-  "ngrokPid": 9118
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }
