@@ -39,7 +39,8 @@ export default class TeamPicture3 extends Component {
     count: this.props.navigation.state.params.count,
     averageAge: this.props.navigation.state.params.averageAge,
     comment: this.props.navigation.state.params.comment,
-    userId: this.props.navigation.state.params.userId
+    userId: this.props.navigation.state.params.userId,
+    locationId:this.props.navigation.state.params.locationId
   };
 
   _uploadImageAsync = async uri => {
@@ -96,16 +97,18 @@ export default class TeamPicture3 extends Component {
       console.log({ e });
       alert(" 또안되네시발 ");
     } finally {
-      const { sex, teamname, count, averageAge, comment, image, userId } = this.state;
-      this.props.navigation.navigate("Home", { sex, teamname, count, averageAge, comment, image, userId });
+      const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
+      this.props.navigation.navigate("Home", { sex, teamname, count, averageAge, comment, image, userId, locationId });
       console.log("upload!");
     }
   };
 
   componentDidMount = () => {};
   render() {
+    console.log(this.props.navigation.state.params, 'props... setTeamPicture3.js 107lines')
+
     //사진 정보가 모두 들어있는 image => 이 이미지 파일들을 s3에 저장한다.
-    const { sex, teamname, count, averageAge, comment, image, userId } = this.state;
+    const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
     thirdImage = image[2];
     return (
       <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
@@ -120,7 +123,8 @@ export default class TeamPicture3 extends Component {
                   averageAge,
                   comment,
                   image,
-                  userId
+                  userId,
+                  locationId
                 });
               }}
             />
@@ -133,7 +137,8 @@ export default class TeamPicture3 extends Component {
                   averageAge,
                   comment,
                   image,
-                  userId
+                  userId,
+                  locationId
                 });
               }}
             />

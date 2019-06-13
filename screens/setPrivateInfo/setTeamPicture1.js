@@ -34,13 +34,14 @@ const Dot = props => {
 
 export default class TeamPicture1 extends Component {
   state = {
-    image: this.props.navigation.state.params.image || { 0: null, 1: null, 2: null },
-    sex: this.props.navigation.state.params.sex,
-    teamname: this.props.navigation.state.params.teamname,
-    count: this.props.navigation.state.params.count,
-    averageAge: this.props.navigation.state.params.averageAge,
-    comment: this.props.navigation.state.params.comment,
-    userId: this.props.navigation.state.params.data.userId
+    image: this.props.navigation.state.params.data.image || { 0: null, 1: null, 2: null },
+    sex: this.props.navigation.state.params.data.sex,
+    teamname: this.props.navigation.state.params.data.teamname,
+    count: this.props.navigation.state.params.data.count,
+    averageAge: this.props.navigation.state.params.data.age,
+    comment: this.props.navigation.state.params.data.comment,
+    userId: this.props.navigation.state.params.data.userId,
+    locationId: this.props.navigation.state.params.data.locationId
 
     // image: { 0: null, 1: null, 2: null },
     // sex: 1,
@@ -82,7 +83,7 @@ export default class TeamPicture1 extends Component {
     if (cameraRollPerm === "granted") {
       let pickerResult = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
-        aspect: [4, 3]
+        aspect: [5, 7]
       });
 
       let image = this.state.image;
@@ -106,16 +107,17 @@ export default class TeamPicture1 extends Component {
       console.log({ e });
       alert(" 또안되네시발 ");
     } finally {
-      const { sex, teamname, count, averageAge, comment, image, userId } = this.state;
-      console.log(this.state);
-      this.props.navigation.navigate("SetTeamPicture2", { sex, teamname, count, averageAge, comment, image, userId });
+      const { averageAge, comment, count, image, locationId, sex, teamname, userId } = this.state;
+      
+      this.props.navigation.navigate("SetTeamPicture2", { averageAge, comment, count, image, locationId, sex, teamname, userId});
       console.log("upload!");
     }
   };
 
   componentDidMount = () => {};
   render() {
-    const { sex, teamname, count, averageAge, comment, image, userId } = this.state;
+    console.log(this.props.navigation.state.params, 'props... setTeamPicture1.js 118lines')
+    const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
     firstImage = image[0];
     return (
       <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
@@ -131,7 +133,8 @@ export default class TeamPicture1 extends Component {
                   averageAge,
                   comment,
                   image,
-                  userId
+                  userId,
+                  locationId
                 });
               }}
             />
@@ -144,7 +147,8 @@ export default class TeamPicture1 extends Component {
                   averageAge,
                   comment,
                   image,
-                  userId
+                  userId,
+                  locationId
                 });
               }}
             />
@@ -163,7 +167,7 @@ export default class TeamPicture1 extends Component {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={this._pickImage}>
-              <Image source={{ uri: firstImage }} style={{ width: 320, height: 320, resizeMode: "contain" }} />
+              <Image source={{ uri: firstImage }} style={{ width: 250, height: 350, resizeMode: "contain" }} />
             </TouchableOpacity>
           )}
 
