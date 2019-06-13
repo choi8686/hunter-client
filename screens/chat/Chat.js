@@ -80,9 +80,17 @@ export default class App extends Component {
         keyboardVerticalOffset={105}
       >
         {/* 채팅메시지 스크롤 뷰 */}
-        <ScrollView style={{ flex: 0.9 }}>{chatMessages}</ScrollView>
+        <ScrollView
+          style={{ flex: 0.9 }}
+          ref={ref => (this.scrollView = ref)}
+          onContentSizeChange={(contentWidth, contentHeight) => {
+            this.scrollView.scrollToEnd({ animated: true });
+          }}
+        >
+          {chatMessages}
+        </ScrollView>
         {/* Input Box & 보내기버튼 */}
-        <View style={{ flex: 0.1, marginBottom: 5 }}>
+        <View style={{ flex: 0.1, marginTop: 3 }}>
           <View style={{ flex: 1, flexDirection: "row" }}>
             <View style={{ flex: 0.8 }}>
               <Input

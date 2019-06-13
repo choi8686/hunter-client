@@ -12,45 +12,52 @@ import { Avatar } from "react-native-elements";
 //5. 발신인 사진
 
 const MessageBox = ({ text, teamId, teamName, createdAt, img }) => {
-  if (teamId === 30) {
+  if (teamId === 31) {
     return <RightMessageBubble teamId={teamId} text={text} />;
   } else {
-    <View style={styles.messageBox}>
-      <View style={styles.teamName}>
-        <Text>{teamName}</Text>
-      </View>
-      <View style={styles.AvatarBubbleContainer}>
+    return (
+      <View style={styles.messageBox}>
         <View style={styles.avatar}>
           <Avatar
-            size="small"
+            size="medium"
             rounded
             source={{
               uri: img
             }}
           />
         </View>
-        <LeftMessageBubble style={styles.bubble} teamId={teamId} text={text} />
+        <View style={styles.nameAndBubble}>
+          <View style={styles.name}>
+            <Text>{teamName}</Text>
+          </View>
+          <View style={styles.bubble}>
+            <LeftMessageBubble teamId={teamId} text={text} />
+          </View>
+        </View>
       </View>
-    </View>;
+    );
   }
 };
 
 const styles = StyleSheet.create({
   messageBox: {
-    flex: 1
-  },
-  teamName: {
-    flex: 0.2
-  },
-  AvatarBubbleContainer: {
-    flex: 0.8,
+    flex: 1,
     flexDirection: "row"
   },
   avatar: {
-    flex: 0.3
+    flex: 0.2,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginTop: 5
+  },
+  nameAndBubble: {
+    flex: 0.8
+  },
+  name: {
+    flex: 0.2
   },
   bubble: {
-    flex: 0.7
+    flex: 0.8
   }
 });
 
