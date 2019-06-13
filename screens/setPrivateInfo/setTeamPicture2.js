@@ -39,7 +39,8 @@ export default class TeamPicture2 extends Component {
     count: this.props.navigation.state.params.count,
     averageAge: this.props.navigation.state.params.averageAge,
     comment: this.props.navigation.state.params.comment,
-    userId: this.props.navigation.state.params.userId
+    userId: this.props.navigation.state.params.userId,
+    locationId: this.props.navigation.state.params.locationId,
   };
 
   _uploadImageAsync = async uri => {
@@ -96,15 +97,16 @@ export default class TeamPicture2 extends Component {
       console.log({ e });
       alert(" 또안되네시발 ");
     } finally {
-      const { sex, teamname, count, averageAge, comment, image, userId } = this.state;
-      this.props.navigation.navigate("SetTeamPicture3", { sex, teamname, count, averageAge, comment, image, userId });
+      const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
+      this.props.navigation.navigate("SetTeamPicture3", { sex, teamname, count, averageAge, comment, image, userId, locationId });
       console.log("upload!");
     }
   };
 
   componentDidMount = () => {};
   render() {
-    const { sex, teamname, count, averageAge, comment, image, userId } = this.state;
+    console.log(this.props.navigation.state.params, 'props... setTeamPicture2.js 107lines')
+    const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
     secondImage = image[1];
     return (
       <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
@@ -119,7 +121,8 @@ export default class TeamPicture2 extends Component {
                   averageAge,
                   comment,
                   image,
-                  userId
+                  userId,
+                  locationId
                 });
               }}
             />
@@ -133,7 +136,8 @@ export default class TeamPicture2 extends Component {
                   averageAge,
                   comment,
                   image,
-                  userId
+                  userId,
+                  locationId
                 });
               }}
             />

@@ -34,7 +34,18 @@ export default class SetStore extends Component {
     presentDistrictNum: this.props.navigation.state.params.presentDistrictNum,
     userId: this.props.navigation.state.params.userId,
 
-    data: null
+    data: {
+      image: this.props.navigation.state.params.image,
+      sex: this.props.navigation.state.params.sex,
+      teamname: this.props.navigation.state.params.teamname,
+      count: this.props.navigation.state.params.count,
+      averageAge: this.props.navigation.state.params.averageAge,
+      comment: this.props.navigation.state.params.comment,
+      presentDistrict: this.props.navigation.state.params.presentDistrict,
+      presentDistrictNum: this.props.navigation.state.params.presentDistrictNum,
+      userId: this.props.navigation.state.params.userId,
+  
+    }
   };
 
   _updateIndex = selectedIndex => {
@@ -43,6 +54,7 @@ export default class SetStore extends Component {
       presentStore: this.state.buttons[selectedIndex],
       presentStoreNum: selectedIndex + 1,
       data: {
+        image: this.props.navigation.state.params.image,
         sex: this.state.sex,
         count: this.state.count,
         age: this.state.averageAge,
@@ -58,7 +70,7 @@ export default class SetStore extends Component {
   _goDistrict = () => {
     
     const data = this.state.data;
-    this.props.navigation.navigate("Home", { data });
+    this.props.navigation.navigate("SetTeamPicture1", { data });
   };
 
   _submit = () => {
@@ -70,7 +82,7 @@ export default class SetStore extends Component {
 
       body: JSON.stringify(this.state.data)
     }).then( async res => {
-      console.log(res, "resBody setStore 73 line");
+      console.log(res, "resBody setStore 85 line");
       if (res.ok) {
         console.log("--------Set Information success---------", res.ok);
 
@@ -79,7 +91,7 @@ export default class SetStore extends Component {
         // 그래야 어플껐다가 재접속해도 데이터베이스에 locationId를 보내주고 그 값을 비교하여 District로 바로 접근할 수 있다.
         // console.log( JSON.parse(res._bodyInit), ' JSON.parse setStore line:79 ')
         const Obj = JSON.parse(res._bodyInit);
-        console.log(Obj, 'setStore Obj 82lines')
+        console.log(Obj, 'setStore Obj 94lines')
         let tokenData = "aasertetdbc";
 
         for(let keys in Obj){
