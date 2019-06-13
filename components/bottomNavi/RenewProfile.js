@@ -1,5 +1,6 @@
 import React from "react";
 import { ScrollView, View, Text, Dimensions, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { url } from "../../url";
 
 const { width } = Dimensions.get("window");
 export default class RenewProfile extends React.Component {
@@ -19,7 +20,7 @@ export default class RenewProfile extends React.Component {
 
   //개인의 유저 id 를 통해 데이터를 끌고 오는게 먼저!
   _bringProfileData = () => {
-    fetch("http://13.124.131.38:3000/users/", {
+    fetch(`${url}/users/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
