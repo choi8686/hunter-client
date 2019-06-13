@@ -2,6 +2,7 @@ import React, { Fragment, Component } from "react";
 import { StyleSheet, Text, AsyncStorage, View, Modal, KeyboardAvoidingView } from "react-native";
 import { Input, Button, Icon } from "react-native-elements";
 import { LinearGradient, Constants } from "expo";
+import { url } from "../../url";
 
 // 제목
 class SignInTitle extends Component {
@@ -62,7 +63,7 @@ export default class SignUp extends Component {
       this.state.errorNickname === "" &&
       this.state.errorPassword === ""
     ) {
-      fetch("http://13.124.131.38:3000/users/login", {
+      fetch(`${url}/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -142,7 +143,6 @@ export default class SignUp extends Component {
   }
 
   render() {
-
     return (
       <View style={styles.container}>
         <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>

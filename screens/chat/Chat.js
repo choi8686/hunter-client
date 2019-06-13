@@ -3,6 +3,7 @@ import { StyleSheet, View, YellowBox, ScrollView, KeyboardAvoidingView } from "r
 import { Input, Button } from "react-native-elements";
 import io from "socket.io-client";
 import MessageBox from "../../components/Chat/messageBox";
+import { url } from "../../url";
 
 //웹소켓 실행시 뜨는 노란색 경고창 무시하는 코드
 //기능적으로 문제 없으므로 무시하도록 함
@@ -29,7 +30,7 @@ export default class App extends Component {
   //팀사진들은 객체에 저장됨. 사진 값의 0번째 인덱스.
 
   componentDidMount() {
-    this.socket = io("http://13.124.131.38:3000");
+    this.socket = io(`${url}`);
     this.socket.on("chat message", msgData => {
       this.setState({ chatMessages: [...this.state.chatMessages, msgData] });
     });

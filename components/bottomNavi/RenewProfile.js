@@ -34,7 +34,7 @@ export default class RenewProfile extends React.Component {
 
   //프로필을 수정할 때 필요한 함수
   _renewProfileData = () => {
-    fetch("http://13.124.131.38:3000/users/", {
+    fetch(`${url}/users/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
