@@ -2,6 +2,7 @@ import React, { Fragment, Component } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, AsyncStorage } from "react-native";
 import { Input, Button, ButtonGroup } from "react-native-elements";
 import { LinearGradient } from "expo";
+import { url } from "../../url";
 
 class Title extends Component {
   render() {
@@ -43,8 +44,7 @@ export default class SetStore extends Component {
       comment: this.props.navigation.state.params.comment,
       presentDistrict: this.props.navigation.state.params.presentDistrict,
       presentDistrictNum: this.props.navigation.state.params.presentDistrictNum,
-      userId: this.props.navigation.state.params.userId,
-  
+      userId: this.props.navigation.state.params.userId
     }
   };
 
@@ -68,40 +68,39 @@ export default class SetStore extends Component {
   };
 
   _goDistrict = () => {
-    
     const data = this.state.data;
     this.props.navigation.navigate("SetTeamPicture1", { data });
   };
 
   _submit = () => {
-    fetch("http://13.124.131.38:3000/teams", {
+    fetch(`${url}/teams`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
 
       body: JSON.stringify(this.state.data)
-    }).then( async res => {
+    }).then(async res => {
       console.log(res, "resBody setStore 85 line");
       if (res.ok) {
         console.log("--------Set Information success---------", res.ok);
 
         flag = true;
-       //팀정보를 모두 AsyncStorage에 토큰에 저장한다.
+        //팀정보를 모두 AsyncStorage에 토큰에 저장한다.
         // 그래야 어플껐다가 재접속해도 데이터베이스에 locationId를 보내주고 그 값을 비교하여 District로 바로 접근할 수 있다.
         // console.log( JSON.parse(res._bodyInit), ' JSON.parse setStore line:79 ')
         const Obj = JSON.parse(res._bodyInit);
-        console.log(Obj, 'setStore Obj 94lines')
+        console.log(Obj, "setStore Obj 94lines");
         let tokenData = "aasertetdbc";
 
-        for(let keys in Obj){
-          tokenData += '-' + Obj[keys];
+        for (let keys in Obj) {
+          tokenData += "-" + Obj[keys];
         }
 
         //userToken에 들어가는 순서 sex, count, age, comment, teamname, locationId, userId
-       AsyncStorage.setItem("userToken", tokenData);
-        let userToken = await AsyncStorage.getItem("userToken")
-        //사진 제출하면 District로 보내고 data안에 있는 teamuserId를 이용하여 관련 데이터를 가져온다. 
+        AsyncStorage.setItem("userToken", tokenData);
+        let userToken = await AsyncStorage.getItem("userToken");
+        //사진 제출하면 District로 보내고 data안에 있는 teamuserId를 이용하여 관련 데이터를 가져온다.
 
         this._goDistrict();
       } else {
