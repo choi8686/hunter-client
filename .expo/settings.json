@@ -2,6 +2,5 @@
   "hostType": "lan",
   "lanType": "ip",
   "dev": true,
-  "minify": false,
-  "urlRandomness": "2e-xi2"
+  "minify": false
 }

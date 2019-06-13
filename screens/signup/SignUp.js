@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Modal, KeyboardAvoidingView } from "react-nativ
 import { Input, Button } from "react-native-elements";
 
 import { LinearGradient, Constants } from "expo";
+import { url } from "../../url";
 
 class SignUpTitle extends Component {
   render() {
@@ -101,7 +102,7 @@ export default class SignUp extends Component {
       this.state.errorPassword.length === 0 &&
       this.state.password === this.state.password_CHECK
     ) {
-      fetch("http://13.124.131.38:3000/users/signup", {
+      fetch(`${url}/users/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
