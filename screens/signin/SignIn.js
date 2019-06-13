@@ -116,6 +116,31 @@ export default class SignUp extends Component {
   _signInAsync = async () => {
     userId = this.state.userId;
 
+    ////////////////////////////////////////////////////////////
+    // const userToken = await AsyncStorage.getItem("userToken");
+
+    
+    // const userTokenArr = userToken.split("-");
+    
+    // //유저의 아이디
+    // const userId = userTokenArr[userTokenArr.length - 1];
+    // const locationId = userTokenArr[userTokenArr.length -2];
+    // const teamname = userTokenArr[userTokenArr.length -3];
+    // const comment = userTokenArr[userTokenArr.length -4];
+    // const age = userTokenArr[userTokenArr.length -5];
+    // const count = userTokenArr[userTokenArr.length -5];
+    // const sex = userTokenArr[userTokenArr.length -6];
+    
+    // //team아디
+    // const id = userTokenArr[userTokenArr.length -7];
+    
+    // userId && locationId && teamname && comment && age && count && sex && id ? 
+    // this.props.navigation.navigate( "Home", {userId, locationId, teamname, comment, age, count, sex, id} )
+    // :
+    // this.props.navigation.navigate("SignIn");
+    
+    ////////////////////////////////////////////////////////////
+
     //asyncstorage의 userToken에 userId를 같이 저장하여 어떤 screen에서든 userId를 통해 데이터베이스에서 정보를 가져올 수 있게 한다.
     await AsyncStorage.setItem("userToken", "aasertetdbc" + "-" + userId);
     this.props.navigation.navigate("ChooseSex", { userId });
