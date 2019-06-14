@@ -60,6 +60,7 @@ export default class RenewProfile extends React.Component {
     // this._bringProfileData();
   };
   render() {
+    console.log()
     return (
       <ScrollView
         contentContainerStyle={{
