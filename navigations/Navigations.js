@@ -21,23 +21,23 @@ import TabNavigator from "./TapNavigations";
 
 const RootStack = createStackNavigator(
   {
-    ChatList: {
-      screen: ChatListScreen,
-      navigationOptions: {
-        title: "채팅"
-      }
-    },
-    Chat: {
-      screen: ChatScreen
-    },
-    Home: {
-      screen: TabNavigator,
+    // ChatList: {
+    //   screen: ChatListScreen,
+    //   navigationOptions: {
+    //     title: "채팅"
+    //   }
+    // },
+    // Chat: {
+    //   screen: ChatScreen
+    // },
+    Main: {
+      screen: MainScreen,
       navigationOptions: {
         header: null
       }
     },
-    Main: {
-      screen: MainScreen,
+    Home: {
+      screen: TabNavigator,
       navigationOptions: {
         header: null
       }
