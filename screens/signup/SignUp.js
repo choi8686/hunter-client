@@ -129,7 +129,7 @@ export default class SignUp extends Component {
   //id, password 에러 잡아내는 함수 에러 없다면 this._submit함수 실행시켜서 회원가입시도
   _errorMessages = () => {
     //닉네임은 한글 영문 숫자 포함 4~8글자
-    var regTypeID = /^[a-zA-Z0-9+]{4,8}$/gi;
+    var regTypeID = /^[a-zA-Z0-9+]{4,9}$/gi;
     //비밀번호는 영문 대소문자 및 숫자 또는 특수문자 포함 6-20글자
     var regTypePW = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
     if (this.state.nickname === "") {
@@ -175,9 +175,10 @@ export default class SignUp extends Component {
           </KeyboardAvoidingView>
           <View style={styles.buttonHouse}>
             <Button
-              title="Submit"
+              title=" Submit"
               color="white"
-              buttonStyle={{width:"100%"}}
+              alignText="center"
+              buttonStyle={{ width: "100%" }}
               onPress={this._submit}
               icon={{ type: "font-awesome", name: "check-circle", color: "pink" }}
             />
@@ -185,7 +186,8 @@ export default class SignUp extends Component {
               icon={{ type: "font-awesome", name: "check-circle", color: "pink" }}
               title=" SignIn "
               color="white"
-              buttonStyle={{width:"100%"}}
+              alignText="center"
+              buttonStyle={{ width: "100%" }}
               onPress={() => {
                 this.props.navigation.navigate("SignIn");
               }}

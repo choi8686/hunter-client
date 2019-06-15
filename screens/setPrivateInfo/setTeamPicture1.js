@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 import { LinearGradient, ImagePicker, Permissions } from "expo";
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Icon } from "react-native-elements";
@@ -34,7 +34,7 @@ const Dot = props => {
 
 export default class TeamPicture1 extends Component {
   state = {
-    image: this.props.navigation.state.params.data.image || {
+    image: {
       0: null,
       1: null,
       2: null
@@ -45,7 +45,8 @@ export default class TeamPicture1 extends Component {
     averageAge: this.props.navigation.state.params.data.age,
     comment: this.props.navigation.state.params.data.comment,
     userId: this.props.navigation.state.params.data.userId,
-    locationId: this.props.navigation.state.params.data.locationId
+    locationId: this.props.navigation.state.params.data.locationId,
+    teamId: this.props.navigation.state.params.data.teamId
 
     // image: { 0: null, 1: null, 2: null },
     // sex: 1,
@@ -74,7 +75,7 @@ export default class TeamPicture1 extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
-        userId: this.props.navigation.state.params.data.userId
+        teamId: this.props.navigation.state.params.data.teamId
         // userId: 5
       }
     };
@@ -129,10 +130,13 @@ export default class TeamPicture1 extends Component {
 
   componentDidMount = () => {};
   render() {
+    console.log(this.props.navigation.state.params.data, "hihihih setTeamPicture1.js 133lines");
+    console.log(this.state, "this.state hi hihihihi setTeamPicture1.js 135lines");
+
     const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
-    firstImage = image[0];
-    secondImage = image[1];
-    thirdImage = image[2];
+    const firstImage = image[0];
+    const secondImage = image[1];
+    const thirdImage = image[2];
     return (
       <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
         <View style={styles.container}>
