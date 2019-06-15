@@ -1,38 +1,41 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:prettier/recommended",
-    "plugin:react/recommended",
-    "prettier",
-    "prettier/react"
-  ],
-  "plugins": ["prettier", "react"],
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
-  "env": {
-    "es6": true,
-    "browser": true,
-    "node": true
-  },
-  "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQoute": true,
-        "printWidth": 120
-      },
-      {
-        "usePrettierrc": false
-      }
+    "extends": [
+        "eslint:recommended",
+        "plugin:prettier/recommended",
+        "plugin:react/recommended",
+        "prettier",
+        "prettier/react"
     ],
-    "no-console": "warn",
-    "semi": 2,
-    "no-undef": "warn",
-    "parser": "babel-eslint"
-  }
+    "plugins": ["prettier", "react"],
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "modules": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "prettier/prettier": [
+            "error",
+            {
+                "singleQoute": true,
+                "printWidth": 120
+            },
+            {
+                "usePrettierrc": false
+            }
+        ],
+        "no-console": "warn",
+        "semi": 2,
+        "no-undef": "warn",
+        "parser": "babel-eslint"
+    }
 }

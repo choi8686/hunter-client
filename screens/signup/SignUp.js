@@ -162,7 +162,6 @@ export default class SignUp extends Component {
     if (this.state.nickname === "" || this.state.password === "" || this.state.password_CHECK === "") {
       flag = false;
     }
-
     return flag;
   };
 
