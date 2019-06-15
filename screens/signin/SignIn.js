@@ -89,6 +89,7 @@ export default class SignUp extends Component {
                 })
             }).then(async res => {
                 if (res.ok) {
+                    console.log(res, "fucking res");
                     JWT = JSON.parse(res._bodyInit).token;
                     console.log("--------login success---------", res.ok);
                     flag = true;
@@ -108,6 +109,7 @@ export default class SignUp extends Component {
                     }
                 }).then(async res => {
                     console.log(JWT, "JWT!!!!!! SignIn.js lines 102");
+
                     if (res.ok) {
                         await this.setState({
                             userId: JSON.parse(res._bodyInit).userInfo.id
@@ -123,9 +125,16 @@ export default class SignUp extends Component {
                             }
                         ).then(async res => {
                             if (res.ok) {
-                                await this.setState({
-                                    teamInfo: JSON.parse(res._bodyInit).teams[0]
-                                });
+                                console.log(
+                                    JSON.parse(res._bodyInit),
+                                    "ssibalsagie"
+                                );
+                                if (JSON.parse(res._bodyInit)) {
+                                    await this.setState({
+                                        teamInfo: JSON.parse(res._bodyInit)
+                                            .teams[0]
+                                    });
+                                }
                                 this._signInAsync();
                             }
                         });
@@ -137,33 +146,10 @@ export default class SignUp extends Component {
         }
     };
 
-    //id, password 에러 잡아내는 함수 에러 없다면 this._submit함수 실행시켜서 로그인 시도
-    _errorMessages = () => {
-        if (this.state.nickname === "") {
-            this.setState(() => ({errorNickname: "아이디를 작성해주세요"}));
-            flag = false;
-        } else {
-            this.setState(() => ({errorNickname: ""}));
-            flag = true;
-        }
-        if (this.state.password === "") {
-            this.setState(() => ({errorPassword: "비밀번호를 작성해주세요"}));
-            flag = false;
-        } else {
-            this.setState(() => ({errorPassword: ""}));
-            flag = true;
-        }
-        if (this.state.nickname === "" || this.state.password === "") {
-            flag = false;
-        }
-
-        return flag;
-    };
-
     //로그인 성공시, userToken 저장하고 ChooseSex로 보내주는 함수
     _signInAsync = async () => {
         const {userId, teamInfo} = this.state;
-        console.log(this.state.teamInfo, "teamInfo");
+        console.log(this.state.teamInfo, "teamInfo SignIn.js 146 lines");
         teamInfo
             ? this.props.navigation.navigate("Home", {userId, teamInfo})
             : this.props.navigation.navigate("ChooseSex", {userId});
@@ -194,6 +180,29 @@ export default class SignUp extends Component {
         ////////////////////////////////////////////////////////////
 
         //asyncstorage의 userToken에 userId를 같이 저장하여 어떤 screen에서든 userId를 통해 데이터베이스에서 정보를 가져올 수 있게 한다.
+    };
+
+    //id, password 에러 잡아내는 함수 에러 없다면 this._submit함수 실행시켜서 로그인 시도
+    _errorMessages = () => {
+        if (this.state.nickname === "") {
+            this.setState(() => ({errorNickname: "아이디를 작성해주세요"}));
+            flag = false;
+        } else {
+            this.setState(() => ({errorNickname: ""}));
+            flag = true;
+        }
+        if (this.state.password === "") {
+            this.setState(() => ({errorPassword: "비밀번호를 작성해주세요"}));
+            flag = false;
+        } else {
+            this.setState(() => ({errorPassword: ""}));
+            flag = true;
+        }
+        if (this.state.nickname === "" || this.state.password === "") {
+            flag = false;
+        }
+
+        return flag;
     };
 
     // 에러메세지 띄우는 함수
