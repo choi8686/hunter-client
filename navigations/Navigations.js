@@ -30,12 +30,12 @@ const RootStack = createStackNavigator(
     // Chat: {
     //   screen: ChatScreen
     // },
-    Main: {
-      screen: MainScreen,
-      navigationOptions: {
-        header: null
-      }
-    },
+    // Main: {
+    //   screen: MainScreen,
+    //   navigationOptions: {
+    //     header: null
+    //   }
+    // },
     Home: {
       screen: TabNavigator,
       navigationOptions: {

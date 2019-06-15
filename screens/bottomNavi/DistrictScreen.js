@@ -15,145 +15,147 @@ import { Icon } from "react-native-elements";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo";
 import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
+import { url } from "../../url";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
-const Teams = [
-  {
-    id: 1,
-    count: 3,
-    age: 22,
-    sex: 1,
-    comment: "nada sip seggiya",
-    teamname: "otaesik",
-    locationId: 1,
-    userId: 1,
-    location: {
-      district: "hongdae",
-      store: "greenright"
-    },
-    teamimages: [
-      {
-        imgUrl: {uri:"https://i.pinimg.com/564x/25/5a/ec/255aecbaaa04fab4fc27d5461ec49fd9.jpg" }
-      },
-      {
-        imgUrl: require("../../assets/team1-1.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team1-2.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team1-3.jpg")
-      }
-    ]
-  },
-  {
-    id: 2,
-    count: 2,
-    age: 24,
-    sex: 1,
-    comment: "sex is a game",
-    teamname: "JYPENT",
-    locationId: 1,
-    userId: 1,
-    location: {
-      district: "hongdae",
-      store: "greenright"
-    },
-    teamimages: [
-      {
-        imgUrl: require("../../assets/team2-1.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team2-2.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team2-3.jpg")
-      }
-    ]
-  },
-  {
-    id: 3,
-    count: 2,
-    age: 20,
-    sex: 1,
-    comment: "i love meat",
-    teamname: "sukgamoni",
-    locationId: 2,
-    userId: 1,
-    location: {
-      district: "hongdae",
-      store: "sampo"
-    },
-    teamimages: [
-      {
-        imgUrl: require("../../assets/team3-1.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team3-2.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team3-3.jpg")
-      }
-    ]
-  },
-  {
-    id: 4,
-    count: 2,
-    age: 20,
-    sex: 1,
-    comment: "my job is F.B crop. CEO",
-    teamname: "simyoung",
-    locationId: 2,
-    userId: 1,
-    location: {
-      district: "hongdae",
-      store: "sampo"
-    },
-    teamimages: [
-      {
-        imgUrl: require("../../assets/team4-1.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team4-2.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team4-3.jpg")
-      }
-    ]
-  },
-  {
-    id: 5,
-    count: 2,
-    age: 20,
-    sex: 1,
-    comment: "i miss minsoo",
-    teamname: "Yuna Han",
-    locationId: 2,
-    userId: 1,
-    location: {
-      district: "hongdae",
-      store: "sampo"
-    },
-    teamimages: [
-      {
-        imgUrl: require("../../assets/team5-1.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team5-2.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team5-3.jpg")
-      }
-    ]
-  }
-];
+// const Teams = [
+//   {
+//     id: 1,
+//     count: 3,
+//     age: 22,
+//     sex: 1,
+//     comment: "nada sip seggiya",
+//     teamname: "otaesik",
+//     locationId: 1,
+//     userId: 1,
+//     location: {
+//       district: "hongdae",
+//       store: "greenright"
+//     },
+//     teamimages: [
+//       {
+//         imgUrl: { uri: "https://i.pinimg.com/564x/25/5a/ec/255aecbaaa04fab4fc27d5461ec49fd9.jpg" }
+//       },
+//       {
+//         imgUrl: require("../../assets/team1-1.jpg")
+//       },
+//       {
+//         imgUrl: require("../../assets/team1-2.jpg")
+//       },
+//       {
+//         imgUrl: require("../../assets/team1-3.jpg")
+//       }
+//     ]
+//   },
+//   {
+//     id: 2,
+//     count: 2,
+//     age: 24,
+//     sex: 1,
+//     comment: "sex is a game",
+//     teamname: "JYPENT",
+//     locationId: 1,
+//     userId: 1,
+//     location: {
+//       district: "hongdae",
+//       store: "greenright"
+//     },
+//     teamimages: [
+//       {
+//         imgUrl: require("../../assets/team2-1.jpg")
+//       },
+//       {
+//         imgUrl: require("../../assets/team2-2.jpg")
+//       },
+//       {
+//         imgUrl: require("../../assets/team2-3.jpg")
+//       }
+//     ]
+//   },
+//   {
+//     id: 3,
+//     count: 2,
+//     age: 20,
+//     sex: 1,
+//     comment: "i love meat",
+//     teamname: "sukgamoni",
+//     locationId: 2,
+//     userId: 1,
+//     location: {
+//       district: "hongdae",
+//       store: "sampo"
+//     },
+//     teamimages: [
+//       {
+//         imgUrl: require("../../assets/team3-1.jpg")
+//       },
+//       {
+//         imgUrl: require("../../assets/team3-2.jpg")
+//       },
+//       {
+//         imgUrl: require("../../assets/team3-3.jpg")
+//       }
+//     ]
+//   },
+//   {
+//     id: 4,
+//     count: 2,
+//     age: 20,
+//     sex: 1,
+//     comment: "my job is F.B crop. CEO",
+//     teamname: "simyoung",
+//     locationId: 2,
+//     userId: 1,
+//     location: {
+//       district: "hongdae",
+//       store: "sampo"
+//     },
+//     teamimages: [
+//       {
+//         imgUrl: require("../../assets/team4-1.jpg")
+//       },
+//       {
+//         imgUrl: require("../../assets/team4-2.jpg")
+//       },
+//       {
+//         imgUrl: require("../../assets/team4-3.jpg")
+//       }
+//     ]
+//   },
+//   {
+//     id: 5,
+//     count: 2,
+//     age: 20,
+//     sex: 1,
+//     comment: "i miss minsoo",
+//     teamname: "Yuna Han",
+//     locationId: 2,
+//     userId: 1,
+//     location: {
+//       district: "hongdae",
+//       store: "sampo"
+//     },
+//     teamimages: [
+//       {
+//         imgUrl: require("../../assets/team5-1.jpg")
+//       },
+//       {
+//         imgUrl: require("../../assets/team5-2.jpg")
+//       },
+//       {
+//         imgUrl: require("../../assets/team5-3.jpg")
+//       }
+//     ]
+//   }
+// ];
 
 export default class DistrictScreen extends Component {
   constructor() {
     super();
     this.position = new Animated.ValueXY();
     this.state = {
+      Teams: [],
       currentIndex: 0,
       pictrueIndex: 0
     };
@@ -205,9 +207,36 @@ export default class DistrictScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "저기어때",
-      headerRight: <TopBarRightIcons />
+      headerRight: <TopBarRightIcons navigation={navigation} />
     };
   };
+
+  _getTeamsOnDistrict = () => {
+    // **수정사항
+    // 추후에 'hongdea' 값은 로그인 사용자의 위치를 가져와야한다.
+    // 추후에 헤더값에 사용자의 id와 성별을 보낸다.
+    // 1. 사용자를 제외한 나머지 값들을 가져와야 한다.
+    // 2. 사용자의 성별과 반대인 상대방의 정보를 가져와야 한다.
+    fetch(`${url}/teams/district/hongdea`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+        // 로그인한 사용자의 성별
+        // 로그인한 사용자의 userId or TeamId
+      }
+    })
+      .then(result => result.json())
+      .then(data =>
+        this.setState({
+          Teams: data
+        })
+      );
+  };
+
+  componentDidMount() {
+    this._getTeamsOnDistrict();
+  }
+
   componentWillMount() {
     this.PanResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
@@ -252,7 +281,10 @@ export default class DistrictScreen extends Component {
   }
 
   _onChangeIndex = e => {
-    if (e === "rightArrow" && this.state.pictrueIndex < Teams[this.state.currentIndex].teamimages.length - 1) {
+    if (
+      e === "rightArrow" &&
+      this.state.pictrueIndex < this.state.Teams[this.state.currentIndex].teamimages.length - 1
+    ) {
       this.setState({
         pictrueIndex: this.state.pictrueIndex + 1
       });
@@ -294,20 +326,26 @@ export default class DistrictScreen extends Component {
 
   //comment랑 teamname을 가져와서 animation안에 띄워준다.
   renderUsers = () => {
-    return Teams.map((item, i) => {
+    console.log(this.state.Teams);
+    return this.state.Teams.map((item, i) => {
       // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
       if (i < this.state.currentIndex) {
         return null;
       } else if (i === this.state.currentIndex) {
         return (
           // 0보다 작 무조건
-
           <Animated.View
             {...this.PanResponder.panHandlers}
             key={item.id}
             style={[
               this.rotateAndTranslate,
-              { height: SCREEN_HEIGHT*4/4, width: SCREEN_WIDTH, margin: 0, paddingBottom:20, position: "absolute" }
+              {
+                height: (SCREEN_HEIGHT * 4) / 4,
+                width: SCREEN_WIDTH,
+                margin: 0,
+                paddingBottom: 20,
+                position: "absolute"
+              }
             ]}
           >
             <Animated.View style={{ opacity: this.likeOpacity, ...styles.likeBorder }}>
@@ -319,8 +357,16 @@ export default class DistrictScreen extends Component {
             </Animated.View>
 
             <Image
-              style={{ flex: 1, height: "100%", width: "100%", resizeMode: "cover", borderRadius: 20 }}
-              source={item.teamimages[this.state.pictrueIndex].imgUrl}
+              style={{
+                flex: 1,
+                height: "100%",
+                width: "100%",
+                resizeMode: "cover",
+                borderRadius: 20
+              }}
+              source={{
+                uri: `${item.teamimages[this.state.pictrueIndex].imgUrl}`
+              }}
             />
 
             <Animated.View
@@ -333,8 +379,24 @@ export default class DistrictScreen extends Component {
                 marginLeft: "5%"
               }}
             >
-              <Text style={{ color: "floralwhite", fontWeight: "bold", fontSize: 20 }}>트벤져스</Text>
-              <Text style={{ color: "floralwhite", fontWeight: "bold", fontSize: 15 }}>한짝가능요</Text>
+              <Text
+                style={{
+                  color: "floralwhite",
+                  fontWeight: "bold",
+                  fontSize: 20
+                }}
+              >
+                트벤져스
+              </Text>
+              <Text
+                style={{
+                  color: "floralwhite",
+                  fontWeight: "bold",
+                  fontSize: 15
+                }}
+              >
+                한짝가능요
+              </Text>
             </Animated.View>
           </Animated.View>
         );
@@ -346,17 +408,23 @@ export default class DistrictScreen extends Component {
               {
                 opacity: this.nextCardOpacity,
                 transform: [{ scale: this.nextCardScale }],
-                height: SCREEN_HEIGHT*3/4,
+                height: (SCREEN_HEIGHT * 3) / 4,
                 width: SCREEN_WIDTH,
                 padding: 10,
-                paddingBottom:20,
+                paddingBottom: 20,
                 position: "absolute"
               }
             ]}
           >
             <Image
-              style={{ flex: 1, height: null, width: null, resizeMode: "cover", borderRadius: 20 }}
-              source={item.teamimages[0].imgUrl}
+              style={{
+                flex: 1,
+                height: null,
+                width: null,
+                resizeMode: "cover",
+                borderRadius: 20
+              }}
+              source={{ uri: `${item.teamimages[0].imgUrl}` }}
             />
           </Animated.View>
         );
@@ -368,23 +436,23 @@ export default class DistrictScreen extends Component {
     return (
       <View style={{ ...styles.backGround }}>
         {/* <View style={{ flexDirection:'column', justifyContent:'space-between', height:'100%' }}> */}
-          <View style={{ flex: 0.9, height:'100%', flexDirection:'column' }}>{this.renderUsers()}</View>
-          <View style={styles.arrow}>
-            <AntDesign
-              id="leftArrow"
-              name="leftcircleo"
-              style={styles.leftArrow}
-              onPress={() => this._onChangeIndex("leftArrow")}
-            />
-            
-              <Ionicons name="md-refresh" style={styles.refreshButton} onPress={() => this._onPresRefresh()} />
-          
-            <AntDesign
-              id="rightArrow"
-              name="rightcircleo"
-              style={styles.rigthArrow}
-              onPress={() => this._onChangeIndex("rightArrow")}
-            />
+        <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>{this.renderUsers()}</View>
+        <View style={styles.arrow}>
+          <AntDesign
+            id="leftArrow"
+            name="leftcircleo"
+            style={styles.leftArrow}
+            onPress={() => this._onChangeIndex("leftArrow")}
+          />
+
+          <Ionicons name="md-refresh" style={styles.refreshButton} onPress={() => this._onPresRefresh()} />
+
+          <AntDesign
+            id="rightArrow"
+            name="rightcircleo"
+            style={styles.rigthArrow}
+            onPress={() => this._onChangeIndex("rightArrow")}
+          />
           {/* </View>  */}
         </View>
       </View>
@@ -394,10 +462,10 @@ export default class DistrictScreen extends Component {
 
 const styles = StyleSheet.create({
   backGround: {
-    flex:1,
+    flex: 1,
     flexDirection: "column",
-    alignItems:'flex-start',
-    height:'100%',
+    alignItems: "flex-start",
+    height: "100%",
     width: "100%",
     color: "#F9F9F8"
   },
@@ -449,22 +517,22 @@ const styles = StyleSheet.create({
     flex: 0.1,
     flexDirection: "row",
     justifyContent: "space-between",
-    height:'100%',
+    height: "100%",
     width: "100%",
-    alignContent:'center',
+    alignContent: "center",
     alignItems: "center",
-    padding:'5%',
+    padding: "5%"
   },
   rigthArrow: {
-    height:'100%',
+    height: "100%",
     fontSize: 23
   },
   leftArrow: {
-    height:'100%',
+    height: "100%",
     fontSize: 23
   },
   refreshButton: {
-    height:'100%',
+    height: "100%",
     color: "mediumturquoise",
     fontSize: 28
   },

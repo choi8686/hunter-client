@@ -12,7 +12,6 @@ export default class ChatList extends React.Component {
       chatList: fakeListBox
     };
   }
-
   _moveToChatroom = (chatBoxIdx, teamName) => {
     this.props.navigation.navigate("Chat", {
       chatBoxIdx,

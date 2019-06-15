@@ -124,7 +124,7 @@ export default class SignUp extends Component {
   // 에러메세지 띄우는 함수
   _errorMsg = check => {
     const state = this.state;
-    if (!!state[check]) {
+    if (state[check]) {
       return <Text style={{ color: "white" }}>{state[check]}</Text>;
     }
   };

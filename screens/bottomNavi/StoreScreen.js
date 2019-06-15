@@ -35,7 +35,9 @@ const Teams = [
     },
     teamimages: [
       {
-        imgUrl: {uri:"https://i.pinimg.com/564x/25/5a/ec/255aecbaaa04fab4fc27d5461ec49fd9.jpg" }
+        imgUrl: {
+          uri: "https://i.pinimg.com/564x/25/5a/ec/255aecbaaa04fab4fc27d5461ec49fd9.jpg"
+        }
       },
       {
         imgUrl: require("../../assets/team1-1.jpg")
@@ -309,7 +311,13 @@ export default class StoreScreen extends Component {
             key={item.id}
             style={[
               this.rotateAndTranslate,
-              { height: SCREEN_HEIGHT*3/4, width: SCREEN_WIDTH, padding: 10,paddingBottom:20, position: "absolute" }
+              {
+                height: (SCREEN_HEIGHT * 3) / 4,
+                width: SCREEN_WIDTH,
+                padding: 10,
+                paddingBottom: 20,
+                position: "absolute"
+              }
             ]}
           >
             <Animated.View style={{ opacity: this.likeOpacity, ...styles.likeBorder }}>
@@ -321,7 +329,13 @@ export default class StoreScreen extends Component {
             </Animated.View>
 
             <Image
-              style={{ flex: 1, height: "100%", width: "100%", resizeMode: "cover", borderRadius: 20 }}
+              style={{
+                flex: 1,
+                height: "100%",
+                width: "100%",
+                resizeMode: "cover",
+                borderRadius: 20
+              }}
               source={item.teamimages[this.state.pictrueIndex].imgUrl}
             />
             <Animated.View
@@ -334,8 +348,24 @@ export default class StoreScreen extends Component {
                 marginLeft: "5%"
               }}
             >
-              <Text style={{ color: "floralwhite", fontWeight: "bold", fontSize: 20 }}>트벤져스</Text>
-              <Text style={{ color: "floralwhite", fontWeight: "bold", fontSize: 15 }}>한짝가능요</Text>
+              <Text
+                style={{
+                  color: "floralwhite",
+                  fontWeight: "bold",
+                  fontSize: 20
+                }}
+              >
+                트벤져스
+              </Text>
+              <Text
+                style={{
+                  color: "floralwhite",
+                  fontWeight: "bold",
+                  fontSize: 15
+                }}
+              >
+                한짝가능요
+              </Text>
             </Animated.View>
           </Animated.View>
         );
@@ -347,16 +377,22 @@ export default class StoreScreen extends Component {
               {
                 opacity: this.nextCardOpacity,
                 transform: [{ scale: this.nextCardScale }],
-                height: SCREEN_HEIGHT*3/4,
+                height: (SCREEN_HEIGHT * 3) / 4,
                 width: SCREEN_WIDTH,
                 padding: 10,
-                paddingBottom:20,
+                paddingBottom: 20,
                 position: "absolute"
               }
             ]}
           >
             <Image
-              style={{ flex: 1, height: null, width: null, resizeMode: "cover", borderRadius: 20 }}
+              style={{
+                flex: 1,
+                height: null,
+                width: null,
+                resizeMode: "cover",
+                borderRadius: 20
+              }}
               source={item.teamimages[0].imgUrl}
             />
           </Animated.View>
@@ -368,8 +404,15 @@ export default class StoreScreen extends Component {
   render() {
     return (
       <View style={{ ...styles.backGround }}>
-        <View style={{ flex: 1,flexDirection:'column', justifyContent:'space-between', alignContent:'center'  }}>
-          <View style={{ flex: 0.9,  height:'100%', flexDirection:'column' }}>{this.renderUsers()}</View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "column",
+            justifyContent: "space-between",
+            alignContent: "center"
+          }}
+        >
+          <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>{this.renderUsers()}</View>
           <View style={styles.arrow}>
             <AntDesign
               id="leftArrow"
@@ -411,7 +454,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    height:'100%',
+    height: "100%",
     width: "100%",
     color: "#F9F9F8"
   },
@@ -468,22 +511,22 @@ const styles = StyleSheet.create({
     flex: 0.1,
     flexDirection: "row",
     justifyContent: "space-between",
-    height:'100%',
+    height: "100%",
     width: "100%",
     alignItems: "center",
     paddingRight: "10%",
     paddingLeft: "10%"
   },
   rigthArrow: {
-    height:'100%',
+    height: "100%",
     fontSize: 23
   },
   leftArrow: {
-    height:'100%',
+    height: "100%",
     fontSize: 23
   },
   refreshButton: {
-    height:'100%',
+    height: "100%",
     color: "mediumturquoise",
     fontSize: 28
   },

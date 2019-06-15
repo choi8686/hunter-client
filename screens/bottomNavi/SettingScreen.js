@@ -31,10 +31,19 @@ export default class SettingScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
         <View style={styles.avatarContainer}>
           <Image
-            source={{ uri: "http://cphoto.asiae.co.kr/listimglink/1/2013012413095706640_1.jpg" }}
+            source={{
+              uri: "http://cphoto.asiae.co.kr/listimglink/1/2013012413095706640_1.jpg"
+            }}
             style={styles.avatar}
           />
         </View>
