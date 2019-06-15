@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import ChatListBox from "../../components/chatlist/ChatListBox";
 import fakeListBox from "../../components/chatlist/ChatListFake";
-// import { url } from "../../url";
+import { url } from "../../url";
 
 export default class ChatList extends React.Component {
   constructor(props) {
@@ -13,6 +13,7 @@ export default class ChatList extends React.Component {
       chatList: fakeListBox
     };
   }
+
   _moveToChatroom = (chatBoxIdx, teamName) => {
     this.props.navigation.navigate("Chat", {
       chatBoxIdx,
@@ -21,19 +22,18 @@ export default class ChatList extends React.Component {
   };
 
   componentDidMount() {
-    const idxBox = this.props.navigation.state.params;
-    console.log(idxBox, 1111111111111111);
-    // idxBox =  {id : '', userId: ''}
-    // const idxData = {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     info: JSON.stringify(idxBox)
-    //   }
-    // };
-    // fetch(url, idxData)
-    //   .then(res => res.json())
-    //   .then(data => console.log(json));
+    const { teamId, teamName, userId } = this.props.navigation.state.params;
+
+    const getHeaders = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    fetch(`${url}/messages/${teamId}`, getHeaders)
+      .then(res => res.json())
+      .then(data => console.log(data));
   }
 
   render() {
@@ -44,7 +44,9 @@ export default class ChatList extends React.Component {
             teamName={chatBox.teamName}
             chatBoxIdx={chatBox.idx}
             avatarURL={chatBox.avatarURL}
-            conversation={chatBox.conversation[chatBox.conversation.length - 1].text}
+            conversation={
+              chatBox.conversation[chatBox.conversation.length - 1].text
+            }
             key={chatBox.idx}
             moveToChatroom={this._moveToChatroom}
           />

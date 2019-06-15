@@ -17,18 +17,6 @@ import TabNavigator from "./TapNavigations";
 
 const RootStack = createStackNavigator(
   {
-    SignIn: {
-      screen: SignInScreen,
-      navigationOptions: {
-        header: null
-      }
-    },
-    Main: {
-      screen: MainScreen,
-      navigationOptions: {
-        header: null
-      }
-    },
     Home: {
       screen: TabNavigator,
       navigationOptions: {
@@ -37,6 +25,18 @@ const RootStack = createStackNavigator(
     },
     SignUp: {
       screen: SignUpScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+    SignIn: {
+      screen: SignInScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+    Main: {
+      screen: MainScreen,
       navigationOptions: {
         header: null
       }
