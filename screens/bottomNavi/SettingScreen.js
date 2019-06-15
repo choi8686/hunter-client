@@ -8,7 +8,6 @@ import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
 export default class SettingScreen extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {};
   }
   static navigationOptions = ({ navigation }) => {
