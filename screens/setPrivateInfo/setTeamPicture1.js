@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { Fragment, Component } from "react";
-=======
 import React, { Component } from "react";
->>>>>>> bd55df0effc1f9e72a454c0dcb4f1b6a52ab194e
 import { LinearGradient, ImagePicker, Permissions } from "expo";
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Icon } from "react-native-elements";
@@ -38,11 +34,7 @@ const Dot = props => {
 
 export default class TeamPicture1 extends Component {
   state = {
-<<<<<<< HEAD
-    image: this.props.navigation.state.params.data.image || {
-=======
     image: {
->>>>>>> bd55df0effc1f9e72a454c0dcb4f1b6a52ab194e
       0: null,
       1: null,
       2: null
@@ -53,12 +45,8 @@ export default class TeamPicture1 extends Component {
     averageAge: this.props.navigation.state.params.data.age,
     comment: this.props.navigation.state.params.data.comment,
     userId: this.props.navigation.state.params.data.userId,
-<<<<<<< HEAD
-    locationId: this.props.navigation.state.params.data.locationId
-=======
     locationId: this.props.navigation.state.params.data.locationId,
     teamId: this.props.navigation.state.params.data.teamId
->>>>>>> bd55df0effc1f9e72a454c0dcb4f1b6a52ab194e
 
     // image: { 0: null, 1: null, 2: null },
     // sex: 1,
@@ -87,11 +75,7 @@ export default class TeamPicture1 extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
-<<<<<<< HEAD
-        userId: this.props.navigation.state.params.data.userId
-=======
         teamId: this.props.navigation.state.params.data.teamId
->>>>>>> bd55df0effc1f9e72a454c0dcb4f1b6a52ab194e
         // userId: 5
       }
     };
@@ -118,10 +102,10 @@ export default class TeamPicture1 extends Component {
 
     try {
       if (!pickerResult.cancelled) {
-        uploadResponse = await this._uploadImageAsync(this.state.image[0]);
-        uploadResult = await uploadResponse.json();
+        await this._uploadImageAsync(this.state.image[0]);
+        await this._uploadImageAsync(this.state.image[1]);
+        await this._uploadImageAsync(this.state.image[2]);
       }
-      console.log(uploadResult);
     } catch (e) {
       console.log({ uploadResponse });
       console.log({ uploadResult });
@@ -146,6 +130,9 @@ export default class TeamPicture1 extends Component {
 
   componentDidMount = () => {};
   render() {
+    console.log(this.props.navigation.state.params.data, "hihihih setTeamPicture1.js 133lines");
+    console.log(this.state, "this.state hi hihihihi setTeamPicture1.js 135lines");
+
     const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
     const firstImage = image[0];
     const secondImage = image[1];
