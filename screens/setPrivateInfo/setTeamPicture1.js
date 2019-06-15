@@ -152,7 +152,6 @@ export default class TeamPicture1 extends Component {
 
   componentDidMount = async () => {
     let token = await AsyncStorage.getItem("userToken");
-    console.log(token, "tokenhihihihihihihih133lines");
   };
   render() {
     console.log(

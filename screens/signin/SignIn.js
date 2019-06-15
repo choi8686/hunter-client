@@ -4,7 +4,8 @@ import {
   Text,
   View,
   Modal,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  AsyncStorage
 } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { LinearGradient, Constants } from "expo";
@@ -83,7 +84,6 @@ export default class SignUp extends Component {
         })
       }).then(async res => {
         if (res.ok) {
-          console.log(res, "fucking res");
           JWT = JSON.parse(res._bodyInit).token;
           console.log("--------login success---------", res.ok);
           flag = true;
@@ -120,10 +120,32 @@ export default class SignUp extends Component {
                   JSON.parse(res._bodyInit),
                   "teamInfo SignIn.js Lines:113"
                 );
+                const teamInfo = JSON.parse(res._bodyInit).teams[0];
                 if (JSON.parse(res._bodyInit)) {
                   await this.setState({
-                    teamInfo: JSON.parse(res._bodyInit).teams[0]
+                    teamInfo: teamInfo
                   });
+
+                  await AsyncStorage.setItem(
+                    "userToken",
+                    "aasertetdbc" +
+                      "-" +
+                      teamInfo.sex +
+                      "-" +
+                      teamInfo.count +
+                      "-" +
+                      teamInfo.age +
+                      "-" +
+                      teamInfo.comment +
+                      "-" +
+                      teamInfo.teamname +
+                      "-" +
+                      teamInfo.locationId +
+                      "-" +
+                      teamInfo.userId +
+                      "-" +
+                      teamInfo.id
+                  );
                 }
                 this._signInAsync();
               }
@@ -139,7 +161,6 @@ export default class SignUp extends Component {
   //로그인 성공시, userToken 저장하고 ChooseSex로 보내주는 함수
   _signInAsync = async () => {
     const { userId, teamInfo } = this.state;
-    console.log(this.state.teamInfo, "teamInfo SignIn.js 146 lines");
     teamInfo
       ? this.props.navigation.navigate("Home", { userId, teamInfo })
       : this.props.navigation.navigate("ChooseSex", { userId });

@@ -14,18 +14,6 @@ class Title extends Component {
   }
 }
 
-class Loading extends Component {
-  render() {
-    return (
-      <Fragment>
-        <View>
-          <Text style={styles.title}>{this.props.name}</Text>
-        </View>
-      </Fragment>
-    );
-  }
-}
-
 export default class Main extends Component {
   constructor() {
     super();
@@ -38,7 +26,14 @@ export default class Main extends Component {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem("userToken");
     const userTokenArr = userToken.split("-");
-    "aasertetdbc" + sex + count + age + comment + teamname + locationId + userId;
+    "aasertetdbc" +
+      sex +
+      count +
+      age +
+      comment +
+      teamname +
+      locationId +
+      userId;
     //유저의 아이디
     const userId = userTokenArr[userTokenArr.length - 1];
     const locationId = userTokenArr[userTokenArr.length - 2];
@@ -52,7 +47,16 @@ export default class Main extends Component {
     const id = userTokenArr[userTokenArr.length - 7];
 
     userId && locationId && teamname && comment && age && count && sex && id
-      ? this.props.navigation.navigate("Home", { userId, locationId, teamname, comment, age, count, sex, id })
+      ? this.props.navigation.navigate("Home", {
+          userId,
+          locationId,
+          teamname,
+          comment,
+          age,
+          count,
+          sex,
+          id
+        })
       : this.props.navigation.navigate("SignIn");
   };
 
@@ -67,13 +71,21 @@ export default class Main extends Component {
   };
   render() {
     return (
-      <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
+      <LinearGradient
+        colors={["coral", "#f44283", "#f441bb", "#8341f4"]}
+        style={styles.backGround}
+      >
         <View style={styles.titleHouse}>
           <Title name="  저기 어때 " />
           <AntDesign id="leftArrow" name="rocket1" size={25} style={{}} />
         </View>
 
-        <Button title="Loading" type="clear" titleStyle={{ color: "white" }} buttonStyle={{}} />
+        <Button
+          title="Loading"
+          type="clear"
+          titleStyle={{ color: "white" }}
+          buttonStyle={{}}
+        />
         <Button
           loading
           type="clear"
