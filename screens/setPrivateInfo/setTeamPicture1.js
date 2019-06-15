@@ -6,7 +6,12 @@ import {
   View,
   Image,
   TouchableOpacity,
+<<<<<<< HEAD
   ScrollView
+=======
+  ScrollView,
+  AsyncStorage
+>>>>>>> 1f5ecc1b37a01cc6cecf1753a8b15712c74fa242
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { url } from "../../url";
@@ -155,8 +160,16 @@ export default class TeamPicture1 extends Component {
     }
   };
 
-  componentDidMount = () => {};
+  componentDidMount = async () => {
+    let token = await AsyncStorage.getItem("userToken");
+    console.log(token, "tokenhihihihihihihih133lines");
+  };
   render() {
+    console.log(
+      this.props.navigation.state.params.data,
+      "hihihih setTeamPicture1.js 133lines"
+    );
+
     const {
       sex,
       teamname,
@@ -167,7 +180,6 @@ export default class TeamPicture1 extends Component {
       userId,
       locationId
     } = this.state;
-
     const firstImage = image[0];
     const secondImage = image[1];
     const thirdImage = image[2];
