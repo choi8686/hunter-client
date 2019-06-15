@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { LinearGradient, ImagePicker, Permissions } from "expo";
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, AsyncStorage } from "react-native";
 import { Icon } from "react-native-elements";
 import { url } from "../../url";
 
@@ -128,11 +128,12 @@ export default class TeamPicture1 extends Component {
     }
   };
 
-  componentDidMount = () => {};
+  componentDidMount = async () => {
+    let token = await AsyncStorage.getItem("userToken");
+    console.log(token, "tokenhihihihihihihih133lines");
+  };
   render() {
-    console.log(this.props.navigation.state.params.data, "hihihih setTeamPicture1.js 133lines");
-
-    console.log(this.state, "this.state hi hihihihi setTeamPicture1.js 135lines");
+    console.log(this.props.navigation.state.params.data, "hihihih setTeamPicture1.js 136lines");
 
     const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
     const firstImage = image[0];
