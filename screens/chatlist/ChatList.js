@@ -21,8 +21,9 @@ export default class ChatList extends React.Component {
   };
 
   componentDidMount() {
-    // const idxBox = this.props.navigation.state.params;
-    //idxBox =  {id : '', userId: ''}
+    const idxBox = this.props.navigation.state.params;
+    console.log(idxBox, 1111111111111111);
+    // idxBox =  {id : '', userId: ''}
     // const idxData = {
     //   method: "GET",
     //   headers: {
