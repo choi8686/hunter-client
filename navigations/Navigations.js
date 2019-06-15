@@ -8,6 +8,7 @@ import ChooseStoreScreen from "../screens/setPrivateInfo/setStore";
 import ChooseSexScreen from "../screens/setPrivateInfo/setSex";
 import SetTeamInfoScreen1 from "../screens/setPrivateInfo/setTeamInfo1";
 import SetTeamInfoScreen2 from "../screens/setPrivateInfo/setTeamInfo2";
+import LogoutScreen from "../screens/bottomNavi/SettingScreen";
 
 import SetTeamPictureScreen1 from "../screens/setPrivateInfo/setTeamPicture1";
 import SetTeamPictureScreen2 from "../screens/setPrivateInfo/setTeamPicture2";
@@ -23,12 +24,12 @@ const RootStack = createStackNavigator(
         header: null
       }
     },
-    Main: {
-      screen: MainScreen,
-      navigationOptions: {
-        header: null
-      }
-    },
+    // Logout: {
+    //   screen: LogoutScreen,
+    //   navigationOptions: {
+    //     header: null
+    //   }
+    // },
     Home: {
       screen: TabNavigator,
       navigationOptions: {
@@ -41,8 +42,8 @@ const RootStack = createStackNavigator(
         header: null
       }
     },
-    SignIn: {
-      screen: SignInScreen,
+    Main: {
+      screen: MainScreen,
       navigationOptions: {
         header: null
       }

@@ -9,7 +9,8 @@ import {
   Button,
   Dimensions,
   Animated,
-  PanResponder
+  PanResponder,
+  AsyncStorage
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
@@ -19,136 +20,6 @@ import { url } from "../../url";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
-// const Teams = [
-//   {
-//     id: 1,
-//     count: 3,
-//     age: 22,
-//     sex: 1,
-//     comment: "nada sip seggiya",
-//     teamname: "otaesik",
-//     locationId: 1,
-//     userId: 1,
-//     location: {
-//       district: "hongdae",
-//       store: "greenright"
-//     },
-//     teamimages: [
-//       {
-//         imgUrl: { uri: "https://i.pinimg.com/564x/25/5a/ec/255aecbaaa04fab4fc27d5461ec49fd9.jpg" }
-//       },
-//       {
-//         imgUrl: require("../../assets/team1-1.jpg")
-//       },
-//       {
-//         imgUrl: require("../../assets/team1-2.jpg")
-//       },
-//       {
-//         imgUrl: require("../../assets/team1-3.jpg")
-//       }
-//     ]
-//   },
-//   {
-//     id: 2,
-//     count: 2,
-//     age: 24,
-//     sex: 1,
-//     comment: "sex is a game",
-//     teamname: "JYPENT",
-//     locationId: 1,
-//     userId: 1,
-//     location: {
-//       district: "hongdae",
-//       store: "greenright"
-//     },
-//     teamimages: [
-//       {
-//         imgUrl: require("../../assets/team2-1.jpg")
-//       },
-//       {
-//         imgUrl: require("../../assets/team2-2.jpg")
-//       },
-//       {
-//         imgUrl: require("../../assets/team2-3.jpg")
-//       }
-//     ]
-//   },
-//   {
-//     id: 3,
-//     count: 2,
-//     age: 20,
-//     sex: 1,
-//     comment: "i love meat",
-//     teamname: "sukgamoni",
-//     locationId: 2,
-//     userId: 1,
-//     location: {
-//       district: "hongdae",
-//       store: "sampo"
-//     },
-//     teamimages: [
-//       {
-//         imgUrl: require("../../assets/team3-1.jpg")
-//       },
-//       {
-//         imgUrl: require("../../assets/team3-2.jpg")
-//       },
-//       {
-//         imgUrl: require("../../assets/team3-3.jpg")
-//       }
-//     ]
-//   },
-//   {
-//     id: 4,
-//     count: 2,
-//     age: 20,
-//     sex: 1,
-//     comment: "my job is F.B crop. CEO",
-//     teamname: "simyoung",
-//     locationId: 2,
-//     userId: 1,
-//     location: {
-//       district: "hongdae",
-//       store: "sampo"
-//     },
-//     teamimages: [
-//       {
-//         imgUrl: require("../../assets/team4-1.jpg")
-//       },
-//       {
-//         imgUrl: require("../../assets/team4-2.jpg")
-//       },
-//       {
-//         imgUrl: require("../../assets/team4-3.jpg")
-//       }
-//     ]
-//   },
-//   {
-//     id: 5,
-//     count: 2,
-//     age: 20,
-//     sex: 1,
-//     comment: "i miss minsoo",
-//     teamname: "Yuna Han",
-//     locationId: 2,
-//     userId: 1,
-//     location: {
-//       district: "hongdae",
-//       store: "sampo"
-//     },
-//     teamimages: [
-//       {
-//         imgUrl: require("../../assets/team5-1.jpg")
-//       },
-//       {
-//         imgUrl: require("../../assets/team5-2.jpg")
-//       },
-//       {
-//         imgUrl: require("../../assets/team5-3.jpg")
-//       }
-//     ]
-//   }
-// ];
 
 export default class DistrictScreen extends Component {
   constructor() {
@@ -235,9 +106,13 @@ export default class DistrictScreen extends Component {
       );
   };
 
-  componentDidMount() {
+  componentDidMount = async () => {
+    console.log(
+      await AsyncStorage.getItem("userToken"),
+      "-------------------------------------"
+    );
     this._getTeamsOnDistrict();
-  }
+  };
 
   componentWillMount() {
     this.PanResponder = PanResponder.create({
@@ -255,9 +130,12 @@ export default class DistrictScreen extends Component {
             toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
           }).start(() => {
             //사라진 다음 다음 사진을 0,0 좌표에 set 하는 부분
-            this.setState({ currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 }, () => {
-              this.position.setValue({ x: 0, y: 0 });
-            });
+            this.setState(
+              { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+              () => {
+                this.position.setValue({ x: 0, y: 0 });
+              }
+            );
           });
         }
         // 왼쪽으로 스와이프 할 때
@@ -266,9 +144,12 @@ export default class DistrictScreen extends Component {
           Animated.spring(this.position, {
             toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
           }).start(() => {
-            this.setState({ currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 }, () => {
-              this.position.setValue({ x: 0, y: 0 });
-            });
+            this.setState(
+              { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+              () => {
+                this.position.setValue({ x: 0, y: 0 });
+              }
+            );
           });
         }
         // 둘다 아니면 실행
@@ -285,7 +166,8 @@ export default class DistrictScreen extends Component {
   _onChangeIndex = e => {
     if (
       e === "rightArrow" &&
-      this.state.pictrueIndex < this.state.Teams[this.state.currentIndex].teamimages.length - 1
+      this.state.pictrueIndex <
+        this.state.Teams[this.state.currentIndex].teamimages.length - 1
     ) {
       this.setState({
         pictrueIndex: this.state.pictrueIndex + 1
@@ -303,9 +185,12 @@ export default class DistrictScreen extends Component {
     Animated.spring(this.position, {
       toValue: { x: -SCREEN_WIDTH - 100, y: -20 }
     }).start(() => {
-      this.setState({ currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 }, () => {
-        this.position.setValue({ x: 0, y: 0 });
-      });
+      this.setState(
+        { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+        () => {
+          this.position.setValue({ x: 0, y: 0 });
+        }
+      );
     });
   };
 
@@ -313,9 +198,12 @@ export default class DistrictScreen extends Component {
     Animated.spring(this.position, {
       toValue: { x: SCREEN_WIDTH + 100, y: -20 }
     }).start(() => {
-      this.setState({ currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 }, () => {
-        this.position.setValue({ x: 0, y: 0 });
-      });
+      this.setState(
+        { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+        () => {
+          this.position.setValue({ x: 0, y: 0 });
+        }
+      );
     });
   };
 
@@ -350,11 +238,15 @@ export default class DistrictScreen extends Component {
               }
             ]}
           >
-            <Animated.View style={{ opacity: this.likeOpacity, ...styles.likeBorder }}>
+            <Animated.View
+              style={{ opacity: this.likeOpacity, ...styles.likeBorder }}
+            >
               <Text style={styles.likeText}>LIKE</Text>
             </Animated.View>
 
-            <Animated.View style={{ opacity: this.dislikeOpacity, ...styles.dislikeBorder }}>
+            <Animated.View
+              style={{ opacity: this.dislikeOpacity, ...styles.dislikeBorder }}
+            >
               <Text style={styles.dislikeText}>NOPE</Text>
             </Animated.View>
 
@@ -438,7 +330,9 @@ export default class DistrictScreen extends Component {
     return (
       <View style={{ ...styles.backGround }}>
         {/* <View style={{ flexDirection:'column', justifyContent:'space-between', height:'100%' }}> */}
-        <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>{this.renderUsers()}</View>
+        <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>
+          {this.renderUsers()}
+        </View>
         <View style={styles.arrow}>
           <AntDesign
             id="leftArrow"
@@ -447,7 +341,11 @@ export default class DistrictScreen extends Component {
             onPress={() => this._onChangeIndex("leftArrow")}
           />
 
-          <Ionicons name="md-refresh" style={styles.refreshButton} onPress={() => this._onPresRefresh()} />
+          <Ionicons
+            name="md-refresh"
+            style={styles.refreshButton}
+            onPress={() => this._onPresRefresh()}
+          />
 
           <AntDesign
             id="rightArrow"

@@ -10,6 +10,7 @@ import {
 import { Input, Button } from "react-native-elements";
 import { LinearGradient, Constants } from "expo";
 import { url } from "../../url";
+var flag;
 
 // 제목
 class SignInTitle extends Component {
@@ -57,7 +58,6 @@ export default class SignUp extends Component {
 
     //teamId
     teamInfo: null,
-
     modalVisible: false
   };
 
@@ -123,6 +123,7 @@ export default class SignUp extends Component {
                 const teamInfo = JSON.parse(res._bodyInit).teams[0];
                 if (JSON.parse(res._bodyInit)) {
                   await this.setState({
+                    userId: teamInfo.userId,
                     teamInfo: teamInfo
                   });
 
@@ -147,7 +148,7 @@ export default class SignUp extends Component {
                       teamInfo.id
                   );
                 }
-                this._signInAsync();
+                await this._signInAsync();
               }
             });
           }
@@ -161,6 +162,10 @@ export default class SignUp extends Component {
   //로그인 성공시, userToken 저장하고 ChooseSex로 보내주는 함수
   _signInAsync = async () => {
     const { userId, teamInfo } = this.state;
+    console.log("hi");
+    console.log(teamInfo, "teamInfo!!!!!!");
+    console.log(userId, "userId!!!!!!!!");
+
     teamInfo
       ? this.props.navigation.navigate("Home", { userId, teamInfo })
       : this.props.navigation.navigate("ChooseSex", { userId });
@@ -274,7 +279,7 @@ export default class SignUp extends Component {
                 name: "check-circle",
                 color: "pink"
               }}
-              alignText="center"
+              textAlign="center"
               title=" SignUp"
               color="white"
               buttonStyle={{ width: "100%" }}
@@ -307,6 +312,7 @@ export default class SignUp extends Component {
                 <Button
                   title="close "
                   color="black"
+                  alignItems="center"
                   onPress={() => {
                     this.setModalVisible(!this.state.modalVisible);
                   }}

@@ -12,8 +12,8 @@ import ChatScreen from "../screens/chat/Chat";
 import ChatListScreen from "../screens/chatlist/ChatList";
 import RenewProfileScreen from "../screens/bottomNavi/RenewProfile";
 import TopBarRightIcon from "../components/bottomNavi/topBarRightIcons";
-import { Icon } from "react-native-elements";
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import SignInScreen from "../screens/signin/SignIn";
 
 //District 스텍
 const DistrictStack = createStackNavigator({
@@ -77,10 +77,10 @@ const StoreStack = createStackNavigator({
     screen: TopBarRightIcon
   },
   ChatList: {
-    screen: ChatListScreen,
-    navigationOptions: {
-      title: "채팅"
-    }
+    screen: ChatListScreen
+    // navigationOptions: {
+    //   title: "채팅"
+    // }
   },
   Chat: {
     screen: ChatScreen
@@ -156,10 +156,10 @@ class TabMainNavigator extends Component {
 
   render() {
     console.log(
-      this.props.navigation.state.params,
+      this.props.navigation,
       " 지금 이값으로 database에서 다른 팀들에 대한 프로필을 불러온다. TapNavigations.js line:144--------------------------------------------------"
     );
-    return <AppTabContainer data={this.props.navigation.state.params} />; // AppTabContainet 컴포넌트를 리턴한다.
+    return <AppTabContainer />; // AppTabContainet 컴포넌트를 리턴한다.
   }
 }
 
