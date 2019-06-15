@@ -64,10 +64,10 @@ export default class SetStore extends Component {
     });
   };
 
-  _goDistrict = () => {
+  _goDistrict = async () => {
     const { data } = this.state;
-    console.log(this.state.data, "data setStore!!!!! 69 Lines");
-    this.props.navigation.navigate("SetTeamPicture1", { data });
+
+    await this.props.navigation.navigate("SetTeamPicture1", { data });
   };
 
   _submit = () => {
@@ -97,6 +97,27 @@ export default class SetStore extends Component {
 
         //userToken에 들어가는 순서 sex, count, age, comment, teamname, locationId, userId
 
+        await AsyncStorage.setItem(
+          "userToken",
+          "aasertetdbc" +
+            "-" +
+            teamInfo.sex +
+            "-" +
+            teamInfo.count +
+            "-" +
+            teamInfo.age +
+            "-" +
+            teamInfo.comment +
+            "-" +
+            teamInfo.teamname +
+            "-" +
+            teamInfo.userId +
+            "-" +
+            teamInfo.id
+        );
+
+        let hi = await AsyncStorage.getItem("userToken");
+        console.log(hi, "hi");
         //사진 제출하면 District로 보내고 data안에 있는 teamuserId를 이용하여 관련 데이터를 가져온다.
         await this._goDistrict();
       } else {

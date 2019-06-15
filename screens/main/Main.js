@@ -37,9 +37,8 @@ export default class Main extends Component {
   // 데이터 베이스에서 해당정보를 가지고 와야 홍대의 사람들을 보여줄지, 이태원의 사람들을 보여줄지 그리고 또 홍대의 그린라이트를 보여줄지, 한신포차를 보여줄지 알 수 있다.
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem("userToken");
-
     const userTokenArr = userToken.split("-");
-
+    "aasertetdbc" + sex + count + age + comment + teamname + locationId + userId;
     //유저의 아이디
     const userId = userTokenArr[userTokenArr.length - 1];
     const locationId = userTokenArr[userTokenArr.length - 2];
