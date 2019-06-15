@@ -1,8 +1,9 @@
 import React from "react";
-import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import ChatListBox from "../../components/chatlist/ChatListBox";
 import fakeListBox from "../../components/chatlist/ChatListFake";
+// import { url } from "../../url";
 
 export default class ChatList extends React.Component {
   constructor(props) {
@@ -19,6 +20,21 @@ export default class ChatList extends React.Component {
       teamName
     });
   };
+
+  componentDidMount() {
+    // const idxBox = this.props.navigation.state.params;
+    //idxBox =  {id : '', userId: ''}
+    // const idxData = {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     info: JSON.stringify(idxBox)
+    //   }
+    // };
+    // fetch(url, idxData)
+    //   .then(res => res.json())
+    //   .then(data => console.log(json));
+  }
 
   render() {
     return (
