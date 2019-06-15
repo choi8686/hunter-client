@@ -162,7 +162,6 @@ export default class SignUp extends Component {
     if (this.state.nickname === "" || this.state.password === "" || this.state.password_CHECK === "") {
       flag = false;
     }
-
     return flag;
   };
 
@@ -178,6 +177,7 @@ export default class SignUp extends Component {
             <Button
               title="Submit"
               color="white"
+              buttonStyle={{width:"100%"}}
               onPress={this._submit}
               icon={{ type: "font-awesome", name: "check-circle", color: "pink" }}
             />
@@ -185,6 +185,7 @@ export default class SignUp extends Component {
               icon={{ type: "font-awesome", name: "check-circle", color: "pink" }}
               title=" SignIn "
               color="white"
+              buttonStyle={{width:"100%"}}
               onPress={() => {
                 this.props.navigation.navigate("SignIn");
               }}

@@ -12,30 +12,18 @@ import SetTeamInfoScreen2 from "../screens/setPrivateInfo/setTeamInfo2";
 import SetTeamPictureScreen1 from "../screens/setPrivateInfo/setTeamPicture1";
 import SetTeamPictureScreen2 from "../screens/setPrivateInfo/setTeamPicture2";
 import SetTeamPictureScreen3 from "../screens/setPrivateInfo/setTeamPicture3";
-import TestScreen from "../screens/setPrivateInfo/blurTest";
+// import TestScreen from "../screens/setPrivateInfo/blurTest";
 import GetPictureScreen from "../components/getPicture/getPicture";
-
-import ChatScreen from "../screens/chat/Chat";
-import ChatListScreen from "../screens/chatlist/ChatList";
 import TabNavigator from "./TapNavigations";
 
 const RootStack = createStackNavigator(
   {
-    // ChatList: {
-    //   screen: ChatListScreen,
-    //   navigationOptions: {
-    //     title: "채팅"
-    //   }
-    // },
-    // Chat: {
-    //   screen: ChatScreen
-    // },
-    // Main: {
-    //   screen: MainScreen,
-    //   navigationOptions: {
-    //     header: null
-    //   }
-    // },
+    Main: {
+      screen: MainScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
     Home: {
       screen: TabNavigator,
       navigationOptions: {
