@@ -36,6 +36,48 @@ export default class SettingScreen extends React.Component {
   
   render() {
     return (
+<<<<<<< HEAD
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <View style={styles.avatarContainer}>
+          <Image
+            source={{
+              uri: "http://cphoto.asiae.co.kr/listimglink/1/2013012413095706640_1.jpg"
+            }}
+            style={styles.avatar}
+          />
+        </View>
+        <View style={styles.buttonGroup}>
+          <Button
+            title="프로필수정"
+            onPress={() => {
+              this.props.navigation.navigate("RenewProfile");
+            }}
+            style={styles.button}
+          />
+          <Button title="이용약관" onPress={() => this.props.navigation.navigate("Conditions")} style={styles.button} />
+          <Button
+            title="로그아웃"
+            onPress={() => {
+              this._handleButton(3);
+            }}
+            containerStyle={{ color: "#7FC18A" }}
+            style={styles.button}
+          />
+          <Button
+            title="계정삭제"
+            onPress={() => {
+              this._handleButton(4);
+            }}
+            style={styles.button}
+          />
+=======
       <View style={{width: "100%", height: '100%', alignItems:'center', padding:'5%'}}>
         
         <Avatar
@@ -88,6 +130,7 @@ export default class SettingScreen extends React.Component {
               buttonStyle={{width:"100%"}}
             />
           </View>
+>>>>>>> bfb8bd144f092fe28bf7b1e402c1ee1ff983750f
         </View>
       </View>
     );

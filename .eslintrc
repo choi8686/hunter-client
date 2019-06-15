@@ -1,44 +1,4 @@
 {
-<<<<<<< HEAD
-    "parser": "babel-eslint",
-    "extends": [
-        "eslint:recommended",
-        "plugin:prettier/recommended",
-        "plugin:react/recommended",
-        "prettier",
-        "prettier/react"
-    ],
-    "plugins": ["prettier", "react"],
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true,
-            "experimentalObjectRestSpread": true
-        }
-    },
-    "env": {
-        "es6": true,
-        "browser": true,
-        "node": true
-    },
-    "rules": {
-        "no-console": "off",
-        "react/prop-types": ["error", {"ignore": ["navigation"]}],
-        "prettier/prettier": [
-            "error",
-            {
-                "singleQoute": true,
-                "printWidth": 120
-            },
-            {
-                "usePrettierrc": false
-            }
-        ],
-        "semi": 2,
-        "no-undef": "warn"
-    }
-=======
   "parser": "babel-eslint",
   "extends": [
     "eslint:recommended",
@@ -77,5 +37,4 @@
     "semi": 2,
     "no-undef": "warn"
   }
->>>>>>> b9692afb7ed2f7a5fe873fb040353887a45a7748
 }
