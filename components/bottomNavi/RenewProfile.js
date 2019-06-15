@@ -1,13 +1,8 @@
 import React from "react";
-import { ScrollView, View, Text, Dimensions, StyleSheet, Image, TouchableOpacity } from "react-native";
-import {Badge, withBadge, Icon, Avatar} from "react-native-elements";
-import IconBadge from 'react-native-icon-badge';
+import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import IconBadge from "react-native-icon-badge";
 
 import { url } from "../../url";
-
-const BadgedIcon = withBadge(' + ')(Icon)
-
-const { width } = Dimensions.get("window");
 
 export default class RenewProfile extends React.Component {
   //개인 프로필창을 클릭 시, 제일 먼저 실행되는 함수! 데이터베이스에서 개인프로필에 대한 정보를 가져온다.
@@ -28,7 +23,7 @@ export default class RenewProfile extends React.Component {
   _bringProfileData = () => {
     fetch(`${url}/users/`, {
       method: "GET",
-      headers: {                                     
+      headers: {
         "Content-Type": "application/json"
       }
     });
@@ -61,86 +56,70 @@ export default class RenewProfile extends React.Component {
     });
   };
 
-  
   componentDidMount = () => {
     //componentDidMount를 통해 개인 프로필데이터를 가져오는 함수를 실행
     // this._bringProfileData();
   };
   render() {
-    console.log()
+    console.log();
     return (
-        <View style={{alignItems:'center'}}>
-          
-          <View style={{flexDirection: 'row',alignItems: 'center',justifyContent: 'center', marginTop:'10%'}}>
-          
+      <View style={{ alignItems: "center" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginTop: "10%" }}>
           {/* 프로필 사진을 가져와서 띄워준다.  */}
           {/* 사진옆에 수정버튼을 누르면 사진의 수정이 가능하다. => 수정하게 될 경우, S3로 쏴주고 그 사진을 다시 불러온다.   */}
           <TouchableOpacity onPress={this._changeProfilePicture}>
             <IconBadge
               MainElement={
                 <Image
-                source={{ uri: "http://img1.daumcdn.net/thumb/C246x358/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fmovie%2F91340b7a23541ea5697f7d765948446e75e40f7b" }}
-                style={styles.avatar}
-              />
+                  source={{
+                    uri:
+                      "http://img1.daumcdn.net/thumb/C246x358/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fmovie%2F91340b7a23541ea5697f7d765948446e75e40f7b"
+                  }}
+                  style={styles.avatar}
+                />
               }
-
-
               BadgeElement={
                 <View>
-                  <Text  style={{color:'ghostwhite', fontSize:15}}>{' + '}</Text>
+                  <Text style={{ color: "ghostwhite", fontSize: 15 }}>{" + "}</Text>
                 </View>
               }
-              IconBadgeStyle={
-                {width:30,
-                height:30,
-                backgroundColor: 'rgba(0, 0, 0, 0.3)' }
-              }
-              Hidden={this.state.BadgeCount==0}
-              />
-              </TouchableOpacity>
-          </View>
-        
-        <ScrollView>
-        <Text style={{fontSize:80, textAlign:'center'}}>Who </Text>
-        <Text style={{fontSize:65, textAlign:'center'}}>are We ?    </Text>
-          
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Text style={{fontSize:96}}>Scrolling down</Text>
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Text style={{fontSize:96}}>What's the best</Text>
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Text style={{fontSize:96}}>Framework around?</Text>
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Image source={{uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64}} />
-          <Text style={{fontSize:80}}>React Native</Text>
-        </ScrollView>
-    </View>
+              IconBadgeStyle={{ width: 30, height: 30, backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+              Hidden={this.state.BadgeCount == 0}
+            />
+          </TouchableOpacity>
+        </View>
 
+        <ScrollView>
+          <Text style={{ fontSize: 80, textAlign: "center" }}>Who </Text>
+          <Text style={{ fontSize: 65, textAlign: "center" }}>are We ? </Text>
+
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Text style={{ fontSize: 96 }}>Scrolling down</Text>
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Text style={{ fontSize: 96 }}>Framework around?</Text>
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Image source={{ uri: "https://facebook.github.io/react-native/img/favicon.png", width: 64, height: 64 }} />
+          <Text style={{ fontSize: 80 }}>React Native</Text>
+        </ScrollView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   avatarContainer: {
-    marginTop: "5%",
-    // flexDirection:'column'
-    
-    // alignItems:'center'
+    marginTop: "5%"
   },
   container: {
     flex: 1,

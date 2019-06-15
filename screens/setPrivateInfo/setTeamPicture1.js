@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { Fragment, Component } from "react";
+=======
+import React, { Component } from "react";
+>>>>>>> bd55df0effc1f9e72a454c0dcb4f1b6a52ab194e
 import { LinearGradient, ImagePicker, Permissions } from "expo";
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Icon } from "react-native-elements";
@@ -34,7 +38,11 @@ const Dot = props => {
 
 export default class TeamPicture1 extends Component {
   state = {
+<<<<<<< HEAD
     image: this.props.navigation.state.params.data.image || {
+=======
+    image: {
+>>>>>>> bd55df0effc1f9e72a454c0dcb4f1b6a52ab194e
       0: null,
       1: null,
       2: null
@@ -45,7 +53,12 @@ export default class TeamPicture1 extends Component {
     averageAge: this.props.navigation.state.params.data.age,
     comment: this.props.navigation.state.params.data.comment,
     userId: this.props.navigation.state.params.data.userId,
+<<<<<<< HEAD
     locationId: this.props.navigation.state.params.data.locationId
+=======
+    locationId: this.props.navigation.state.params.data.locationId,
+    teamId: this.props.navigation.state.params.data.teamId
+>>>>>>> bd55df0effc1f9e72a454c0dcb4f1b6a52ab194e
 
     // image: { 0: null, 1: null, 2: null },
     // sex: 1,
@@ -74,7 +87,11 @@ export default class TeamPicture1 extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
+<<<<<<< HEAD
         userId: this.props.navigation.state.params.data.userId
+=======
+        teamId: this.props.navigation.state.params.data.teamId
+>>>>>>> bd55df0effc1f9e72a454c0dcb4f1b6a52ab194e
         // userId: 5
       }
     };

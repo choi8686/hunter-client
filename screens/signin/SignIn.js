@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import React, { Fragment, Component } from "react";
 import { StyleSheet, Text, AsyncStorage, View, Modal, KeyboardAvoidingView } from "react-native";
 import { Input, Button, Icon } from "react-native-elements";
+=======
+import React, { Component } from "react";
+import { StyleSheet, Text, View, Modal, KeyboardAvoidingView } from "react-native";
+import { Input, Button } from "react-native-elements";
+>>>>>>> bd55df0effc1f9e72a454c0dcb4f1b6a52ab194e
 import { LinearGradient, Constants } from "expo";
 import { url } from "../../url";
 var flag;
@@ -110,7 +116,7 @@ export default class SignUp extends Component {
               }
             }).then(async res => {
               if (res.ok) {
-                console.log(JSON.parse(res._bodyInit), "ssibalsagie");
+                console.log(JSON.parse(res._bodyInit), "teamInfo SignIn.js Lines:113");
                 if (JSON.parse(res._bodyInit)) {
                   await this.setState({
                     teamInfo: JSON.parse(res._bodyInit).teams[0]
@@ -222,6 +228,7 @@ export default class SignUp extends Component {
               title=" SignIn"
               color="white"
               buttonStyle={{ width: "100%" }}
+              alignText="right"
               // style={styles.nextButton}
               icon={{
                 type: "font-awesome",
@@ -236,7 +243,11 @@ export default class SignUp extends Component {
                 name: "check-circle",
                 color: "pink"
               }}
+<<<<<<< HEAD
               textAlign="center"
+=======
+              alignText="center"
+>>>>>>> bd55df0effc1f9e72a454c0dcb4f1b6a52ab194e
               title=" SignUp"
               color="white"
               buttonStyle={{ width: "100%" }}
