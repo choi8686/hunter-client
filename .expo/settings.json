@@ -3,5 +3,9 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
+<<<<<<< HEAD
+  "urlRandomness": "en-26i"
+=======
   "urlRandomness": "iz-fb9"
+>>>>>>> bfb8bd144f092fe28bf7b1e402c1ee1ff983750f
 }
