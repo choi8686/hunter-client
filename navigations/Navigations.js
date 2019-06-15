@@ -17,6 +17,12 @@ import TabNavigator from "./TapNavigations";
 
 const RootStack = createStackNavigator(
   {
+    SetTeamPicture1: {
+      screen: SetTeamPictureScreen1,
+      navigationOptions: {
+        header: null
+      }
+    },
     SignUp: {
       screen: SignUpScreen,
       navigationOptions: {
