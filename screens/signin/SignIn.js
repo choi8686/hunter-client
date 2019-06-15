@@ -84,12 +84,7 @@ export default class SignUp extends Component {
         })
       }).then(async res => {
         if (res.ok) {
-<<<<<<< HEAD
-          console.log(res, "fucking res");
-          var JWT = JSON.parse(res._bodyInit).token;
-=======
           JWT = JSON.parse(res._bodyInit).token;
->>>>>>> 2fe7ef719e41bce5c454d5e7daa22a8dd8e1dd73
           console.log("--------login success---------", res.ok);
           flag = true;
         } else {
@@ -128,6 +123,7 @@ export default class SignUp extends Component {
                 const teamInfo = JSON.parse(res._bodyInit).teams[0];
                 if (JSON.parse(res._bodyInit)) {
                   await this.setState({
+                    userId: teamInfo.userId,
                     teamInfo: teamInfo
                   });
 
@@ -152,7 +148,7 @@ export default class SignUp extends Component {
                       teamInfo.id
                   );
                 }
-                this._signInAsync();
+                await this._signInAsync();
               }
             });
           }
@@ -166,6 +162,10 @@ export default class SignUp extends Component {
   //로그인 성공시, userToken 저장하고 ChooseSex로 보내주는 함수
   _signInAsync = async () => {
     const { userId, teamInfo } = this.state;
+    console.log("hi");
+    console.log(teamInfo, "teamInfo!!!!!!");
+    console.log(userId, "userId!!!!!!!!");
+
     teamInfo
       ? this.props.navigation.navigate("Home", { userId, teamInfo })
       : this.props.navigation.navigate("ChooseSex", { userId });

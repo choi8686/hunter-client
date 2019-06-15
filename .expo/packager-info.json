@@ -1,19 +1,9 @@
 {
-<<<<<<< HEAD
-  "devToolsPort": 19003,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
-=======
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 19695,
-  "expoServerNgrokUrl": "https://en-26i.anonymous.hunter-client-new.exp.direct",
-  "packagerNgrokUrl": "https://packager.en-26i.anonymous.hunter-client-new.exp.direct",
-  "ngrokPid": 19717
->>>>>>> 2fe7ef719e41bce5c454d5e7daa22a8dd8e1dd73
+  "packagerPid": 18913,
+  "expoServerNgrokUrl": "https://zd-s49.anonymous.hunter-client-new.exp.direct",
+  "packagerNgrokUrl": "https://packager.zd-s49.anonymous.hunter-client-new.exp.direct",
+  "ngrokPid": 19042
 }
