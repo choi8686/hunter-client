@@ -4,8 +4,10 @@ import DistrictScreen from "../screens/bottomNavi/DistrictScreen";
 import StoreScreen from "../screens/bottomNavi/StoreScreen";
 import SettingScreen from "../screens/bottomNavi/SettingScreen";
 import ConditionsScreen from "../components/bottomNavi/Conditions";
+import ChatScreen from "../screens/chat/Chat";
+import ChatListScreen from "../screens/chatlist/ChatList";
 import RenewProfileScreen from "../components/bottomNavi/RenewProfile";
-
+import TopBarRightIcon from "../components/bottomNavi/topBarRightIcons";
 import { Icon } from "react-native-elements";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 
@@ -13,6 +15,18 @@ import { FontAwesome, AntDesign } from "@expo/vector-icons";
 const DistrictStack = createStackNavigator({
   DistrictHome: {
     screen: DistrictScreen
+  },
+  TopBarRightIcon: {
+    screen: TopBarRightIcon
+  },
+  ChatList: {
+    screen: ChatListScreen,
+    navigationOptions: {
+      title: "채팅"
+    }
+  },
+  Chat: {
+    screen: ChatScreen
   }
 });
 
@@ -20,6 +34,9 @@ const DistrictStack = createStackNavigator({
 const SettingStack = createStackNavigator({
   SettingHome: {
     screen: SettingScreen
+  },
+  TopBarRightIcon: {
+    screen: TopBarRightIcon
   },
   RenewProfile: {
     screen: RenewProfileScreen,
@@ -32,6 +49,15 @@ const SettingStack = createStackNavigator({
     navigationOptions: {
       title: "이용약관"
     }
+  },
+  ChatList: {
+    screen: ChatListScreen,
+    navigationOptions: {
+      title: "채팅"
+    }
+  },
+  Chat: {
+    screen: ChatScreen
   }
 });
 
@@ -42,6 +68,18 @@ const StoreStack = createStackNavigator({
     navigationOptions: {
       title: "저기어때"
     }
+  },
+  TopBarRightIcon: {
+    screen: TopBarRightIcon
+  },
+  ChatList: {
+    screen: ChatListScreen,
+    navigationOptions: {
+      title: "채팅"
+    }
+  },
+  Chat: {
+    screen: ChatScreen
   }
 });
 
@@ -107,11 +145,16 @@ class TabMainNavigator extends Component {
   };
 
   render() {
-    console.log(this.props.navigation.state.params, " 지금 이값으로 database에서 다른 팀들에 대한 프로필을 불러온다. TapNavigations.js line:144--------------------------------------------------");
+    console.log(
+      this.props.navigation.state.params,
+      " 지금 이값으로 database에서 다른 팀들에 대한 프로필을 불러온다. TapNavigations.js line:144--------------------------------------------------"
+    );
     return <AppTabContainer />; // AppTabContainet 컴포넌트를 리턴한다.
   }
 }
 
-const HomeStack = createStackNavigator({ TabMainNavigator });
+const HomeStack = createStackNavigator({
+  TabMainNavigator
+});
 
 export default HomeStack;
