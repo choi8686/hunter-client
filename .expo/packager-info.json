@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://zd-s49.anonymous.hunter-client-new.exp.direct",
+  "packagerNgrokUrl": "https://packager.zd-s49.anonymous.hunter-client-new.exp.direct",
+  "ngrokPid": 11790
 }
