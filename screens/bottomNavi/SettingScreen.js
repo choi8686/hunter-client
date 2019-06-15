@@ -17,7 +17,7 @@ export default class SettingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "설정",
-      headerRight: <TopBarRightIcons />
+      headerRight: <TopBarRightIcons navigation={navigation} />
     };
   };
   _handleButton = num => {

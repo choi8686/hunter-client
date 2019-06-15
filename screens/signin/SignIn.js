@@ -1,5 +1,12 @@
 import React, { Fragment, Component } from "react";
-import { StyleSheet, Text, AsyncStorage, View, Modal, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  AsyncStorage,
+  View,
+  Modal,
+  KeyboardAvoidingView
+} from "react-native";
 import { Input, Button, Icon } from "react-native-elements";
 import { LinearGradient, Constants } from "expo";
 import { url } from "../../url";
@@ -210,10 +217,17 @@ export default class SignUp extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
+        <LinearGradient
+          colors={["coral", "#f44283", "#f441bb", "#8341f4"]}
+          style={styles.backGround}
+        >
           <SignInTitle style={styles.title} />
 
-          <KeyboardAvoidingView style={styles.KeyboardAvoidingViewStyle} behavior="padding" enabled>
+          <KeyboardAvoidingView
+            style={styles.KeyboardAvoidingViewStyle}
+            behavior="padding"
+            enabled
+          >
             <InputBars changeErr={this._changeErr} errorMsg={this._errorMsg} />
           </KeyboardAvoidingView>
 
