@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import { LinearGradient, ImagePicker, Permissions } from "expo";
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  AsyncStorage
+} from "react-native";
 import { Icon } from "react-native-elements";
 import { url } from "../../url";
 
@@ -16,7 +24,10 @@ class Title extends Component {
 
 const NextButton = props => {
   return (
-    <TouchableOpacity style={styles.nextButton} onPress={props.handleImagePicked}>
+    <TouchableOpacity
+      style={styles.nextButton}
+      onPress={props.handleImagePicked}
+    >
       <Text style={styles.nextButtonText}>Next</Text>
     </TouchableOpacity>
   );
@@ -83,7 +94,9 @@ export default class TeamPicture1 extends Component {
   };
 
   _pickImage = async num => {
-    const { status: cameraRollPerm } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    const { status: cameraRollPerm } = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
 
     if (cameraRollPerm === "granted") {
       let pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -112,7 +125,16 @@ export default class TeamPicture1 extends Component {
       console.log({ e });
       alert(" 또안되네시발 ");
     } finally {
-      const { averageAge, comment, count, image, locationId, sex, teamname, userId } = this.state;
+      const {
+        averageAge,
+        comment,
+        count,
+        image,
+        locationId,
+        sex,
+        teamname,
+        userId
+      } = this.state;
 
       this.props.navigation.navigate("Home", {
         sex,
@@ -128,17 +150,34 @@ export default class TeamPicture1 extends Component {
     }
   };
 
-  componentDidMount = () => {};
+  componentDidMount = async () => {
+    let token = await AsyncStorage.getItem("userToken");
+    console.log(token, "tokenhihihihihihihih133lines");
+  };
   render() {
-    console.log(this.props.navigation.state.params.data, "hihihih setTeamPicture1.js 133lines");
-    console.log(this.state, "this.state hi hihihihi setTeamPicture1.js 135lines");
+    console.log(
+      this.props.navigation.state.params.data,
+      "hihihih setTeamPicture1.js 133lines"
+    );
 
-    const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
+    const {
+      sex,
+      teamname,
+      count,
+      averageAge,
+      comment,
+      image,
+      userId,
+      locationId
+    } = this.state;
     const firstImage = image[0];
     const secondImage = image[1];
     const thirdImage = image[2];
     return (
-      <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
+      <LinearGradient
+        colors={["coral", "#f44283", "#f441bb", "#8341f4"]}
+        style={styles.backGround}
+      >
         <View style={styles.container}>
           <View style={styles.dotContainer}>
             <Dot active={true} />
@@ -186,7 +225,10 @@ export default class TeamPicture1 extends Component {
               <Title name="가장 섹시한 사진을 넣어주세요" />
             </View>
             {firstImage === null ? (
-              <TouchableOpacity onPress={() => this._pickImage(0)} lineHeight="300">
+              <TouchableOpacity
+                onPress={() => this._pickImage(0)}
+                lineHeight="300"
+              >
                 {/* <Text style={styles.text}> */}
                 <Icon name="image" color="#00aced" size={300} />
 
@@ -209,7 +251,10 @@ export default class TeamPicture1 extends Component {
               <Title name="가장 귀여운 사진을 넣어주세요" />
             </View>
             {secondImage === null ? (
-              <TouchableOpacity onPress={() => this._pickImage(1)} lineHeight="300">
+              <TouchableOpacity
+                onPress={() => this._pickImage(1)}
+                lineHeight="300"
+              >
                 {/* <Text style={styles.text}> */}
                 <Icon name="image" color="#00aced" size={300} />
 
@@ -232,7 +277,10 @@ export default class TeamPicture1 extends Component {
               <Title name="가장 우리 팀다운 사진을 넣어주세요" />
             </View>
             {thirdImage === null ? (
-              <TouchableOpacity onPress={() => this._pickImage(2)} lineHeight="300">
+              <TouchableOpacity
+                onPress={() => this._pickImage(2)}
+                lineHeight="300"
+              >
                 {/* <Text style={styles.text}> */}
                 <Icon name="image" color="#00aced" size={300} />
 
