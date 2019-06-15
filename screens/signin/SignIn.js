@@ -110,7 +110,7 @@ export default class SignUp extends Component {
               }
             }).then(async res => {
               if (res.ok) {
-                console.log(JSON.parse(res._bodyInit), "ssibalsagie");
+                console.log(JSON.parse(res._bodyInit), "teamInfo SignIn.js Lines:113");
                 if (JSON.parse(res._bodyInit)) {
                   await this.setState({
                     teamInfo: JSON.parse(res._bodyInit).teams[0]
@@ -222,6 +222,7 @@ export default class SignUp extends Component {
               title=" SignIn"
               color="white"
               buttonStyle={{ width: "100%" }}
+              alignText="right"
               // style={styles.nextButton}
               icon={{
                 type: "font-awesome",
@@ -236,6 +237,7 @@ export default class SignUp extends Component {
                 name: "check-circle",
                 color: "pink"
               }}
+              alignText="center"
               title=" SignUp"
               color="white"
               buttonStyle={{ width: "100%" }}
