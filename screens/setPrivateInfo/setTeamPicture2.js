@@ -40,7 +40,7 @@ export default class TeamPicture2 extends Component {
     averageAge: this.props.navigation.state.params.averageAge,
     comment: this.props.navigation.state.params.comment,
     userId: this.props.navigation.state.params.userId,
-    locationId: this.props.navigation.state.params.locationId,
+    locationId: this.props.navigation.state.params.locationId
   };
 
   _uploadImageAsync = async uri => {
@@ -98,14 +98,23 @@ export default class TeamPicture2 extends Component {
       alert(" 또안되네시발 ");
     } finally {
       const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
-      this.props.navigation.navigate("SetTeamPicture3", { sex, teamname, count, averageAge, comment, image, userId, locationId });
+      this.props.navigation.navigate("SetTeamPicture3", {
+        sex,
+        teamname,
+        count,
+        averageAge,
+        comment,
+        image,
+        userId,
+        locationId
+      });
       console.log("upload!");
     }
   };
 
   componentDidMount = () => {};
   render() {
-    console.log(this.props.navigation.state.params, 'props... setTeamPicture2.js 107lines')
+    console.log(this.props.navigation.state.params, "props... setTeamPicture2.js 107lines");
     const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
     secondImage = image[1];
     return (

@@ -102,10 +102,10 @@ export default class TeamPicture1 extends Component {
 
     try {
       if (!pickerResult.cancelled) {
-        uploadResponse = await this._uploadImageAsync(this.state.image[0]);
-        uploadResult = await uploadResponse.json();
+        await this._uploadImageAsync(this.state.image[0]);
+        await this._uploadImageAsync(this.state.image[1]);
+        await this._uploadImageAsync(this.state.image[2]);
       }
-      console.log(uploadResult);
     } catch (e) {
       console.log({ uploadResponse });
       console.log({ uploadResult });
@@ -131,7 +131,6 @@ export default class TeamPicture1 extends Component {
   componentDidMount = () => {};
   render() {
     console.log(this.props.navigation.state.params.data, "hihihih setTeamPicture1.js 133lines");
-
     console.log(this.state, "this.state hi hihihihi setTeamPicture1.js 135lines");
 
     const { sex, teamname, count, averageAge, comment, image, userId, locationId } = this.state;
