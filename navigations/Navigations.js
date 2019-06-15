@@ -12,12 +12,17 @@ import SetTeamInfoScreen2 from "../screens/setPrivateInfo/setTeamInfo2";
 import SetTeamPictureScreen1 from "../screens/setPrivateInfo/setTeamPicture1";
 import SetTeamPictureScreen2 from "../screens/setPrivateInfo/setTeamPicture2";
 import SetTeamPictureScreen3 from "../screens/setPrivateInfo/setTeamPicture3";
-// import TestScreen from "../screens/setPrivateInfo/blurTest";
 import GetPictureScreen from "../components/getPicture/getPicture";
 import TabNavigator from "./TapNavigations";
 
 const RootStack = createStackNavigator(
   {
+    SignUp: {
+      screen: SignUpScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
     Main: {
       screen: MainScreen,
       navigationOptions: {

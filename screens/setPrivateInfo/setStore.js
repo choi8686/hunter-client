@@ -25,7 +25,7 @@ export default class SetStore extends Component {
     presentStore: null,
     presentStoreNum: null,
     //여기부터가 팀생성을 위해 서버에 보내는 데이터
-    image: this.props.navigation.state.params.image,
+    image: null,
     sex: this.props.navigation.state.params.sex,
     teamname: this.props.navigation.state.params.teamname,
     count: this.props.navigation.state.params.count,
@@ -36,14 +36,12 @@ export default class SetStore extends Component {
     userId: this.props.navigation.state.params.userId,
 
     data: {
-      image: this.props.navigation.state.params.image,
       sex: this.props.navigation.state.params.sex,
-      teamname: this.props.navigation.state.params.teamname,
       count: this.props.navigation.state.params.count,
-      averageAge: this.props.navigation.state.params.averageAge,
+      age: this.props.navigation.state.params.averageAge,
       comment: this.props.navigation.state.params.comment,
-      presentDistrict: this.props.navigation.state.params.presentDistrict,
-      presentDistrictNum: this.props.navigation.state.params.presentDistrictNum,
+      teamname: this.props.navigation.state.params.teamname,
+      locationId: this.props.navigation.state.params.presentDistrictNum,
       userId: this.props.navigation.state.params.userId
     }
   };
@@ -54,7 +52,6 @@ export default class SetStore extends Component {
       presentStore: this.state.buttons[selectedIndex],
       presentStoreNum: selectedIndex + 1,
       data: {
-        image: this.props.navigation.state.params.image,
         sex: this.state.sex,
         count: this.state.count,
         age: this.state.averageAge,
@@ -68,7 +65,8 @@ export default class SetStore extends Component {
   };
 
   _goDistrict = () => {
-    const data = this.state.data;
+    const { data } = this.state;
+    console.log(this.state.data, "data setStore!!!!! 69 Lines");
     this.props.navigation.navigate("SetTeamPicture1", { data });
   };
 
@@ -81,28 +79,26 @@ export default class SetStore extends Component {
 
       body: JSON.stringify(this.state.data)
     }).then(async res => {
-      console.log(res, "resBody setStore 85 line");
+      // console.log(res._v, "resBody setStore 85 line");
       if (res.ok) {
         console.log("--------Set Information success---------", res.ok);
 
         flag = true;
         //팀정보를 모두 AsyncStorage에 토큰에 저장한다.
         // 그래야 어플껐다가 재접속해도 데이터베이스에 locationId를 보내주고 그 값을 비교하여 District로 바로 접근할 수 있다.
-        // console.log( JSON.parse(res._bodyInit), ' JSON.parse setStore line:79 ')
-        const Obj = JSON.parse(res._bodyInit);
-        console.log(Obj, "setStore Obj 94lines");
-        let tokenData = "aasertetdbc";
 
-        for (let keys in Obj) {
-          tokenData += "-" + Obj[keys];
-        }
+        const teamInfo = JSON.parse(res._bodyInit);
+        console.log(teamInfo, "teamInfo setStore.js 91 lines");
+        await this.setState({
+          data: {
+            teamId: teamInfo.id
+          }
+        });
 
         //userToken에 들어가는 순서 sex, count, age, comment, teamname, locationId, userId
-        AsyncStorage.setItem("userToken", tokenData);
-        let userToken = await AsyncStorage.getItem("userToken");
-        //사진 제출하면 District로 보내고 data안에 있는 teamuserId를 이용하여 관련 데이터를 가져온다.
 
-        this._goDistrict();
+        //사진 제출하면 District로 보내고 data안에 있는 teamuserId를 이용하여 관련 데이터를 가져온다.
+        await this._goDistrict();
       } else {
         console.log("--------Set Information fail---------", res.ok);
         alert("입장에 실패하였습니다.");
