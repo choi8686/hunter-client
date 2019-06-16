@@ -97,6 +97,7 @@ export default class DistrictScreen extends Component {
     console.log("-----------------TeamGet-----------------");
     // 토큰을 항상 문자열 형태로 가져오기 때문에
     // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
+    // 전역에서 loginUser 사용해야하기 때문에 변수타입 선언 안했음
     loginUser = {
       sex: Number(userToken[1]),
       count: Number(userToken[2]),
@@ -307,6 +308,7 @@ export default class DistrictScreen extends Component {
                   uri: `${item.teamimages[this.state.pictrueIndex].imgUrl}`
                 }}
               />
+
               <Animated.View
                 style={{
                   opacity: this.titleOpacity,
