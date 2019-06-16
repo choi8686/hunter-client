@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 18913,
+  "packagerPort": null,
+  "packagerPid": null,
   "expoServerNgrokUrl": "https://zd-s49.anonymous.hunter-client-new.exp.direct",
   "packagerNgrokUrl": "https://packager.zd-s49.anonymous.hunter-client-new.exp.direct",
-  "ngrokPid": 19042
+  "ngrokPid": 23229
 }

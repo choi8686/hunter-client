@@ -10,7 +10,7 @@ export default class ChatList extends React.Component {
     super(props);
 
     this.state = {
-      chatList: fakeListBox
+      chatList: 
     };
   }
 
@@ -33,8 +33,15 @@ export default class ChatList extends React.Component {
 
     fetch(`${url}/messages/${teamId}`, getHeaders)
       .then(res => res.json())
-      .then(data => console.log(data));
-  }
+      .then(data => console.log(data, 1111111111111111111111))
+      .then(data => {
+        // teamName, idx, avatarURL, conversation
+        // let idx = null;
+        // let teamName = null;
+        // let avatarURL = "https://images.unsplash.com/photo-1529903384028-929ae5dccdf1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80"
+        // data.map()
+      })
+    }
 
   render() {
     return (
