@@ -1,8 +1,5 @@
-import { createAppContainer, createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 
-import MainScreen from "../screens/main/Main";
-import SignUpScreen from "../screens/signup/SignUp";
-import SignInScreen from "../screens/signin/SignIn";
 import ChooseDistrictScreen from "../screens/setPrivateInfo/setDistrict";
 import ChooseStoreScreen from "../screens/setPrivateInfo/setStore";
 import ChooseSexScreen from "../screens/setPrivateInfo/setSex";
@@ -13,34 +10,10 @@ import SetTeamPictureScreen1 from "../screens/setPrivateInfo/setTeamPicture1";
 import SetTeamPictureScreen2 from "../screens/setPrivateInfo/setTeamPicture2";
 import SetTeamPictureScreen3 from "../screens/setPrivateInfo/setTeamPicture3";
 import GetPictureScreen from "../components/getPicture/getPicture";
-import TabNavigator from "./TapNavigations";
 
-const RootStack = createStackNavigator(
+//팀생성 스택 - ChooseSex부터 SetTeamPicture3까지 담겨있는 스택
+const createTeamStack = createStackNavigator(
   {
-    Home: {
-      screen: TabNavigator,
-      navigationOptions: {
-        header: null
-      }
-    },
-    Main: {
-      SignIn: {
-        screen: SignInScreen,
-        navigationOptions: {
-          header: null
-        }
-      },
-      screen: MainScreen,
-      navigationOptions: {
-        header: null
-      }
-    },
-    SignUp: {
-      screen: SignUpScreen,
-      navigationOptions: {
-        header: null
-      }
-    },
     ChooseSex: {
       screen: ChooseSexScreen,
       navigationOptions: {
@@ -94,20 +67,8 @@ const RootStack = createStackNavigator(
     }
   },
   {
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: "#28F1A6",
-        elevation: 0,
-        shadowOpacity: 0
-      },
-      headerTintColor: "#333333",
-      headerTitleStyle: {
-        fontWeight: "bold",
-        color: "#ffffff",
-        marginLeft: 25
-      }
-    }
+    initialRouteName: "ChooseSex"
   }
 );
 
-export default createAppContainer(RootStack);
+export default createTeamStack;

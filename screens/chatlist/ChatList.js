@@ -10,7 +10,7 @@ export default class ChatList extends React.Component {
     super(props);
 
     this.state = {
-      chatList: 
+      chatList: fakeListBox
     };
   }
 
@@ -21,27 +21,27 @@ export default class ChatList extends React.Component {
     });
   };
 
-  componentDidMount() {
-    const { teamId, teamName, userId } = this.props.navigation.state.params;
+  // componentDidMount() {
+  //   const { teamId, teamName, userId } = this.props.navigation.state.params;
 
-    const getHeaders = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
+  //   const getHeaders = {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   };
 
-    fetch(`${url}/messages/${teamId}`, getHeaders)
-      .then(res => res.json())
-      .then(data => console.log(data, 1111111111111111111111))
-      .then(data => {
-        // teamName, idx, avatarURL, conversation
-        // let idx = null;
-        // let teamName = null;
-        // let avatarURL = "https://images.unsplash.com/photo-1529903384028-929ae5dccdf1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80"
-        // data.map()
-      })
-    }
+  //   fetch(`${url}/messages/${teamId}`, getHeaders)
+  //     .then(res => res.json())
+  //     .then(data => console.log(data, 1111111111111111111111))
+  //     .then(data => {
+  // teamName, idx, avatarURL, conversation
+  // let idx = null;
+  // let teamName = null;
+  // let avatarURL = "https://images.unsplash.com/photo-1529903384028-929ae5dccdf1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80"
+  // data.map()
+  // });
+  // }
 
   render() {
     return (
