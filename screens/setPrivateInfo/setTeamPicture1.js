@@ -45,33 +45,33 @@ const Dot = props => {
 
 export default class TeamPicture1 extends Component {
   state = {
-    // image: {
-    //   0: null,
-    //   1: null,
-    //   2: null
-    // },
-    // sex: this.props.navigation.state.params.data.sex,
-    // teamname: this.props.navigation.state.params.data.teamname,
-    // count: this.props.navigation.state.params.data.count,
-    // averageAge: this.props.navigation.state.params.data.age,
-    // comment: this.props.navigation.state.params.data.comment,
-    // userId: this.props.navigation.state.params.data.userId,
-    // locationId: this.props.navigation.state.params.data.locationId,
-    // teamId: this.props.navigation.state.params.data.teamId
-
     image: {
       0: null,
       1: null,
       2: null
     },
-    sex: 1,
-    teamname: "yyy",
-    count: 4,
-    averageAge: 21,
-    comment: "qqq",
-    userId: 1,
-    locationId: 1,
-    teamId: 1
+    sex: this.props.navigation.state.params.data.sex,
+    teamname: this.props.navigation.state.params.data.teamname,
+    count: this.props.navigation.state.params.data.count,
+    averageAge: this.props.navigation.state.params.data.age,
+    comment: this.props.navigation.state.params.data.comment,
+    userId: this.props.navigation.state.params.data.userId,
+    locationId: this.props.navigation.state.params.data.locationId,
+    teamId: this.props.navigation.state.params.data.teamId
+
+    // image: {
+    //   0: null,
+    //   1: null,
+    //   2: null
+    // },
+    // sex: 1,
+    // teamname: "yyy",
+    // count: 4,
+    // averageAge: 21,
+    // comment: "qqq",
+    // userId: 1,
+    // locationId: 1,
+    // teamId: 1
   };
 
   _uploadImageAsync = async uri => {
@@ -92,8 +92,8 @@ export default class TeamPicture1 extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
-        // teamId: this.props.navigation.state.params.data.teamId
-        teamId: 1
+        teamId: this.props.navigation.state.params.data.teamId
+        // teamId: 1
       }
     };
     return await fetch(apiUrl, options);

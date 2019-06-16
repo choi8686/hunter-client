@@ -4,15 +4,11 @@ import {
   Text,
   View,
   Image,
-  TouchableWithoutFeedback,
-  Platform,
-  Button,
   Dimensions,
   Animated,
   PanResponder,
   AsyncStorage
 } from "react-native";
-import { Icon } from "react-native-elements";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo";
 import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
@@ -28,8 +24,6 @@ export default class DistrictScreen extends Component {
     this.position = new Animated.ValueXY();
     this.state = {
       teams: [],
-      teamName: "",
-      teamComment: "",
       currentIndex: 0,
       pictrueIndex: 0
     };
@@ -87,48 +81,6 @@ export default class DistrictScreen extends Component {
     };
   };
 
-  _getTeamsOnDistrict = async () => {
-    // const userToken = await AsyncStorage.getItem("userToken");
-    // console.log(userToken);
-    // sex, count, age, comment, teamname, locationId, userId
-
-    // test1 의 토큰을 가져왔다고 가정한다면
-    const userToken = "aasertetdbc-1-4-21-qqq-yyy-1-1-hongdea".split("-");
-    console.log("-----------------TeamGet-----------------");
-    // 토큰을 항상 문자열 형태로 가져오기 때문에
-    // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
-    // 전역에서 loginUser 사용해야하기 때문에 변수타입 선언 안했음
-    loginUser = {
-      sex: Number(userToken[1]),
-      count: Number(userToken[2]),
-      age: Number(userToken[3]),
-      comment: userToken[4],
-      teamname: userToken[5],
-      locationId: Number(userToken[6]),
-      userId: Number(userToken[7]),
-      district: userToken[8]
-    };
-
-    // 토큰에 location.district 의 값을 추가해야 할것 같다.. 혁님 파이팅
-    fetch(`${url}/teams/district/${loginUser.district}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(result => result.json())
-      .then(teamList =>
-        // 접속한 유저와 다른 성별의 팀을 필터하여 setState
-        this.setState({
-          teams: teamList.filter(list => {
-            return loginUser.sex !== list.sex;
-          }),
-          teamName: loginUser.teamname,
-          teamComment: loginUser.comment
-        })
-      );
-  };
-
   componentDidMount() {
     this._getTeamsOnDistrict();
   }
@@ -150,10 +102,7 @@ export default class DistrictScreen extends Component {
           }).start(() => {
             //사라진 다음 다음 사진을 0,0 좌표에 set 하는 부분
             this.setState(
-              {
-                currentIndex: this.state.currentIndex + 1,
-                pictrueIndex: 0
-              },
+              { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
               },
@@ -186,9 +135,49 @@ export default class DistrictScreen extends Component {
     });
   }
 
+  _getTeamsOnDistrict = async () => {
+    // const userToken = await AsyncStorage.getItem("userToken");
+    // console.log(userToken);
+    // sex, count, age, comment, teamname, locationId, userId
+
+    // test1 의 토큰을 가져왔다고 가정한다면
+    const userToken = "aasertetdbc-1-4-21-qqq-yyy-1-1-hongdea".split("-");
+    console.log("-----------------TeamGetOnDistrict-----------------");
+    // 토큰을 항상 문자열 형태로 가져오기 때문에
+    // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
+    // 전역에서 loginUser 사용해야하기 때문에 변수타입 선언 안했음
+    loginUser = {
+      sex: Number(userToken[1]),
+      count: Number(userToken[2]),
+      age: Number(userToken[3]),
+      comment: userToken[4],
+      teamname: userToken[5],
+      locationId: Number(userToken[6]),
+      userId: Number(userToken[7]),
+      district: userToken[8]
+    };
+
+    // 토큰에 location.district 의 값을 추가해야 할것 같다.. 혁님 파이팅
+    fetch(`${url}/teams/district/${loginUser.district}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(result => result.json())
+      .then(teamList =>
+        // 접속한 유저와 다른 성별의 팀을 필터하여 setState
+        this.setState({
+          teams: teamList.filter(list => {
+            return loginUser.sex !== list.sex;
+          })
+        })
+      );
+  };
+
   _snedToLike = () => {
     const whoLikeId = loginUser.userId;
-    const toLikeId = this.state.teams[0].userId;
+    const toLikeId = this.state.teams[this.state.currentIndex].userId;
 
     fetch(`${url}/like`, {
       method: "POST",
@@ -200,7 +189,7 @@ export default class DistrictScreen extends Component {
         toLikeId: toLikeId,
         introText: "같은 매장이면 메세지를 볼 수 있습니다."
       })
-    }).then(result => console.log(result));
+    });
   };
 
   _onChangeIndex = e => {
@@ -260,7 +249,6 @@ export default class DistrictScreen extends Component {
     return this.state.teams
       .map((item, i) => {
         // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
-
         if (i < this.state.currentIndex) {
           // 이미 넘긴 팀의 카드를 보여주지 않는 부분
           return null;
@@ -275,7 +263,7 @@ export default class DistrictScreen extends Component {
                 {
                   height: (SCREEN_HEIGHT * 4) / 4,
                   width: SCREEN_WIDTH,
-                  margin: 0,
+                  margin: 10,
                   paddingBottom: 20,
                   position: "absolute"
                 }
@@ -326,7 +314,7 @@ export default class DistrictScreen extends Component {
                     fontSize: 20
                   }}
                 >
-                  {this.state.teamName}
+                  {this.state.teams[this.state.currentIndex].teamname}
                 </Text>
                 <Text
                   style={{
@@ -335,7 +323,7 @@ export default class DistrictScreen extends Component {
                     fontSize: 15
                   }}
                 >
-                  {this.state.teamComment}
+                  {this.state.teams[this.state.currentIndex].comment}
                 </Text>
               </Animated.View>
             </Animated.View>
@@ -377,7 +365,6 @@ export default class DistrictScreen extends Component {
   render() {
     return (
       <View style={{ ...styles.backGround }}>
-        {/* <View style={{ flexDirection:'column', justifyContent:'space-between', height:'100%' }}> */}
         <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>
           {this.renderUsers()}
         </View>
@@ -401,7 +388,6 @@ export default class DistrictScreen extends Component {
             style={styles.rigthArrow}
             onPress={() => this._onChangeIndex("rightArrow")}
           />
-          {/* </View>  */}
         </View>
       </View>
     );
