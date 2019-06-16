@@ -6,12 +6,8 @@ import {
   View,
   Image,
   TouchableOpacity,
-<<<<<<< HEAD
-  ScrollView
-=======
   ScrollView,
   AsyncStorage
->>>>>>> 1f5ecc1b37a01cc6cecf1753a8b15712c74fa242
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { url } from "../../url";

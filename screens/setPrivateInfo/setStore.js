@@ -1,12 +1,20 @@
 import React, { Fragment, Component } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, AsyncStorage } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  AsyncStorage
+} from "react-native";
 import { Input, Button, ButtonGroup } from "react-native-elements";
 import { LinearGradient } from "expo";
 import { url } from "../../url";
 
 class Title extends Component {
   render() {
-    let currentStyle = this.props.active ? styles.titleActive : styles.titleInactive;
+    let currentStyle = this.props.active
+      ? styles.titleActive
+      : styles.titleInactive;
     return (
       <View>
         <Text style={[styles.title, currentStyle]}>{this.props.name}</Text>
@@ -96,7 +104,6 @@ export default class SetStore extends Component {
         });
 
         //userToken에 들어가는 순서 sex, count, age, comment, teamname, locationId, userId
-
         await AsyncStorage.setItem(
           "userToken",
           "aasertetdbc" +
@@ -135,7 +142,10 @@ export default class SetStore extends Component {
 
     const { buttons, presentStore, selectedIndex } = this.state;
     return (
-      <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
+      <LinearGradient
+        colors={["coral", "#f44283", "#f441bb", "#8341f4"]}
+        style={styles.backGround}
+      >
         <View style={styles.container}>
           <View style={styles.titleHouse}>
             <Title name="현재 위치를 설정해주세요" style={styles.title} />
