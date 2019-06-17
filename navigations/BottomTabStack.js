@@ -9,6 +9,7 @@ import SettingScreen from "../screens/bottomNavi/SettingScreen";
 import ConditionsScreen from "../components/bottomNavi/Conditions";
 import ChatScreen from "../screens/chat/Chat";
 import ChatListScreen from "../screens/chatlist/ChatList";
+import ModalScreen from "../components/bottomNavi/ModalScreen";
 import RenewProfileScreen from "../screens/bottomNavi/RenewProfile";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -116,6 +117,12 @@ const HomeStack = createStackNavigator(
     },
     Chat: {
       screen: ChatScreen
+    },
+    Modal: {
+      screen: ModalScreen,
+      navigationOptions: {
+        header: null
+      }
     }
   },
   {

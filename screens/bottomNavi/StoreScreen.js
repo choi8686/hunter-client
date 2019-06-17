@@ -138,12 +138,12 @@ export default class StoreScreen extends Component {
   }
 
   _getTeamsOnStore = async () => {
-    // const userToken = await AsyncStorage.getItem("userToken");
-    // console.log(userToken);
+    let userToken = await AsyncStorage.getItem("userToken");
+    userToken = userToken.split("-");
     // sex, count, age, comment, teamname, locationId, userId
 
     // test1 의 토큰을 가져왔다고 가정한다면
-    const userToken = "aasertetdbc-1-4-21-qqq-yyy-1-1-sampo".split("-");
+    // const userToken = "aasertetdbc-1-4-21-qqq-yyy-1-1-sampo".split("-");
     console.log("-----------------TeamGetOnStore-----------------");
     // 토큰을 항상 문자열 형태로 가져오기 때문에
     // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
@@ -156,7 +156,7 @@ export default class StoreScreen extends Component {
       teamname: userToken[5],
       locationId: Number(userToken[6]),
       userId: Number(userToken[7]),
-      storeName: userToken[8]
+      storeName: "sampo"
     };
 
     // 스토어에서는 locationId로 Get해도 될 듯
