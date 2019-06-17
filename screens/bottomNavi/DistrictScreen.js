@@ -138,6 +138,7 @@ export default class DistrictScreen extends Component {
   }
 
   _getTeamsOnDistrict = async () => {
+<<<<<<< HEAD
     let userToken = await AsyncStorage.getItem("userToken");
     userToken = userToken.split("-");
     console.log(userToken, "userToken DistrictScreen 141 lines");
@@ -145,10 +146,14 @@ export default class DistrictScreen extends Component {
     // sex, count, age, comment, teamname, locationId, userId;
 
     // test1 의 토큰을 가져왔다고 가정한다면
+=======
+    const getToken = await AsyncStorage.getItem("userToken");
+    const userToken = getToken.split("-");
+
+    console.log(userToken);
+>>>>>>> 676642ae8cc55a2db8e96c064610734398072266
     console.log("-----------------TeamGetOnDistrict-----------------");
-    // 토큰을 항상 문자열 형태로 가져오기 때문에
-    // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
-    // 전역에서 loginUser 사용해야하기 때문에 변수타입 선언 안했음
+
     loginUser = {
       sex: Number(userToken[1]),
       count: Number(userToken[2]),
@@ -161,8 +166,13 @@ export default class DistrictScreen extends Component {
       teamId: Number(userToken[9])
     };
 
+    console.log(loginUser);
     // 토큰에 location.district 의 값을 추가해야 할것 같다.. 혁님 파이팅
+<<<<<<< HEAD
     fetch(`${url}/teams/district/1`, {
+=======
+    fetch(`${url}/teams/district/${loginUser.districtId}`, {
+>>>>>>> 676642ae8cc55a2db8e96c064610734398072266
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -267,7 +277,7 @@ export default class DistrictScreen extends Component {
                 {
                   height: (SCREEN_HEIGHT * 4) / 4,
                   width: SCREEN_WIDTH,
-                  margin: 10,
+                  padding: 10,
                   paddingBottom: 20,
                   position: "absolute"
                 }
