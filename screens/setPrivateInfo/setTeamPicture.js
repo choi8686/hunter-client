@@ -56,7 +56,8 @@ export default class TeamPicture extends Component {
     averageAge: this.props.navigation.state.params.data.age,
     comment: this.props.navigation.state.params.data.comment,
     userId: this.props.navigation.state.params.data.userId,
-    locationId: this.props.navigation.state.params.data.locationId,
+    districtId: this.props.navigation.state.params.data.districtId,
+    storeId: this.props.navigation.state.params.data.storeId,
     teamId: this.props.navigation.state.params.data.teamId
   };
   _uploadImageAsync = async uri => {

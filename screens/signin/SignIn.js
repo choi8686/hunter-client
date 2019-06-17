@@ -117,10 +117,7 @@ export default class SignUp extends Component {
             }).then(async res => {
               if (res.ok) {
                 if (JSON.parse(res._bodyInit)) {
-                  console.log(
-                    JSON.parse(res._bodyInit),
-                    "hihihihihihihihihihiFUCKFUCKFUCKFUKC"
-                  );
+                  console.log(JSON.parse(res._bodyInit));
                   const teamInfo = JSON.parse(res._bodyInit).teams[0];
                   await this.setState({
                     teamInfo: teamInfo
@@ -139,7 +136,9 @@ export default class SignUp extends Component {
                       "-" +
                       teamInfo.teamname +
                       "-" +
-                      teamInfo.locationId +
+                      teamInfo.districtId +
+                      "-" +
+                      teamInfo.storeId +
                       "-" +
                       teamInfo.userId +
                       "-" +
@@ -160,7 +159,6 @@ export default class SignUp extends Component {
   //로그인 성공시, userToken 저장하고 ChooseSex로 보내주는 함수
   _signInAsync = async () => {
     const { userId, teamInfo } = await this.state;
-    console.log("hi");
     console.log(teamInfo, "teamInfo!!!!!!");
     console.log(userId, "userId!!!!!!!!");
 
