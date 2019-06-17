@@ -138,7 +138,12 @@ export default class DistrictScreen extends Component {
   _getTeamsOnDistrict = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
     userToken = userToken.split("-");
+<<<<<<< HEAD
     console.log(userToken);
+=======
+    console.log(userToken, "userToken DistrictScreen 141 lines");
+    // console.log(userToken);
+>>>>>>> 71f508d1b22373b93d073ec6080a53b6e0847fcb
     // sex, count, age, comment, teamname, locationId, userId
 
     // test1 의 토큰을 가져왔다고 가정한다면
@@ -155,7 +160,10 @@ export default class DistrictScreen extends Component {
       teamname: userToken[5],
       locationId: Number(userToken[6]),
       userId: Number(userToken[7]),
+<<<<<<< HEAD
       // district: userToken[8]
+=======
+>>>>>>> 71f508d1b22373b93d073ec6080a53b6e0847fcb
       district: "hongdae"
     };
 

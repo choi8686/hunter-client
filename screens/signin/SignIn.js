@@ -117,37 +117,42 @@ export default class SignUp extends Component {
             }).then(async res => {
               if (res.ok) {
                 if (JSON.parse(res._bodyInit)) {
+                  console.log(
+                    JSON.parse(res._bodyInit),
+                    "hihihihihihihihihihiFUCKFUCKFUCKFUKC"
+                  );
                   const teamInfo = JSON.parse(res._bodyInit).teams[0];
-                  if (JSON.parse(res._bodyInit)) {
-                    await this.setState({
-                      teamInfo: teamInfo
-                    });
-                    await AsyncStorage.setItem(
-                      "userToken",
-                      "aasertetdbc" +
-                        "-" +
-                        teamInfo.sex +
-                        "-" +
-                        teamInfo.count +
-                        "-" +
-                        teamInfo.age +
-                        "-" +
-                        teamInfo.comment +
-                        "-" +
-                        teamInfo.teamname +
-                        "-" +
-                        teamInfo.locationId +
-                        "-" +
-                        teamInfo.userId +
-                        "-" +
-                        teamInfo.id
-                    );
-                  }
+
+                  await this.setState({
+                    teamInfo: teamInfo
+                  });
+                  await AsyncStorage.setItem(
+                    "userToken",
+                    "aasertetdbc" +
+                      "-" +
+                      teamInfo.sex +
+                      "-" +
+                      teamInfo.count +
+                      "-" +
+                      teamInfo.age +
+                      "-" +
+                      teamInfo.comment +
+                      "-" +
+                      teamInfo.teamname +
+                      "-" +
+                      teamInfo.locationId +
+                      "-" +
+                      teamInfo.userId +
+                      "-" +
+                      teamInfo.id
+                  );
+                  await this._signInAsync();
+                } else {
+                  await this._signInAsync();
                 }
               }
             });
           }
-          await this._signInAsync();
         });
 
         /////
