@@ -156,9 +156,7 @@ export default class TeamPicture1 extends Component {
     }
   };
 
-  componentDidMount = async () => {
-    let token = await AsyncStorage.getItem("userToken");
-  };
+  componentDidMount = () => {};
   render() {
     console.log(
       this.props.navigation.state.params.data,
