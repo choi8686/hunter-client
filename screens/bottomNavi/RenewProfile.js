@@ -21,6 +21,68 @@ import IconBadge from "react-native-icon-badge";
 
 import { url } from "../../url";
 
+//district 버튼
+class ButtonsGroup1 extends React.Component {
+  state = {
+    buttonsDistrict: ["홍대입구역", "이태원역", "강남역", "건대입구역"],
+    districtName: null,
+    districtId: null,
+    selectedIndex: null
+  };
+
+  _updateIndexDistrict = selectedIndex => {
+    this.setState({
+      selectedIndex,
+      storeName: this.state.buttonsDistrict[selectedIndex],
+      districtId: selectedIndex + 1
+    });
+    this.props._updateIndex_D(selectedIndex);
+  };
+
+  render() {
+    const { selectedIndex, buttonsDistrict } = this.state;
+    return (
+      <ButtonGroup
+        onPress={this._updateIndexDistrict}
+        selectedIndex={selectedIndex}
+        buttons={buttonsDistrict}
+        containerStyle={{ height: 50 }}
+      />
+    );
+  }
+}
+
+//store 버튼
+class ButtonsGroup2 extends React.Component {
+  state = {
+    buttonsStore: ["그린라이트", "한신포차", "삼거리포차", "베라"],
+    storeName: null,
+    storeId: null,
+    selectedIndex: null
+  };
+
+  _updateIndexStore = selectedIndex => {
+    this.setState({
+      selectedIndex,
+      storeName: this.state.buttonsStore[selectedIndex],
+      storeId: selectedIndex + 1
+    });
+    this.props._updateIndex_S(selectedIndex);
+  };
+
+  render() {
+    const { selectedIndex, buttonsStore } = this.state;
+    return (
+      <ButtonGroup
+        onPress={this._updateIndexStore}
+        selectedIndex={selectedIndex}
+        buttons={buttonsStore}
+        containerStyle={{ height: 50 }}
+      />
+    );
+  }
+}
+
 export default class RenewProfile extends React.Component {
   //개인 프로필창을 클릭 시, 제일 먼저 실행되는 함수! 데이터베이스에서 개인프로필에 대한 정보를 가져온다.
 
@@ -54,12 +116,10 @@ export default class RenewProfile extends React.Component {
     buttonsDistrict: ["홍대입구역", "이태원역", "강남역", "건대입구역"],
     districtName: null,
     districtId: null,
-    selectedIndex: null,
 
     buttonsStore: ["그린라이트", "한신포차", "삼거리포차", "베라"],
     storeName: null,
     storeId: null,
-    selected: null,
 
     sex: null,
     count: null,
@@ -74,18 +134,16 @@ export default class RenewProfile extends React.Component {
   //district 수정
   _updateIndex_D = selectedIndex => {
     this.setState({
-      selectedIndex,
       districtName: this.state.buttonsDistrict[selectedIndex],
       districtId: selectedIndex + 1
     });
   };
 
   //store 수정
-  _updateIndex_S = selected => {
+  _updateIndex_S = selectedIndex => {
     this.setState({
-      selected,
-      storeName: this.state.buttonsStore[selected],
-      storeId: selected + 1
+      storeName: this.state.buttonsStore[selectedIndex],
+      storeId: selectedIndex + 1
     });
   };
 
@@ -186,10 +244,10 @@ export default class RenewProfile extends React.Component {
   componentDidMount = () => {};
 
   render() {
+    console.log(this.state, "에~~~집에가자!!!!!!!!!!!!시발 집에좀 가자!!!!!");
     const {
       imageFlag,
-      selectedIndex,
-      selected,
+      // selectedIndex,
       buttonsDistrict,
       buttonsStore
     } = this.state;
@@ -258,21 +316,27 @@ export default class RenewProfile extends React.Component {
         >
           <ScrollView style={{ width: "85%" }}>
             <View style={styles.scrollBox}>
+              {/* <View style={styles.buttonBox}>
+                <Text style={{ paddingBottom: 5 }}>테스트</Text>
+                <ButtonsGroup1
+                  _updateIndex_D={this._updateIndex_D}
+                  buttonsDistrict={buttonsDistrict}
+                  containerStyle={{ height: 50 }}
+                />
+              </View> */}
               <View style={styles.buttonBox}>
                 <Text style={{ paddingBottom: 5 }}>지역명</Text>
-                <ButtonGroup
-                  onPress={this._updateIndex_D}
-                  selectedIndex={selectedIndex}
-                  buttons={buttonsDistrict}
+                <ButtonsGroup1
+                  _updateIndex_D={this._updateIndex_D}
+                  buttonsDistrict={buttonsDistrict}
                   containerStyle={{ height: 50 }}
                 />
               </View>
 
               <View style={styles.buttonBox}>
                 <Text style={{ paddingBottom: 5 }}>상호명</Text>
-                <ButtonGroup
-                  onPress={this._updateIndex_S}
-                  selected={selected}
+                <ButtonsGroup2
+                  _updateIndex_S={this._updateIndex_S}
                   buttons={buttonsStore}
                   containerStyle={{ height: 50 }}
                 />

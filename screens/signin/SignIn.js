@@ -158,8 +158,8 @@ export default class SignUp extends Component {
   //로그인 성공시, userToken 저장하고 ChooseSex로 보내주는 함수
   _signInAsync = async () => {
     const { userId, teamInfo } = await this.state;
-    console.log(teamInfo, "teamInfo!!!!!!");
-    console.log(userId, "userId!!!!!!!!");
+    console.log(teamInfo, "teamInfo!!!!!! SignIn.js 161 lines");
+    console.log(userId, "userId!!!!!!!!  SignIn.js 162 lines");
 
     teamInfo
       ? this.props.navigation.navigate("Home", { userId, teamInfo })
