@@ -40,7 +40,7 @@ export default class SetStore extends Component {
     averageAge: this.props.navigation.state.params.averageAge,
     comment: this.props.navigation.state.params.comment,
     presentDistrict: this.props.navigation.state.params.presentDistrict,
-    presentDistrictNum: this.props.navigation.state.params.presentDistrictNum,
+    districtId: this.props.navigation.state.params.presentDistrictNum,
     userId: this.props.navigation.state.params.userId,
 
     data: {
@@ -49,7 +49,8 @@ export default class SetStore extends Component {
       age: this.props.navigation.state.params.averageAge,
       comment: this.props.navigation.state.params.comment,
       teamname: this.props.navigation.state.params.teamname,
-      locationId: this.props.navigation.state.params.presentDistrictNum,
+      districtId: this.props.navigation.state.params.presentDistrictNum,
+      // locationId: this.props.navigation.state.params.presentDistrictNum,
       userId: this.props.navigation.state.params.userId
     }
   };
@@ -65,8 +66,9 @@ export default class SetStore extends Component {
         age: this.state.averageAge,
         comment: this.state.comment,
         teamname: this.state.teamname,
+        districtId: this.state.districtId,
 
-        locationId: selectedIndex + 1,
+        storeId: selectedIndex + 1,
         userId: this.state.userId
       }
     });
@@ -96,7 +98,10 @@ export default class SetStore extends Component {
         // 그래야 어플껐다가 재접속해도 데이터베이스에 locationId를 보내주고 그 값을 비교하여 District로 바로 접근할 수 있다.
 
         const teamInfo = JSON.parse(res._bodyInit);
-        console.log(teamInfo, "teamInfo setStore.js 91 lines");
+        console.log(
+          teamInfo,
+          "teamInfo setStore.js 91 lines~~~~~~~~~~~~~~~~~~~~"
+        );
         await this.setState({
           data: {
             teamId: teamInfo.id
@@ -118,15 +123,15 @@ export default class SetStore extends Component {
             "-" +
             teamInfo.teamname +
             "-" +
-            teamInfo.locationId +
+            teamInfo.districtId +
+            "-" +
+            teamInfo.storeId +
             "-" +
             teamInfo.userId +
             "-" +
             teamInfo.id
         );
 
-        let hi = await AsyncStorage.getItem("userToken");
-        console.log(hi, "hi");
         //사진 제출하면 District로 보내고 data안에 있는 teamuserId를 이용하여 관련 데이터를 가져온다.
         await this._goDistrict();
       } else {
