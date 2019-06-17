@@ -9,7 +9,14 @@ import {
   AsyncStorage,
   icon
 } from "react-native";
-import { Input, Icon, Button, SearchBar } from "react-native-elements";
+
+import {
+  Input,
+  Icon,
+  Button,
+  SearchBar,
+  ButtonGroup
+} from "react-native-elements";
 import IconBadge from "react-native-icon-badge";
 
 import { url } from "../../url";
@@ -35,23 +42,51 @@ export default class RenewProfile extends React.Component {
       districtId: userTokenArr[userTokenArr.length - 4],
       storeId: userTokenArr[userTokenArr.length - 3],
       userId: userTokenArr[userTokenArr.length - 2],
-      id: userTokenArr[userTokenArr.length - 1]
+      id: userTokenArr[userTokenArr.length - 1],
+
+      selectedIndex: userTokenArr[userTokenArr.length - 4]
     });
   };
 
   state = {
     imageFlag: false,
+
+    buttonsDistrict: ["홍대입구역", "이태원역", "강남역", "건대입구역"],
+    districtName: null,
+    districtId: null,
+    selectedIndex: null,
+
+    buttonsStore: ["그린라이트", "한신포차", "삼거리포차", "베라"],
+    storeName: null,
+    storeId: null,
+    selected: null,
+
     sex: null,
     count: null,
     age: null,
     comment: null,
     teamname: null,
 
-    districtId: null,
-    storeId: null,
     userId: null,
 
     id: null
+  };
+  //district 수정
+  _updateIndex_D = selectedIndex => {
+    this.setState({
+      selectedIndex,
+      districtName: this.state.buttonsDistrict[selectedIndex],
+      districtId: selectedIndex + 1
+    });
+  };
+
+  //store 수정
+  _updateIndex_S = selected => {
+    this.setState({
+      selected,
+      storeName: this.state.buttonsStore[selected],
+      storeId: selected + 1
+    });
   };
 
   //개인의 유저 id 를 통해 데이터를 끌고 오는게 먼저!
@@ -151,7 +186,13 @@ export default class RenewProfile extends React.Component {
   componentDidMount = () => {};
 
   render() {
-    const { imageFlag } = this.state;
+    const {
+      imageFlag,
+      selectedIndex,
+      selected,
+      buttonsDistrict,
+      buttonsStore
+    } = this.state;
     return (
       <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
         <View
@@ -217,6 +258,25 @@ export default class RenewProfile extends React.Component {
         >
           <ScrollView style={{ width: "85%" }}>
             <View style={styles.scrollBox}>
+              <View style={styles.buttonBox}>
+                <Text style={{ paddingBottom: 5 }}>지역명</Text>
+                <ButtonGroup
+                  onPress={this._updateIndex_D}
+                  selectedIndex={selectedIndex}
+                  buttons={buttonsDistrict}
+                  containerStyle={{ height: 50 }}
+                />
+              </View>
+
+              <View style={styles.buttonBox}>
+                <Text style={{ paddingBottom: 5 }}>상호명</Text>
+                <ButtonGroup
+                  onPress={this._updateIndex_S}
+                  selected={selected}
+                  buttons={buttonsStore}
+                  containerStyle={{ height: 50 }}
+                />
+              </View>
               {/*
               <View style={styles.infoBox}>
                 <Text style={{ paddingBottom: 5 }}>팀이름</Text>
@@ -322,11 +382,23 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     paddingTop: "10%",
-    paddingBottom: "20%"
+    paddingBottom: "20%",
+    paddingVertical: 10
+  },
+  buttonBox: {
+    flex: 1,
+    flexDirection: "column",
+    marginBottom: "5%",
+    paddingVertical: 10,
+    paddingTop: "5%",
+    color: "white",
+    height: "100%",
+    width: "100%"
   },
   infoBox: {
     flex: 1,
     flexDirection: "column",
+    marginBottom: "5%",
     paddingVertical: 10
   }
 });
