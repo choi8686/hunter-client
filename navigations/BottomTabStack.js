@@ -1,8 +1,10 @@
 import React from "react";
 import {
   createBottomTabNavigator,
-  createStackNavigator
+  createStackNavigator,
+  Header
 } from "react-navigation";
+import { View } from "react-native";
 import DistrictScreen from "../screens/bottomNavi/DistrictScreen";
 import StoreScreen from "../screens/bottomNavi/StoreScreen";
 import SettingScreen from "../screens/bottomNavi/SettingScreen";
@@ -11,28 +13,99 @@ import ChatScreen from "../screens/chat/Chat";
 import ChatListScreen from "../screens/chatlist/ChatList";
 import RenewProfileScreen from "../screens/bottomNavi/RenewProfile";
 import { FontAwesome } from "@expo/vector-icons";
+import { LinearGradient } from "react-native-linear-gradient";
+
+class GradientHeader extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <View style={{ backgroundColor: "#eee" }}>
+        <LinearGradient
+          colors={["#00a8c3", "#00373f"]}
+          style={{
+            flex: 1,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingTop: "10%",
+            width: "100%",
+            left: 0,
+            right: 0,
+            top: 0
+          }}
+        />
+        <Header {...this.props} style={{ backgroundColor: "transparent" }} />
+      </View>
+    );
+  }
+}
 
 //District 스텍
 const DistrictStack = createStackNavigator({
   DistrictHome: {
-    screen: DistrictScreen
+    screen: DistrictScreen,
+    navigationOptions: {
+      // header: props => <GradientHeader {...props} />
+      headerStyle: {
+        backgroundColor: "#FE7B53"
+      }
+    }
+    // headerStyle: {
+    //   backgroundColor: (
+    //     <LinearGradient
+    //       colors={["#00a8c3", "#00373f"]}
+    // style={{
+    //   flex: 1,
+    //   flexDirection: "column",
+    //   alignItems: "center",
+    //   justifyContent: "center",
+    //   paddingTop: "10%",
+    //   width: "100%",
+    //   left: 0,
+    //   right: 0,
+    //   top: 0
+    // }}
+    //     />
+    //   )
+    // }
   }
 });
 
 //Setting 스텍
 const SettingStack = createStackNavigator({
   SettingHome: {
-    screen: SettingScreen
+    screen: SettingScreen,
+    navigationOptions: {
+      // header: props => <GradientHeader {...props} />
+      headerStyle: {
+        backgroundColor: "#FE7B53"
+      }
+    }
   },
   RenewProfile: {
     screen: RenewProfileScreen,
     navigationOptions: {
+      navigationOptions: {
+        // header: props => <GradientHeader {...props} />
+        headerStyle: {
+          backgroundColor: "#FE7B53"
+        }
+      },
       title: "프로필수정"
     }
   },
   Conditions: {
     screen: ConditionsScreen,
     navigationOptions: {
+      navigationOptions: {
+        // header: props => <GradientHeader {...props} />
+        headerStyle: {
+          backgroundColor: "#FE7B53"
+        }
+      },
       title: "이용약관"
     }
   }
@@ -43,6 +116,10 @@ const StoreStack = createStackNavigator({
   StoreHome: {
     screen: StoreScreen,
     navigationOptions: {
+      headerStyle: {
+        backgroundColor: "#FE7B53"
+      },
+
       title: "저기어때"
     }
   }
@@ -116,6 +193,21 @@ const HomeStack = createStackNavigator(
     },
     Chat: {
       screen: ChatScreen
+    }
+  },
+  {
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <FontAwesome size={24} name={"info"} color={tintColor} />
+      ),
+      tabBarOptions: {
+        showLabel: false, // hide labels
+        activeTintColor: "hotpink", // active icon color
+        inactiveTintColor: "darkgray", // inactive icon color
+        style: {
+          backgroundColor: "ghostwhite" // TabBar background
+        }
+      }
     }
   },
   {

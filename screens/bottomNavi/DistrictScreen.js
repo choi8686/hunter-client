@@ -76,7 +76,9 @@ export default class DistrictScreen extends Component {
   //상단탭 부분_우측상단바관리_윤민수
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "저기어때",
+      headerStyle: { backGroundColor: "black" },
+      headerTitle: "저기어때",
+      color: "ghostwhite",
       headerRight: <TopBarRightIcons navigation={navigation} />
     };
   };

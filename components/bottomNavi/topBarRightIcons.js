@@ -22,17 +22,17 @@ export default class TopBarRightIcons extends React.Component {
 
   render() {
     return (
-      <View style={{ flexDirection: "row", marginRight: 10 }}>
+      <View style={{ flexDirection: "row", marginRight: 5 }}>
         <Icon
           type="font-awesome"
           iconStyle={styles.headerRightIcon}
-          name="envelope"
+          name="envelope-o"
           onPress={() => alert("This is a button!")}
         />
         <Icon
           type="font-awesome"
           iconStyle={styles.headerRightIcon}
-          name="comment"
+          name="comment-o"
           onPress={() => this.movetoChatList()}
         />
       </View>
@@ -43,6 +43,6 @@ export default class TopBarRightIcons extends React.Component {
 const styles = StyleSheet.create({
   headerRightIcon: {
     marginRight: 20,
-    color: "red"
+    color: "ghostwhite"
   }
 });

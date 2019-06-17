@@ -56,7 +56,8 @@ export default class TeamPicture1 extends Component {
     averageAge: this.props.navigation.state.params.data.age,
     comment: this.props.navigation.state.params.data.comment,
     userId: this.props.navigation.state.params.data.userId,
-    locationId: this.props.navigation.state.params.data.locationId,
+    districtId: this.props.navigation.state.params.data.districtId,
+    storeId: this.props.navigation.state.params.data.storeId,
     teamId: this.props.navigation.state.params.data.teamId
 
     // image: {
@@ -136,7 +137,8 @@ export default class TeamPicture1 extends Component {
         comment,
         count,
         image,
-        locationId,
+        districtId,
+        storeId,
         sex,
         teamname,
         userId
@@ -150,7 +152,8 @@ export default class TeamPicture1 extends Component {
         comment,
         image,
         userId,
-        locationId
+        districtId,
+        storeId
       });
       console.log("upload!");
     }
@@ -171,7 +174,8 @@ export default class TeamPicture1 extends Component {
       comment,
       image,
       userId,
-      locationId
+      districtId,
+      storeId
     } = this.state;
     const firstImage = image[0];
     const secondImage = image[1];
@@ -194,7 +198,8 @@ export default class TeamPicture1 extends Component {
                   comment,
                   image,
                   userId,
-                  locationId
+                  districtId,
+                  storeId
                 });
               }}
             />
@@ -208,7 +213,8 @@ export default class TeamPicture1 extends Component {
                   comment,
                   image,
                   userId,
-                  locationId
+                  districtId,
+                  storeId
                 });
               }}
             />
