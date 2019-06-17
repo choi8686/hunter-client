@@ -4,15 +4,11 @@ import {
   Text,
   View,
   Image,
-  TouchableWithoutFeedback,
-  Platform,
-  Button,
   Dimensions,
   Animated,
   PanResponder,
   AsyncStorage
 } from "react-native";
-import { Icon } from "react-native-elements";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo";
 import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
@@ -20,13 +16,14 @@ import { url } from "../../url";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
+var loginUser = {};
 
 export default class DistrictScreen extends Component {
   constructor() {
     super();
     this.position = new Animated.ValueXY();
     this.state = {
-      Teams: [],
+      teams: [],
       currentIndex: 0,
       pictrueIndex: 0
     };
@@ -84,35 +81,9 @@ export default class DistrictScreen extends Component {
     };
   };
 
-  _getTeamsOnDistrict = () => {
-    // **수정사항
-    // 추후에 'hongdea' 값은 로그인 사용자의 위치를 가져와야한다.
-    // 추후에 헤더값에 사용자의 id와 성별을 보낸다.
-    // 1. 사용자를 제외한 나머지 값들을 가져와야 한다.
-    // 2. 사용자의 성별과 반대인 상대방의 정보를 가져와야 한다.
-    fetch(`${url}/teams/district/hongdea`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-        // 로그인한 사용자의 성별
-        // 로그인한 사용자의 userId or TeamId
-      }
-    })
-      .then(result => result.json())
-      .then(data =>
-        this.setState({
-          Teams: data
-        })
-      );
-  };
-
-  componentDidMount = async () => {
-    console.log(
-      await AsyncStorage.getItem("userToken"),
-      "-------------------------------------"
-    );
+  componentDidMount() {
     this._getTeamsOnDistrict();
-  };
+  }
 
   componentWillMount() {
     this.PanResponder = PanResponder.create({
@@ -134,7 +105,8 @@ export default class DistrictScreen extends Component {
               { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
-              }
+              },
+              this._snedToLike()
             );
           });
         }
@@ -163,11 +135,68 @@ export default class DistrictScreen extends Component {
     });
   }
 
+  _getTeamsOnDistrict = async () => {
+    // const userToken = await AsyncStorage.getItem("userToken");
+    // console.log(userToken);
+    // sex, count, age, comment, teamname, locationId, userId
+
+    // test1 의 토큰을 가져왔다고 가정한다면
+    const userToken = "aasertetdbc-1-4-21-qqq-yyy-1-1-hongdea".split("-");
+    console.log("-----------------TeamGetOnDistrict-----------------");
+    // 토큰을 항상 문자열 형태로 가져오기 때문에
+    // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
+    // 전역에서 loginUser 사용해야하기 때문에 변수타입 선언 안했음
+    loginUser = {
+      sex: Number(userToken[1]),
+      count: Number(userToken[2]),
+      age: Number(userToken[3]),
+      comment: userToken[4],
+      teamname: userToken[5],
+      locationId: Number(userToken[6]),
+      userId: Number(userToken[7]),
+      district: userToken[8]
+    };
+
+    // 토큰에 location.district 의 값을 추가해야 할것 같다.. 혁님 파이팅
+    fetch(`${url}/teams/district/${loginUser.district}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(result => result.json())
+      .then(teamList =>
+        // 접속한 유저와 다른 성별의 팀을 필터하여 setState
+        this.setState({
+          teams: teamList.filter(list => {
+            return loginUser.sex !== list.sex;
+          })
+        })
+      );
+  };
+
+  _snedToLike = () => {
+    const whoLikeId = loginUser.userId;
+    const toLikeId = this.state.teams[this.state.currentIndex].userId;
+
+    fetch(`${url}/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        whoLikeId: whoLikeId,
+        toLikeId: toLikeId,
+        introText: "같은 매장이면 메세지를 볼 수 있습니다."
+      })
+    });
+  };
+
   _onChangeIndex = e => {
     if (
       e === "rightArrow" &&
       this.state.pictrueIndex <
-        this.state.Teams[this.state.currentIndex].teamimages.length - 1
+        this.state.teams[this.state.currentIndex].teamimages.length - 1
     ) {
       this.setState({
         pictrueIndex: this.state.pictrueIndex + 1
@@ -181,155 +210,161 @@ export default class DistrictScreen extends Component {
     }
   };
 
-  _onPressNope = () => {
-    Animated.spring(this.position, {
-      toValue: { x: -SCREEN_WIDTH - 100, y: -20 }
-    }).start(() => {
-      this.setState(
-        { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
-        () => {
-          this.position.setValue({ x: 0, y: 0 });
-        }
-      );
-    });
-  };
+  // _onPressNope = () => {
+  //   Animated.spring(this.position, {
+  //     toValue: { x: -SCREEN_WIDTH - 100, y: -20 }
+  //   }).start(() => {
+  //     this.setState(
+  //       { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+  //       () => {
+  //         this.position.setValue({ x: 0, y: 0 });
+  //       }
+  //     );
+  //   });
+  // };
 
-  _onPressLike = () => {
-    Animated.spring(this.position, {
-      toValue: { x: SCREEN_WIDTH + 100, y: -20 }
-    }).start(() => {
-      this.setState(
-        { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
-        () => {
-          this.position.setValue({ x: 0, y: 0 });
-        }
-      );
-    });
-  };
+  // _onPressLike = () => {
+  //   Animated.spring(this.position, {
+  //     toValue: { x: SCREEN_WIDTH + 100, y: -20 }
+  //   }).start(() => {
+  //     this.setState(
+  //       { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+  //       () => {
+  //         this.position.setValue({ x: 0, y: 0 });
+  //       }
+  //     );
+  //   });
+  // };
 
   _onPresRefresh = () => {
     this.setState({
       currentIndex: 0,
       pictrueIndex: 0
     });
+    this._getTeamsOnDistrict();
   };
 
   //comment랑 teamname을 가져와서 animation안에 띄워준다.
   renderUsers = () => {
-    console.log(this.state.Teams);
-    return this.state.Teams.map((item, i) => {
-      // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
-      if (i < this.state.currentIndex) {
-        return null;
-      } else if (i === this.state.currentIndex) {
-        return (
-          // 0보다 작 무조건
-          <Animated.View
-            {...this.PanResponder.panHandlers}
-            key={item.id}
-            style={[
-              this.rotateAndTranslate,
-              {
-                height: (SCREEN_HEIGHT * 4) / 4,
-                width: SCREEN_WIDTH,
-                margin: 0,
-                paddingBottom: 20,
-                position: "absolute"
-              }
-            ]}
-          >
+    return this.state.teams
+      .map((item, i) => {
+        // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
+        if (i < this.state.currentIndex) {
+          // 이미 넘긴 팀의 카드를 보여주지 않는 부분
+          return null;
+        } else if (i === this.state.currentIndex) {
+          // 맨 윗장에 있는 팀의 상태
+          return (
             <Animated.View
-              style={{ opacity: this.likeOpacity, ...styles.likeBorder }}
+              {...this.PanResponder.panHandlers}
+              key={item.id}
+              style={[
+                this.rotateAndTranslate,
+                {
+                  height: (SCREEN_HEIGHT * 4) / 4,
+                  width: SCREEN_WIDTH,
+                  margin: 10,
+                  paddingBottom: 20,
+                  position: "absolute"
+                }
+              ]}
             >
-              <Text style={styles.likeText}>LIKE</Text>
-            </Animated.View>
+              <Animated.View
+                style={{ opacity: this.likeOpacity, ...styles.likeBorder }}
+              >
+                <Text style={styles.likeText}>LIKE</Text>
+              </Animated.View>
 
-            <Animated.View
-              style={{ opacity: this.dislikeOpacity, ...styles.dislikeBorder }}
-            >
-              <Text style={styles.dislikeText}>NOPE</Text>
-            </Animated.View>
-
-            <Image
-              style={{
-                flex: 1,
-                height: "100%",
-                width: "100%",
-                resizeMode: "cover",
-                borderRadius: 20
-              }}
-              source={{
-                uri: `${item.teamimages[this.state.pictrueIndex].imgUrl}`
-              }}
-            />
-
-            <Animated.View
-              style={{
-                opacity: this.titleOpacity,
-                zIndex: 1000,
-                position: "absolute",
-                marginTop: "96%",
-                height: 100,
-                marginLeft: "5%"
-              }}
-            >
-              <Text
+              <Animated.View
                 style={{
-                  color: "floralwhite",
-                  fontWeight: "bold",
-                  fontSize: 20
+                  opacity: this.dislikeOpacity,
+                  ...styles.dislikeBorder
                 }}
               >
-                트벤져스
-              </Text>
-              <Text
+                <Text style={styles.dislikeText}>NOPE</Text>
+              </Animated.View>
+
+              <Image
                 style={{
-                  color: "floralwhite",
-                  fontWeight: "bold",
-                  fontSize: 15
+                  flex: 1,
+                  height: "100%",
+                  width: "100%",
+                  resizeMode: "cover",
+                  borderRadius: 20
+                }}
+                source={{
+                  uri: `${item.teamimages[this.state.pictrueIndex].imgUrl}`
+                }}
+              />
+
+              <Animated.View
+                style={{
+                  opacity: this.titleOpacity,
+                  zIndex: 1000,
+                  position: "absolute",
+                  marginTop: "96%",
+                  height: 100,
+                  marginLeft: "5%"
                 }}
               >
-                한짝가능요
-              </Text>
+                <Text
+                  style={{
+                    color: "floralwhite",
+                    fontWeight: "bold",
+                    fontSize: 20
+                  }}
+                >
+                  {this.state.teams[this.state.currentIndex].teamname}
+                </Text>
+                <Text
+                  style={{
+                    color: "floralwhite",
+                    fontWeight: "bold",
+                    fontSize: 15
+                  }}
+                >
+                  {this.state.teams[this.state.currentIndex].comment}
+                </Text>
+              </Animated.View>
             </Animated.View>
-          </Animated.View>
-        );
-      } else {
-        return (
-          <Animated.View
-            key={item.id}
-            style={[
-              {
-                opacity: this.nextCardOpacity,
-                transform: [{ scale: this.nextCardScale }],
-                height: (SCREEN_HEIGHT * 3) / 4,
-                width: SCREEN_WIDTH,
-                padding: 10,
-                paddingBottom: 20,
-                position: "absolute"
-              }
-            ]}
-          >
-            <Image
-              style={{
-                flex: 1,
-                height: null,
-                width: null,
-                resizeMode: "cover",
-                borderRadius: 20
-              }}
-              source={{ uri: `${item.teamimages[0].imgUrl}` }}
-            />
-          </Animated.View>
-        );
-      }
-    }).reverse();
+          );
+        } else {
+          // 맨 윗장을 제외한 나머지. 아직 넘기지 않은 팀의 상태
+          return (
+            <Animated.View
+              key={item.id}
+              style={[
+                {
+                  opacity: this.nextCardOpacity,
+                  transform: [{ scale: this.nextCardScale }],
+                  height: (SCREEN_HEIGHT * 3) / 4,
+                  width: SCREEN_WIDTH,
+                  padding: 10,
+                  paddingBottom: 20,
+                  position: "absolute"
+                }
+              ]}
+            >
+              <Image
+                style={{
+                  flex: 1,
+                  height: null,
+                  width: null,
+                  resizeMode: "cover",
+                  borderRadius: 20
+                }}
+                source={{ uri: `${item.teamimages[0].imgUrl}` }}
+              />
+            </Animated.View>
+          );
+        }
+      })
+      .reverse();
   };
 
   render() {
     return (
       <View style={{ ...styles.backGround }}>
-        {/* <View style={{ flexDirection:'column', justifyContent:'space-between', height:'100%' }}> */}
         <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>
           {this.renderUsers()}
         </View>
@@ -353,7 +388,6 @@ export default class DistrictScreen extends Component {
             style={styles.rigthArrow}
             onPress={() => this._onChangeIndex("rightArrow")}
           />
-          {/* </View>  */}
         </View>
       </View>
     );

@@ -104,7 +104,6 @@ export default class SetStore extends Component {
         });
 
         //userToken에 들어가는 순서 sex, count, age, comment, teamname, locationId, userId
-
         await AsyncStorage.setItem(
           "userToken",
           "aasertetdbc" +

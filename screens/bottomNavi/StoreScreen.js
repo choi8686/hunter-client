@@ -4,160 +4,28 @@ import {
   Text,
   View,
   Image,
-  TouchableWithoutFeedback,
-  Platform,
-  Button,
   Dimensions,
   Animated,
-  PanResponder
+  PanResponder,
+  AsyncStorage
 } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo";
 import { Icon } from "react-native-elements";
 
 import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
+import { url } from "../../url";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
-const Teams = [
-  {
-    id: 1,
-    count: 3,
-    age: 22,
-    sex: 1,
-    comment: "nada sip seggiya",
-    teamname: "otaesik",
-    locationId: 1,
-    userId: 1,
-    location: {
-      district: "hongdae",
-      store: "greenright"
-    },
-    teamimages: [
-      {
-        imgUrl: {
-          uri:
-            "https://i.pinimg.com/564x/25/5a/ec/255aecbaaa04fab4fc27d5461ec49fd9.jpg"
-        }
-      },
-      {
-        imgUrl: require("../../assets/team1-1.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team1-2.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team1-3.jpg")
-      }
-    ]
-  },
-  {
-    id: 2,
-    count: 2,
-    age: 24,
-    sex: 1,
-    comment: "sex is a game",
-    teamname: "JYPENT",
-    locationId: 1,
-    userId: 1,
-    location: {
-      district: "hongdae",
-      store: "greenright"
-    },
-    teamimages: [
-      {
-        imgUrl: require("../../assets/team2-1.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team2-2.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team2-3.jpg")
-      }
-    ]
-  },
-  {
-    id: 3,
-    count: 2,
-    age: 20,
-    sex: 1,
-    comment: "i love meat",
-    teamname: "sukgamoni",
-    locationId: 2,
-    userId: 1,
-    location: {
-      district: "hongdae",
-      store: "sampo"
-    },
-    teamimages: [
-      {
-        imgUrl: require("../../assets/team3-1.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team3-2.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team3-3.jpg")
-      }
-    ]
-  },
-  {
-    id: 4,
-    count: 2,
-    age: 20,
-    sex: 1,
-    comment: "my job is F.B crop. CEO",
-    teamname: "simyoung",
-    locationId: 2,
-    userId: 1,
-    location: {
-      district: "hongdae",
-      store: "sampo"
-    },
-    teamimages: [
-      {
-        imgUrl: require("../../assets/team4-1.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team4-2.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team4-3.jpg")
-      }
-    ]
-  },
-  {
-    id: 5,
-    count: 2,
-    age: 20,
-    sex: 1,
-    comment: "i miss minsoo",
-    teamname: "Yuna Han",
-    locationId: 2,
-    userId: 1,
-    location: {
-      district: "hongdae",
-      store: "sampo"
-    },
-    teamimages: [
-      {
-        imgUrl: require("../../assets/team5-1.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team5-2.jpg")
-      },
-      {
-        imgUrl: require("../../assets/team5-3.jpg")
-      }
-    ]
-  }
-];
+var loginUser = {};
 
 export default class StoreScreen extends Component {
   constructor() {
     super();
     this.position = new Animated.ValueXY();
     this.state = {
+      teams: [],
       currentIndex: 0,
       pictrueIndex: 0
     };
@@ -215,6 +83,10 @@ export default class StoreScreen extends Component {
     };
   };
 
+  componentDidMount() {
+    this._getTeamsOnStore();
+  }
+
   componentWillMount() {
     this.PanResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
@@ -235,7 +107,8 @@ export default class StoreScreen extends Component {
               { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
-              }
+              },
+              this._snedToLike()
             );
           });
         }
@@ -264,11 +137,73 @@ export default class StoreScreen extends Component {
     });
   }
 
+  _getTeamsOnStore = async () => {
+    // const userToken = await AsyncStorage.getItem("userToken");
+    // console.log(userToken);
+    // sex, count, age, comment, teamname, locationId, userId
+
+    // test1 의 토큰을 가져왔다고 가정한다면
+    const userToken = "aasertetdbc-1-4-21-qqq-yyy-1-1-sampo".split("-");
+    console.log("-----------------TeamGetOnStore-----------------");
+    // 토큰을 항상 문자열 형태로 가져오기 때문에
+    // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
+    // 전역에서 loginUser 사용해야하기 때문에 변수타입 선언 안했음
+    loginUser = {
+      sex: Number(userToken[1]),
+      count: Number(userToken[2]),
+      age: Number(userToken[3]),
+      comment: userToken[4],
+      teamname: userToken[5],
+      locationId: Number(userToken[6]),
+      userId: Number(userToken[7]),
+      storeName: userToken[8]
+    };
+
+    // 스토어에서는 locationId로 Get해도 될 듯
+    // 초기버젼은 홍대입구 이외의 지역이 없어서 StoreName 으로 요청을 보내는듯
+    // 추후에 지역이 늘어날때를 대비하여 locationId로 요청 보내는게 좋을듯
+    fetch(`${url}/teams/${loginUser.storeName}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(result => result.json())
+      .then(teamList =>
+        // 접속한 유저와 다른 성별의 팀을 필터하여 setState
+        this.setState({
+          teams: teamList.filter(list => {
+            return loginUser.sex !== list.sex;
+          }),
+          teamName: loginUser.teamname,
+          teamComment: loginUser.comment
+        })
+      );
+  };
+
+  _snedToLike = () => {
+    const whoLikeId = loginUser.userId;
+    const toLikeId = this.state.teams[this.state.currentIndex].userId;
+
+    fetch(`${url}/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        whoLikeId: whoLikeId,
+        toLikeId: toLikeId,
+        // Store에서 멘트를 추가하는 기능을 만든다음 해당 멘트를 담을 것
+        introText: "저희 15번 자리입니다 눈길한번만 주세요"
+      })
+    });
+  };
+
   _onChangeIndex = e => {
     if (
       e === "rightArrow" &&
       this.state.pictrueIndex <
-        Teams[this.state.currentIndex].teamimages.length - 1
+        this.state.teams[this.state.currentIndex].teamimages.length - 1
     ) {
       this.setState({
         pictrueIndex: this.state.pictrueIndex + 1
@@ -282,195 +217,181 @@ export default class StoreScreen extends Component {
     }
   };
 
-  _onPressNope = () => {
-    Animated.spring(this.position, {
-      toValue: { x: -SCREEN_WIDTH - 100, y: -20 }
-    }).start(() => {
-      this.setState(
-        { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
-        () => {
-          this.position.setValue({ x: 0, y: 0 });
-        }
-      );
-    });
-  };
+  // _onPressNope = () => {
+  //   Animated.spring(this.position, {
+  //     toValue: { x: -SCREEN_WIDTH - 100, y: -20 }
+  //   }).start(() => {
+  //     this.setState(
+  //       { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+  //       () => {
+  //         this.position.setValue({ x: 0, y: 0 });
+  //       }
+  //     );
+  //   });
+  // };
 
-  _onPressLike = () => {
-    Animated.spring(this.position, {
-      toValue: { x: SCREEN_WIDTH + 100, y: -20 }
-    }).start(() => {
-      this.setState(
-        { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
-        () => {
-          this.position.setValue({ x: 0, y: 0 });
-        }
-      );
-    });
-  };
+  // _onPressLike = () => {
+  //   Animated.spring(this.position, {
+  //     toValue: { x: SCREEN_WIDTH + 100, y: -20 }
+  //   }).start(() => {
+  //     this.setState(
+  //       { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+  //       () => {
+  //         this.position.setValue({ x: 0, y: 0 });
+  //       }
+  //     );
+  //   });
+  // };
 
   _onPresRefresh = () => {
     this.setState({
       currentIndex: 0,
       pictrueIndex: 0
     });
+    this._getTeamsOnStore();
   };
 
   renderUsers = () => {
-    return Teams.map((item, i) => {
-      // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
-      if (i < this.state.currentIndex) {
-        return null;
-      } else if (i === this.state.currentIndex) {
-        return (
-          // 0보다 작 무조건
-
-          <Animated.View
-            {...this.PanResponder.panHandlers}
-            key={item.id}
-            style={[
-              this.rotateAndTranslate,
-              {
-                height: (SCREEN_HEIGHT * 3) / 4,
-                width: SCREEN_WIDTH,
-                padding: 10,
-                paddingBottom: 20,
-                position: "absolute"
-              }
-            ]}
-          >
-            <Animated.View
-              style={{ opacity: this.likeOpacity, ...styles.likeBorder }}
-            >
-              <Text style={styles.likeText}>LIKE</Text>
-            </Animated.View>
+    return this.state.teams
+      .map((item, i) => {
+        // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
+        if (i < this.state.currentIndex) {
+          return null;
+        } else if (i === this.state.currentIndex) {
+          return (
+            // 0보다 작 무조건
 
             <Animated.View
-              style={{ opacity: this.dislikeOpacity, ...styles.dislikeBorder }}
+              {...this.PanResponder.panHandlers}
+              key={item.id}
+              style={[
+                this.rotateAndTranslate,
+                {
+                  height: (SCREEN_HEIGHT * 4) / 4,
+                  width: SCREEN_WIDTH,
+                  padding: 10,
+                  paddingBottom: 20,
+                  position: "absolute"
+                }
+              ]}
             >
-              <Text style={styles.dislikeText}>NOPE</Text>
-            </Animated.View>
+              <Animated.View
+                style={{ opacity: this.likeOpacity, ...styles.likeBorder }}
+              >
+                <Text style={styles.likeText}>LIKE</Text>
+              </Animated.View>
 
-            <Image
-              style={{
-                flex: 1,
-                height: "100%",
-                width: "100%",
-                resizeMode: "cover",
-                borderRadius: 20
-              }}
-              source={item.teamimages[this.state.pictrueIndex].imgUrl}
-            />
-            <Animated.View
-              style={{
-                opacity: this.titleOpacity,
-                zIndex: 1000,
-                position: "absolute",
-                marginTop: "96%",
-                height: 200,
-                marginLeft: "5%"
-              }}
-            >
-              <Text
+              <Animated.View
                 style={{
-                  color: "floralwhite",
-                  fontWeight: "bold",
-                  fontSize: 20
+                  opacity: this.dislikeOpacity,
+                  ...styles.dislikeBorder
                 }}
               >
-                트벤져스
-              </Text>
-              <Text
+                <Text style={styles.dislikeText}>NOPE</Text>
+              </Animated.View>
+
+              <Image
                 style={{
-                  color: "floralwhite",
-                  fontWeight: "bold",
-                  fontSize: 15
+                  flex: 1,
+                  height: "100%",
+                  width: "100%",
+                  resizeMode: "cover",
+                  borderRadius: 20
+                }}
+                source={{
+                  uri: `${item.teamimages[this.state.pictrueIndex].imgUrl}`
+                }}
+              />
+              <Animated.View
+                style={{
+                  opacity: this.titleOpacity,
+                  zIndex: 1000,
+                  position: "absolute",
+                  marginTop: "96%",
+                  height: 200,
+                  marginLeft: "5%"
                 }}
               >
-                한짝가능요
-              </Text>
+                <Text
+                  style={{
+                    color: "floralwhite",
+                    fontWeight: "bold",
+                    fontSize: 20
+                  }}
+                >
+                  {this.state.teams[this.state.currentIndex].teamname}
+                </Text>
+                <Text
+                  style={{
+                    color: "floralwhite",
+                    fontWeight: "bold",
+                    fontSize: 15
+                  }}
+                >
+                  {this.state.teams[this.state.currentIndex].comment}
+                </Text>
+              </Animated.View>
             </Animated.View>
-          </Animated.View>
-        );
-      } else {
-        return (
-          <Animated.View
-            key={item.id}
-            style={[
-              {
-                opacity: this.nextCardOpacity,
-                transform: [{ scale: this.nextCardScale }],
-                height: (SCREEN_HEIGHT * 3) / 4,
-                width: SCREEN_WIDTH,
-                padding: 10,
-                paddingBottom: 20,
-                position: "absolute"
-              }
-            ]}
-          >
-            <Image
-              style={{
-                flex: 1,
-                height: null,
-                width: null,
-                resizeMode: "cover",
-                borderRadius: 20
-              }}
-              source={item.teamimages[0].imgUrl}
-            />
-          </Animated.View>
-        );
-      }
-    }).reverse();
+          );
+        } else {
+          return (
+            <Animated.View
+              key={item.id}
+              style={[
+                {
+                  opacity: this.nextCardOpacity,
+                  transform: [{ scale: this.nextCardScale }],
+                  height: (SCREEN_HEIGHT * 3) / 4,
+                  width: SCREEN_WIDTH,
+                  padding: 10,
+                  paddingBottom: 20,
+                  position: "absolute"
+                }
+              ]}
+            >
+              <Image
+                style={{
+                  flex: 1,
+                  height: null,
+                  width: null,
+                  resizeMode: "cover",
+                  borderRadius: 20
+                }}
+                source={{ uri: `${item.teamimages[0].imgUrl}` }}
+              />
+            </Animated.View>
+          );
+        }
+      })
+      .reverse();
   };
 
   render() {
     return (
       <View style={{ ...styles.backGround }}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "space-between",
-            alignContent: "center"
-          }}
-        >
-          <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>
-            {this.renderUsers()}
-          </View>
-          <View style={styles.arrow}>
-            <AntDesign
-              id="leftArrow"
-              name="leftcircleo"
-              style={styles.leftArrow}
-              onPress={() => this._onChangeIndex("leftArrow")}
-            />
-            <View>
-              <Ionicons
-                name="md-refresh"
-                style={styles.refreshButton}
-                onPress={() => this._onPresRefresh()}
-              />
-            </View>
-            <AntDesign
-              id="rightArrow"
-              name="rightcircleo"
-              style={styles.rigthArrow}
-              onPress={() => this._onChangeIndex("rightArrow")}
-            />
-          </View>
-          {/* <View style={{ ...styles.likeButton }}>
-            <Text onPress={() => this._onPressLike()} style={styles.likeText}>
-              LIKE
-            </Text>
-          </View>
+        <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>
+          {this.renderUsers()}
+        </View>
+        <View style={styles.arrow}>
+          <AntDesign
+            id="leftArrow"
+            name="leftcircleo"
+            style={styles.leftArrow}
+            onPress={() => this._onChangeIndex("leftArrow")}
+          />
           <View>
-            <Ionicons name="md-refresh" style={styles.refreshButton} onPress={() => this._onPresRefresh()} />
+            <Ionicons
+              name="md-refresh"
+              style={styles.refreshButton}
+              onPress={() => this._onPresRefresh()}
+            />
           </View>
-          <View style={{ ...styles.disLikeButton }}>
-            <Text onPress={() => this._onPressNope()} style={styles.dislikeText}>
-              NOPE
-            </Text>
-          </View> */}
+          <AntDesign
+            id="rightArrow"
+            name="rightcircleo"
+            style={styles.rigthArrow}
+            onPress={() => this._onChangeIndex("rightArrow")}
+          />
         </View>
       </View>
     );
