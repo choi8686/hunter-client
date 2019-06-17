@@ -75,9 +75,9 @@ export default class SetStore extends Component {
   };
 
   _goDistrict = async () => {
+    console.log("gogo pic1");
     const { data } = this.state;
-
-    await this.props.navigation.navigate("SetTeamPicture1", { data });
+    await this.props.navigation.navigate("SetTeamPicture", { data });
   };
 
   _submit = () => {
