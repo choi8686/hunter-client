@@ -131,27 +131,7 @@ export default class TeamPicture1 extends Component {
       console.log({ e });
       alert(" 또안되네시발 ");
     } finally {
-      const {
-        averageAge,
-        comment,
-        count,
-        image,
-        locationId,
-        sex,
-        teamname,
-        userId
-      } = this.state;
-
-      this.props.navigation.navigate("Home", {
-        sex,
-        teamname,
-        count,
-        averageAge,
-        comment,
-        image,
-        userId,
-        locationId
-      });
+      this.props.navigation.navigate("Home");
       console.log("upload!");
     }
   };
@@ -159,6 +139,7 @@ export default class TeamPicture1 extends Component {
   componentDidMount = async () => {
     let token = await AsyncStorage.getItem("userToken");
   };
+
   render() {
     console.log(
       this.props.navigation.state.params.data,
