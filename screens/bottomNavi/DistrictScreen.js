@@ -138,14 +138,13 @@ export default class DistrictScreen extends Component {
   }
 
   _getTeamsOnDistrict = async () => {
-    // let userToken = await AsyncStorage.getItem("userToken");
-    // userToken = userToken.split("-");
-    // console.log(userToken, "userToken DistrictScreen 141 lines");
-    // console.log(userToken);
-    // sex, count, age, comment, teamname, locationId, userId
+    let userToken = await AsyncStorage.getItem("userToken");
+    userToken = userToken.split("-");
+    console.log(userToken, "userToken DistrictScreen 141 lines");
+    console.log(userToken);
+    // sex, count, age, comment, teamname, locationId, userId;
 
     // test1 의 토큰을 가져왔다고 가정한다면
-    const userToken = "aasertetdbc-1-4-21-qqq-yyy-1-1-1-1".split("-");
     console.log("-----------------TeamGetOnDistrict-----------------");
     // 토큰을 항상 문자열 형태로 가져오기 때문에
     // 유저 정보를 좀더 심플하게 저장할수는 없을까...?

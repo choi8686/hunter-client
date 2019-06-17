@@ -11,67 +11,20 @@ import SettingScreen from "../screens/bottomNavi/SettingScreen";
 import ConditionsScreen from "../components/bottomNavi/Conditions";
 import ChatScreen from "../screens/chat/Chat";
 import ChatListScreen from "../screens/chatlist/ChatList";
-import LetterScreen from "../screens/letter/Letter";
+
 import RenewProfileScreen from "../screens/bottomNavi/RenewProfile";
 import { FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "react-native-linear-gradient";
-
-class GradientHeader extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <View style={{ backgroundColor: "#eee" }}>
-        <LinearGradient
-          colors={["#00a8c3", "#00373f"]}
-          style={{
-            flex: 1,
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingTop: "10%",
-            width: "100%",
-            left: 0,
-            right: 0,
-            top: 0
-          }}
-        />
-        <Header {...this.props} style={{ backgroundColor: "transparent" }} />
-      </View>
-    );
-  }
-}
 
 //District 스텍
 const DistrictStack = createStackNavigator({
   DistrictHome: {
     screen: DistrictScreen,
     navigationOptions: {
-      // header: props => <GradientHeader {...props} />
       headerStyle: {
         backgroundColor: "#FE7B53"
       }
     }
-    // headerStyle: {
-    //   backgroundColor: (
-    //     <LinearGradient
-    //       colors={["#00a8c3", "#00373f"]}
-    // style={{
-    //   flex: 1,
-    //   flexDirection: "column",
-    //   alignItems: "center",
-    //   justifyContent: "center",
-    //   paddingTop: "10%",
-    //   width: "100%",
-    //   left: 0,
-    //   right: 0,
-    //   top: 0
-    // }}
-    //     />
-    //   )
-    // }
   }
 });
 
@@ -194,9 +147,6 @@ const HomeStack = createStackNavigator(
     },
     Chat: {
       screen: ChatScreen
-    },
-    Letter: {
-      screen: LetterScreen
     }
   },
   {

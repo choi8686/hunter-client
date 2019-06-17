@@ -8,15 +8,16 @@ export default class TopBarRightIcons extends React.Component {
     this.state = {};
   }
   movetoLetterScreen = async () => {
-    let userToken = await AsyncStorage.getItem("userToken");
-    let userTokenArray = userToken.split("-");
+    alert("쪽지스크린이와야함");
+    // let userToken = await AsyncStorage.getItem("userToken");
+    // let userTokenArray = userToken.split("-");
 
-    //sex, count, age, comment, teamname, locationId, userId, id
-    const teamId = userTokenArray[7];
-    const userId = userTokenArray[6];
-    const teamName = userTokenArray[4];
+    // //sex, count, age, comment, teamname, locationId, userId, id
+    // const teamId = userTokenArray[7];
+    // const userId = userTokenArray[6];
+    // const teamName = userTokenArray[4];
 
-    this.props.navigation.navigate("Letter", { teamId, userId, teamName });
+    // this.props.navigation.navigate("Letter", { teamId, userId, teamName });
   };
   movetoChatList = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
