@@ -141,10 +141,7 @@ export default class StoreScreen extends Component {
     let userToken = await AsyncStorage.getItem("userToken");
     userToken = userToken.split("-");
 
-    // sex, count, age, comment, teamname, locationId, userId
-
-    // test1 의 토큰을 가져왔다고 가정한다면
-
+    console.log(userToken);
     console.log("-----------------TeamGetOnStore-----------------");
     // 토큰을 항상 문자열 형태로 가져오기 때문에
     // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
@@ -155,15 +152,13 @@ export default class StoreScreen extends Component {
       age: Number(userToken[3]),
       comment: userToken[4],
       teamname: userToken[5],
-      locationId: Number(userToken[6]),
-      userId: Number(userToken[7]),
-      storeName: "sampo"
+      districtId: Number(userToken[6]),
+      storeId: Number(userToken[7]),
+      userId: Number(userToken[8]),
+      teamId: Number(userToken[9])
     };
 
-    // 스토어에서는 locationId로 Get해도 될 듯
-    // 초기버젼은 홍대입구 이외의 지역이 없어서 StoreName 으로 요청을 보내는듯
-    // 추후에 지역이 늘어날때를 대비하여 locationId로 요청 보내는게 좋을듯
-    fetch(`${url}/teams/${loginUser.storeName}`, {
+    fetch(`${url}/teams/store/${loginUser.storeId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
