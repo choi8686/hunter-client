@@ -136,13 +136,24 @@ export default class DistrictScreen extends Component {
   }
 
   _getTeamsOnDistrict = async () => {
+<<<<<<< HEAD
     const getToken = await AsyncStorage.getItem("userToken");
     const userToken = getToken.split("-");
     console.log(userToken);
     // console.log("await", test);
+=======
+    let userToken = await AsyncStorage.getItem("userToken");
+    userToken = userToken.split("-");
+    console.log(userToken, "userToken DistrictScreen 141 lines");
+    // console.log(userToken);
+>>>>>>> 71f508d1b22373b93d073ec6080a53b6e0847fcb
     // sex, count, age, comment, teamname, locationId, userId
     // test1 의 토큰을 가져왔다고 가정한다면
+<<<<<<< HEAD
     // const userToken = "aasertetdbc-0-4-21-qqq-yyy-1-2-hongdea".split("-");
+=======
+    // const userToken = "aasertetdbc-1-4-21-qqq-yyy-1-1-hongdea".split("-");
+>>>>>>> 71f508d1b22373b93d073ec6080a53b6e0847fcb
     console.log("-----------------TeamGetOnDistrict-----------------");
     // 토큰을 항상 문자열 형태로 가져오기 때문에
     // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
@@ -155,7 +166,11 @@ export default class DistrictScreen extends Component {
       teamname: userToken[5],
       locationId: Number(userToken[6]),
       userId: Number(userToken[7]),
+<<<<<<< HEAD
       district: "hongdea"
+=======
+      district: "hongdae"
+>>>>>>> 71f508d1b22373b93d073ec6080a53b6e0847fcb
     };
     console.log(loginUser);
     // 토큰에 location.district 의 값을 추가해야 할것 같다.. 혁님 파이팅

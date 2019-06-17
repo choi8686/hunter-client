@@ -117,6 +117,10 @@ export default class SignUp extends Component {
             }).then(async res => {
               if (res.ok) {
                 if (JSON.parse(res._bodyInit)) {
+                  console.log(
+                    JSON.parse(res._bodyInit),
+                    "hihihihihihihihihihiFUCKFUCKFUCKFUKC"
+                  );
                   const teamInfo = JSON.parse(res._bodyInit).teams[0];
                   await this.setState({
                     teamInfo: teamInfo
@@ -141,9 +145,9 @@ export default class SignUp extends Component {
                       "-" +
                       teamInfo.id
                   );
-                  this._signInAsync();
+                  await this._signInAsync();
                 } else {
-                  this._signInAsync();
+                  await this._signInAsync();
                 }
               }
             });
