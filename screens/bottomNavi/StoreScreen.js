@@ -260,8 +260,6 @@ export default class StoreScreen extends Component {
           return null;
         } else if (i === this.state.currentIndex) {
           return (
-            // 0보다 작 무조건
-
             <Animated.View
               {...this.PanResponder.panHandlers}
               key={item.id}

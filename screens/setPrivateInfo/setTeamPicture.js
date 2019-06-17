@@ -33,17 +33,17 @@ const NextButton = props => {
   );
 };
 
-const Dot = props => {
-  let currentStyle = props.active ? styles.dotActive : styles.dotInactive;
+// const Dot = props => {
+//   let currentStyle = props.active ? styles.dotActive : styles.dotInactive;
 
-  return (
-    <TouchableOpacity onPress={props.next}>
-      <View style={[styles.dot, currentStyle]} />
-    </TouchableOpacity>
-  );
-};
+//   return (
+//     <TouchableOpacity onPress={props.next}>
+//       <View style={[styles.dot, currentStyle]} />
+//     </TouchableOpacity>
+//   );
+// };
 
-export default class TeamPicture1 extends Component {
+export default class TeamPicture extends Component {
   state = {
     image: {
       0: null,
@@ -58,22 +58,7 @@ export default class TeamPicture1 extends Component {
     userId: this.props.navigation.state.params.data.userId,
     locationId: this.props.navigation.state.params.data.locationId,
     teamId: this.props.navigation.state.params.data.teamId
-
-    // image: {
-    //   0: null,
-    //   1: null,
-    //   2: null
-    // },
-    // sex: 1,
-    // teamname: "yyy",
-    // count: 4,
-    // averageAge: 21,
-    // comment: "qqq",
-    // userId: 1,
-    // locationId: 1,
-    // teamId: 1
   };
-
   _uploadImageAsync = async uri => {
     let apiUrl = `${url}/upload`;
     let uriParts = uri.split(".");
@@ -93,7 +78,6 @@ export default class TeamPicture1 extends Component {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
         teamId: this.props.navigation.state.params.data.teamId
-        // teamId: 1
       }
     };
     return await fetch(apiUrl, options);
@@ -136,66 +120,18 @@ export default class TeamPicture1 extends Component {
     }
   };
 
-  componentDidMount = async () => {
-    let token = await AsyncStorage.getItem("userToken");
-  };
-
   render() {
-    console.log(
-      this.props.navigation.state.params.data,
-      "hihihih setTeamPicture1.js 133lines"
-    );
-
-    const {
-      sex,
-      teamname,
-      count,
-      averageAge,
-      comment,
-      image,
-      userId,
-      locationId
-    } = this.state;
+    const { image } = this.state;
     const firstImage = image[0];
     const secondImage = image[1];
     const thirdImage = image[2];
+
     return (
       <LinearGradient
         colors={["coral", "#f44283", "#f441bb", "#8341f4"]}
         style={styles.backGround}
       >
         <View style={styles.container}>
-          <View style={styles.dotContainer}>
-            <Dot active={true} />
-            <Dot
-              next={() => {
-                this.props.navigation.navigate("SetTeamPicture2", {
-                  sex,
-                  teamname,
-                  count,
-                  averageAge,
-                  comment,
-                  image,
-                  userId,
-                  locationId
-                });
-              }}
-            />
-            <Dot
-              next={() => {
-                this.props.navigation.navigate("SetTeamPicture3", {
-                  sex,
-                  teamname,
-                  count,
-                  averageAge,
-                  comment,
-                  image,
-                  userId,
-                  locationId
-                });
-              }}
-            />
-          </View>
           <View style={styles.titleContainer}>
             <Title name="팀 사진을 저장해주세요" />
             <Title name="(사진 누르면 수정가능)" />
@@ -215,10 +151,7 @@ export default class TeamPicture1 extends Component {
                 onPress={() => this._pickImage(0)}
                 lineHeight="300"
               >
-                {/* <Text style={styles.text}> */}
                 <Icon name="image" color="#00aced" size={300} />
-
-                {/* </Text> */}
               </TouchableOpacity>
             ) : (
               <TouchableOpacity onPress={() => this._pickImage(0)}>
@@ -241,10 +174,7 @@ export default class TeamPicture1 extends Component {
                 onPress={() => this._pickImage(1)}
                 lineHeight="300"
               >
-                {/* <Text style={styles.text}> */}
                 <Icon name="image" color="#00aced" size={300} />
-
-                {/* </Text> */}
               </TouchableOpacity>
             ) : (
               <TouchableOpacity onPress={() => this._pickImage(1)}>
@@ -267,10 +197,7 @@ export default class TeamPicture1 extends Component {
                 onPress={() => this._pickImage(2)}
                 lineHeight="300"
               >
-                {/* <Text style={styles.text}> */}
                 <Icon name="image" color="#00aced" size={300} />
-
-                {/* </Text> */}
               </TouchableOpacity>
             ) : (
               <TouchableOpacity onPress={() => this._pickImage(2)}>
