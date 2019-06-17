@@ -1,16 +1,16 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
-import ChatListBox from "../../components/chatlist/ChatListBox";
-import fakeListBox from "../../components/chatlist/ChatListFake";
+// import ChatListBox from "../../components/chatlist/ChatListBox";
+// import fakeListBox from "../../components/chatlist/ChatListFake";
 import { url } from "../../url";
 
-export default class ChatList extends React.Component {
+export default class Letter extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      chatList: []
+      letterList = {}
     };
   }
 

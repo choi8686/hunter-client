@@ -2,7 +2,7 @@ import React from "react";
 import { Text, StyleSheet, View } from "react-native";
 import { ListItem } from "react-native-elements";
 
-class ChatListBox extends React.Component {
+class LetterBox extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ChatListBox;
+export default LetterBox;

@@ -136,18 +136,14 @@ export default class DistrictScreen extends Component {
   }
 
   _getTeamsOnDistrict = async () => {
-    let userToken = await AsyncStorage.getItem("userToken");
-    userToken = userToken.split("-");
-<<<<<<< HEAD
-    console.log(userToken);
-=======
-    console.log(userToken, "userToken DistrictScreen 141 lines");
+    // let userToken = await AsyncStorage.getItem("userToken");
+    // userToken = userToken.split("-");
+    // console.log(userToken, "userToken DistrictScreen 141 lines");
     // console.log(userToken);
->>>>>>> 71f508d1b22373b93d073ec6080a53b6e0847fcb
     // sex, count, age, comment, teamname, locationId, userId
 
     // test1 의 토큰을 가져왔다고 가정한다면
-    // const userToken = "aasertetdbc-1-4-21-qqq-yyy-1-1-hongdea".split("-");
+    const userToken = "aasertetdbc-1-4-21-qqq-yyy-1-1-1-1".split("-");
     console.log("-----------------TeamGetOnDistrict-----------------");
     // 토큰을 항상 문자열 형태로 가져오기 때문에
     // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
@@ -158,17 +154,14 @@ export default class DistrictScreen extends Component {
       age: Number(userToken[3]),
       comment: userToken[4],
       teamname: userToken[5],
-      locationId: Number(userToken[6]),
-      userId: Number(userToken[7]),
-<<<<<<< HEAD
-      // district: userToken[8]
-=======
->>>>>>> 71f508d1b22373b93d073ec6080a53b6e0847fcb
-      district: "hongdae"
+      districtId: Number(userToken[6]),
+      storeId: Number(userToken[7]),
+      userId: Number(userToken[8]),
+      teamId: Number(userToken[9])
     };
 
     // 토큰에 location.district 의 값을 추가해야 할것 같다.. 혁님 파이팅
-    fetch(`${url}/teams/district/${loginUser.district}`, {
+    fetch(`${url}/teams/district/1`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"

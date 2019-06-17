@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Text, TouchableHighlight, View, Alert } from "react-native";
+import { Text, TouchableHighlight, View, Alert } from "react-native";
 
 class ModalScreen extends Component {
   state = {
