@@ -54,7 +54,10 @@ export default class SetDistrict extends Component {
       userId
     } = this.state;
     return (
-      <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
+      <LinearGradient
+        colors={["coral", "#f44283", "#f441bb", "#8341f4"]}
+        style={styles.backGround}
+      >
         <View style={styles.container}>
           <Title name="현재 위치를 설정해주세요" style={styles.title} />
           <View style={styles.districtLists}>

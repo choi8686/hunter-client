@@ -6,12 +6,10 @@ import ChooseSexScreen from "../screens/setPrivateInfo/setSex";
 import SetTeamInfoScreen1 from "../screens/setPrivateInfo/setTeamInfo1";
 import SetTeamInfoScreen2 from "../screens/setPrivateInfo/setTeamInfo2";
 
-import SetTeamPictureScreen1 from "../screens/setPrivateInfo/setTeamPicture1";
-import SetTeamPictureScreen2 from "../screens/setPrivateInfo/setTeamPicture2";
-import SetTeamPictureScreen3 from "../screens/setPrivateInfo/setTeamPicture3";
+import SetTeamPictureScreen from "../screens/setPrivateInfo/setTeamPicture";
 import GetPictureScreen from "../components/getPicture/getPicture";
 
-//팀생성 스택 - ChooseSex부터 SetTeamPicture3까지 담겨있는 스택
+//팀생성 스택 - ChooseSex부터 SetTeamPicture 까지 담겨있는 스택
 const createTeamStack = createStackNavigator(
   {
     ChooseSex: {
@@ -32,20 +30,8 @@ const createTeamStack = createStackNavigator(
         header: null
       }
     },
-    SetTeamPicture1: {
-      screen: SetTeamPictureScreen1,
-      navigationOptions: {
-        header: null
-      }
-    },
-    SetTeamPicture2: {
-      screen: SetTeamPictureScreen2,
-      navigationOptions: {
-        header: null
-      }
-    },
-    SetTeamPicture3: {
-      screen: SetTeamPictureScreen3,
+    SetTeamPicture: {
+      screen: SetTeamPictureScreen,
       navigationOptions: {
         header: null
       }
