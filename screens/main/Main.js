@@ -24,40 +24,42 @@ export default class Main extends Component {
   // 처음 접속시, userToken이 있으면 database에서 나의 해당정보를 가져오고 그 정보를 가지고 DistrictScreen에 접속한다.
   // 데이터 베이스에서 해당정보를 가지고 와야 홍대의 사람들을 보여줄지, 이태원의 사람들을 보여줄지 그리고 또 홍대의 그린라이트를 보여줄지, 한신포차를 보여줄지 알 수 있다.
   _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem("userToken");
-    const userTokenArr = userToken.split("-");
-    "aasertetdbc" +
-      sex +
-      count +
-      age +
-      comment +
-      teamname +
-      locationId +
-      userId;
-    //유저의 아이디
-    const userId = userTokenArr[userTokenArr.length - 1];
-    const locationId = userTokenArr[userTokenArr.length - 2];
-    const teamname = userTokenArr[userTokenArr.length - 3];
-    const comment = userTokenArr[userTokenArr.length - 4];
-    const age = userTokenArr[userTokenArr.length - 5];
-    const count = userTokenArr[userTokenArr.length - 5];
-    const sex = userTokenArr[userTokenArr.length - 6];
+    if (await AsyncStorage.getItem("userToken")) {
+      const userToken = await AsyncStorage.getItem("userToken");
+      console.log(userToken, "111111111111111111111111111111111111111111");
+      const userTokenArr = userToken.split("-");
+      "aasertetdbc" +
+        sex +
+        count +
+        age +
+        comment +
+        teamname +
+        locationId +
+        userId;
+      //유저의 아이디
+      const userId = userTokenArr[userTokenArr.length - 1];
+      const locationId = userTokenArr[userTokenArr.length - 2];
+      const teamname = userTokenArr[userTokenArr.length - 3];
+      const comment = userTokenArr[userTokenArr.length - 4];
+      const age = userTokenArr[userTokenArr.length - 5];
+      const count = userTokenArr[userTokenArr.length - 5];
+      const sex = userTokenArr[userTokenArr.length - 6];
+      //team아디
+      const id = userTokenArr[userTokenArr.length - 7];
 
-    //team아디
-    const id = userTokenArr[userTokenArr.length - 7];
-
-    userId && locationId && teamname && comment && age && count && sex && id
-      ? this.props.navigation.navigate("Home", {
-          userId,
-          locationId,
-          teamname,
-          comment,
-          age,
-          count,
-          sex,
-          id
-        })
-      : this.props.navigation.navigate("SignIn");
+      this.props.navigation.navigate("Home", {
+        userId,
+        locationId,
+        teamname,
+        comment,
+        age,
+        count,
+        sex,
+        id
+      });
+    } else {
+      this.props.navigation.navigate("SignIn");
+    }
   };
 
   goSignUp = () => {
