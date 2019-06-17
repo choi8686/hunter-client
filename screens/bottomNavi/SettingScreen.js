@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  AsyncStorage
+} from "react-native";
 import { LinearGradient } from "expo";
 import { Avatar, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -27,6 +34,14 @@ export default class SettingScreen extends React.Component {
       case 4:
         alert("계정삭제");
     }
+  };
+
+  _handleLogOut = async () => {
+    AsyncStorage.removeItem("userToken");
+    let session = await AsyncStorage.getItem("userToken");
+    console.log(session, "세션없냐 개새꺄 SettingScreen.js 35 lines !!!!!!!");
+    console.log(this.props);
+    this.props.navigation.navigate("SignIn");
   };
 
   render() {
@@ -94,9 +109,7 @@ export default class SettingScreen extends React.Component {
                 color: "pink",
                 marginBottom: "5%"
               }}
-              onPress={() => {
-                this._handleButton(3);
-              }}
+              onPress={this._handleLogOut}
               containerViewStyle={{ width: "100%" }}
               buttonStyle={{ width: "100%" }}
             />

@@ -9,17 +9,16 @@ export default class TopBarRightIcons extends React.Component {
   }
   openNewsModal = () => {};
 
-  movetoChatList = async () => {
-    const userToken = await AsyncStorage.getItem("userToken");
-    console.log(userToken);
-    const userTokenArr = userToken.split("-");
+  movetoChatList = () => {
+    console.log(11111111111);
+    // let userToken = await AsyncStorage.getItem("userToken");
+    // let userTokenArray = userToken.split("-");
 
-    //유저의 아이디
-    const userId = userTokenArr[userTokenArr.length - 1];
-    //team아디
-    const id = userTokenArr[userTokenArr.length - 7];
-
-    this.props.navigation.navigate("ChatList", { userId, id });
+    // const teamId = userTokenArray[7];
+    // const userId = userTokenArray[6];
+    // const teamName = userTokenArray[5];
+    this.props.navigation.push("ChatList");
+    // this.props.navigation.navigate("ChatList", { teamId, userId, teamName });
   };
 
   render() {

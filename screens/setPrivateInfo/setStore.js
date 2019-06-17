@@ -118,6 +118,8 @@ export default class SetStore extends Component {
             "-" +
             teamInfo.teamname +
             "-" +
+            teamInfo.locationId +
+            "-" +
             teamInfo.userId +
             "-" +
             teamInfo.id

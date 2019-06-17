@@ -1,8 +1,5 @@
-import { createAppContainer, createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 
-import MainScreen from "../screens/main/Main";
-import SignUpScreen from "../screens/signup/SignUp";
-import SignInScreen from "../screens/signin/SignIn";
 import ChooseDistrictScreen from "../screens/setPrivateInfo/setDistrict";
 import ChooseStoreScreen from "../screens/setPrivateInfo/setStore";
 import ChooseSexScreen from "../screens/setPrivateInfo/setSex";
@@ -13,10 +10,11 @@ import SetTeamPictureScreen1 from "../screens/setPrivateInfo/setTeamPicture1";
 import SetTeamPictureScreen2 from "../screens/setPrivateInfo/setTeamPicture2";
 import SetTeamPictureScreen3 from "../screens/setPrivateInfo/setTeamPicture3";
 import GetPictureScreen from "../components/getPicture/getPicture";
-import TabNavigator from "./TapNavigations";
 
-const RootStack = createStackNavigator(
+//팀생성 스택 - ChooseSex부터 SetTeamPicture3까지 담겨있는 스택
+const createTeamStack = createStackNavigator(
   {
+<<<<<<< HEAD:navigations/Navigations.js
     Home: {
       screen: TabNavigator,
       navigationOptions: {
@@ -53,6 +51,8 @@ const RootStack = createStackNavigator(
         header: null
       }
     },
+=======
+>>>>>>> 2859dd0b9f7a6accb65fc922ef8d6a3ad1af6b80:navigations/CreateTeamStack.js
     ChooseSex: {
       screen: ChooseSexScreen,
       navigationOptions: {
@@ -106,20 +106,8 @@ const RootStack = createStackNavigator(
     }
   },
   {
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: "#28F1A6",
-        elevation: 0,
-        shadowOpacity: 0
-      },
-      headerTintColor: "#333333",
-      headerTitleStyle: {
-        fontWeight: "bold",
-        color: "#ffffff",
-        marginLeft: 25
-      }
-    }
+    initialRouteName: "ChooseSex"
   }
 );
 
-export default createAppContainer(RootStack);
+export default createTeamStack;
