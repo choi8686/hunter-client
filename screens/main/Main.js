@@ -33,22 +33,25 @@ export default class Main extends Component {
         age +
         comment +
         teamname +
-        locationId +
+        districtId +
+        storeId +
         userId;
       //유저의 아이디
       const userId = userTokenArr[userTokenArr.length - 1];
-      const locationId = userTokenArr[userTokenArr.length - 2];
-      const teamname = userTokenArr[userTokenArr.length - 3];
-      const comment = userTokenArr[userTokenArr.length - 4];
-      const age = userTokenArr[userTokenArr.length - 5];
-      const count = userTokenArr[userTokenArr.length - 5];
-      const sex = userTokenArr[userTokenArr.length - 6];
+      const storeId = userTokenArr[userTokenArr.length - 2];
+      const districtId = userTokenArr[userTokenArr.length - 3];
+      const teamname = userTokenArr[userTokenArr.length - 4];
+      const comment = userTokenArr[userTokenArr.length - 5];
+      const age = userTokenArr[userTokenArr.length - 6];
+      const count = userTokenArr[userTokenArr.length - 7];
+      const sex = userTokenArr[userTokenArr.length - 8];
       //team아디
-      const id = userTokenArr[userTokenArr.length - 7];
+      const id = userTokenArr[userTokenArr.length - 9];
 
       this.props.navigation.navigate("Home", {
         userId,
-        locationId,
+        storeId,
+        districtId,
         teamname,
         comment,
         age,

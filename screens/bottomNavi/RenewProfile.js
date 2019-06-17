@@ -27,14 +27,15 @@ export default class RenewProfile extends React.Component {
     userToken = await AsyncStorage.getItem("userToken");
     userTokenArr = userToken.split("-");
     this.setState({
-      sex: userTokenArr[userTokenArr.length - 8],
-      count: userTokenArr[userTokenArr.length - 7],
-      age: userTokenArr[userTokenArr.length - 6],
-      comment: userTokenArr[userTokenArr.length - 5],
-      teamname: userTokenArr[userTokenArr.length - 4],
-      locationId: userTokenArr[userTokenArr.length - 3],
+      sex: userTokenArr[userTokenArr.length - 9],
+      count: userTokenArr[userTokenArr.length - 8],
+      age: userTokenArr[userTokenArr.length - 7],
+      comment: userTokenArr[userTokenArr.length - 6],
+      teamname: userTokenArr[userTokenArr.length - 5],
+      districtId: userTokenArr[userTokenArr.length - 4],
+      storeId: userTokenArr[userTokenArr.length - 3],
       userId: userTokenArr[userTokenArr.length - 2],
-      teamInfo: userTokenArr[userTokenArr.length - 1]
+      id: userTokenArr[userTokenArr.length - 1]
     });
   };
 
@@ -46,10 +47,11 @@ export default class RenewProfile extends React.Component {
     comment: null,
     teamname: null,
 
-    locationId: null,
+    districtId: null,
+    storeId: null,
     userId: null,
 
-    teamInfo: null
+    id: null
   };
 
   //개인의 유저 id 를 통해 데이터를 끌고 오는게 먼저!
