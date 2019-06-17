@@ -6,15 +6,37 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  icon
 } from "react-native";
+import { Input, Icon, Button, SearchBar } from "react-native-elements";
 import IconBadge from "react-native-icon-badge";
 
 import { url } from "../../url";
 
 export default class RenewProfile extends React.Component {
   //개인 프로필창을 클릭 시, 제일 먼저 실행되는 함수! 데이터베이스에서 개인프로필에 대한 정보를 가져온다.
-  //혹은 로그인 했을때부터 data에 props로 계속 가지고 다녀 전달받는다.
+
+  constructor() {
+    super();
+    //ㅇㅏ래 함수는 componentDidmount가 실행되기 전에 필요한 데이터들을 미리 정의시키져주기 위함이다.
+    this._getUserToken();
+  }
+
+  _getUserToken = async () => {
+    userToken = await AsyncStorage.getItem("userToken");
+    userTokenArr = userToken.split("-");
+    this.setState({
+      sex: userTokenArr[userTokenArr.length - 8],
+      count: userTokenArr[userTokenArr.length - 7],
+      age: userTokenArr[userTokenArr.length - 6],
+      comment: userTokenArr[userTokenArr.length - 5],
+      teamname: userTokenArr[userTokenArr.length - 4],
+      locationId: userTokenArr[userTokenArr.length - 3],
+      userId: userTokenArr[userTokenArr.length - 2],
+      teamInfo: userTokenArr[userTokenArr.length - 1]
+    });
+  };
 
   state = {
     sex: null,
@@ -70,6 +92,9 @@ export default class RenewProfile extends React.Component {
     console.log("ok change your Profile Picture");
   };
 
+  _saveNewProfile = () => {
+    console.log("_saveNewProfile");
+  };
   //프로필을 수정할 때 필요한 함수
   _renewProfileData = () => {
     fetch(`${url}/users/`, {
@@ -93,36 +118,46 @@ export default class RenewProfile extends React.Component {
     });
   };
 
-  componentDidMount = async () => {
-    let userToken = await AsyncStorage.getItem("userToken");
-    let userTokenArr = userToken.split("-");
+  // 개인프로필정보를 onChange를 통해 바꾸는 함수
+  _changeTeamNameValue = e => {
+    console.log(e, "!!!!!!!!!!!");
+
     this.setState({
-      sex: userTokenArr[userTokenArr.length - 7],
-      count: userTokenArr[userTokenArr.length - 6],
-      age: userTokenArr[userTokenArr.length - 5],
-      comment: userTokenArr[userTokenArr.length - 4],
-      teamname: userTokenArr[userTokenArr.length - 3],
-
-      userId: userTokenArr[userTokenArr.length - 2],
-
-      teamInfo: userTokenArr[userTokenArr.length - 1]
+      teamname: e
     });
-
-    console.log(userToken, "userToken hi hi RenewProfile.js 69 lines");
-
-    //componentDidMount를 통해 개인 프로필데이터를 가져오는 함수를 실행
-    // this._bringProfileData();
   };
+
+  _changeCommentValue = e => {
+    this.setState({
+      comment: e.nativeEvent.value
+    });
+  };
+
+  _changeAgeValue = e => {
+    this.setState({
+      age: e.nativeEvent.value
+    });
+  };
+
+  _changeCountValue = e => {
+    this.setState({
+      count: e.nativeEvent.value
+    });
+  };
+
+  componentDidMount = () => {};
+
   render() {
     console.log();
     return (
-      <View style={{ alignItems: "center" }}>
+      <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
         <View
           style={{
+            flex: 1,
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
-            marginTop: "10%"
+            marginTop: "20%"
           }}
         >
           {/* 프로필 사진을 가져와서 띄워준다.  */}
@@ -155,119 +190,81 @@ export default class RenewProfile extends React.Component {
           </TouchableOpacity>
         </View>
 
-        <ScrollView>
-          <Text style={{ fontSize: 80, textAlign: "center" }}>Who </Text>
-          <Text style={{ fontSize: 65, textAlign: "center" }}> Are We ? </Text>
+        <Text
+          style={{
+            fontSize: 35,
+            textAlign: "center",
+            marginTop: "5%",
+            marginBottom: "5%"
+          }}
+        >
+          Who we Are?
+        </Text>
 
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Text style={{ fontSize: 96 }}>Scrolling down</Text>
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Text style={{ fontSize: 96 }}>Framework around?</Text>
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Image
-            source={{
-              uri: "https://facebook.github.io/react-native/img/favicon.png",
-              width: 64,
-              height: 64
-            }}
-          />
-          <Text style={{ fontSize: 80 }}>React Native</Text>
-        </ScrollView>
+        {/* 스크롤뷰는 아래부터 */}
+        <View
+          style={{
+            flex: 5,
+            width: "100%",
+            alignItems: "center",
+            backgroundColor: "gainsboro"
+          }}
+        >
+          <ScrollView style={{ width: "85%" }}>
+            <View style={styles.scrollBox}>
+              <View style={styles.infoBox}>
+                <Text>팀이름</Text>
+                {/* 팀이름 */}
+                <SearchBar
+                  noIcon
+                  lightTheme
+                  value={this.state.teamname}
+                  onChangeText={this._changeTeamNameValue}
+                  noIcon
+                />
+              </View>
+
+              <View style={styles.infoBox}>
+                <Text>인원수</Text>
+                {/* 인원수 */}
+                <Input
+                  value={this.state.count}
+                  onChange={this._changeCountValue}
+                  leftIcon={{ type: "font-awesome", name: "chevron-right" }}
+                />
+              </View>
+
+              <View style={styles.infoBox}>
+                <Text>평균나이</Text>
+                {/* 평균나이 */}
+                <Input
+                  value={this.state.age}
+                  onChange={this._changeAgeValue}
+                  leftIcon={{ type: "font-awesome", name: "chevron-right" }}
+                />
+              </View>
+
+              <View style={styles.infoBox}>
+                <Text>필살멘트</Text>
+                {/* 코멘트 */}
+                <Input
+                  style={{ height: 50, width: 300 }}
+                  value={this.state.comment}
+                  onChange={this._changeCommentValue}
+                  placeholder="INPUT WITH ICON"
+                  leftIcon={{ type: "font-awesome", name: "chevron-right" }}
+                />
+              </View>
+
+              <Button
+                title="Submit "
+                color="black"
+                alignItems="center"
+                onPress={this._saveNewProfile}
+              />
+            </View>
+          </ScrollView>
+        </View>
       </View>
     );
   }
@@ -300,5 +297,14 @@ const styles = StyleSheet.create({
   },
   headerRightIcon: {
     marginRight: 15
-  }
+  },
+  scrollBox: {
+    height: 700,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    paddingTop: "10%",
+    paddingBottom: "20%"
+  },
+  infoBox: {}
 });
