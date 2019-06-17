@@ -59,13 +59,19 @@ export default class TeamPicture1 extends Component {
     locationId: this.props.navigation.state.params.data.locationId,
     teamId: this.props.navigation.state.params.data.teamId
 
-    // image: { 0: null, 1: null, 2: null },
+    // image: {
+    //   0: null,
+    //   1: null,
+    //   2: null
+    // },
     // sex: 1,
-    // teamname: "FBing",
+    // teamname: "yyy",
     // count: 4,
-    // averageAge: 30,
-    // comment: "do you know gangnamstyle",
-    // userId: 5
+    // averageAge: 21,
+    // comment: "qqq",
+    // userId: 1,
+    // locationId: 1,
+    // teamId: 1
   };
 
   _uploadImageAsync = async uri => {
@@ -87,7 +93,7 @@ export default class TeamPicture1 extends Component {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
         teamId: this.props.navigation.state.params.data.teamId
-        // userId: 5
+        // teamId: 1
       }
     };
     return await fetch(apiUrl, options);
