@@ -26,6 +26,7 @@ export default class Main extends Component {
   _bootstrapAsync = async () => {
     if (await AsyncStorage.getItem("userToken")) {
       const userToken = await AsyncStorage.getItem("userToken");
+      console.log(userToken, "111111111111111111111111111111111111111111");
       const userTokenArr = userToken.split("-");
       "aasertetdbc" +
         sex +

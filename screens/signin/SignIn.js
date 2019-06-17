@@ -116,42 +116,38 @@ export default class SignUp extends Component {
               }
             }).then(async res => {
               if (res.ok) {
-                console.log(
-                  JSON.parse(res._bodyInit),
-                  "teamInfo SignIn.js Lines:113"
-                );
-                const teamInfo = JSON.parse(res._bodyInit).teams[0];
                 if (JSON.parse(res._bodyInit)) {
-                  await this.setState({
-                    userId: teamInfo.userId,
-                    teamInfo: teamInfo
-                  });
-
-                  await AsyncStorage.setItem(
-                    "userToken",
-                    "aasertetdbc" +
-                      "-" +
-                      teamInfo.sex +
-                      "-" +
-                      teamInfo.count +
-                      "-" +
-                      teamInfo.age +
-                      "-" +
-                      teamInfo.comment +
-                      "-" +
-                      teamInfo.teamname +
-                      "-" +
-                      teamInfo.locationId +
-                      "-" +
-                      teamInfo.userId +
-                      "-" +
-                      teamInfo.id
-                  );
+                  const teamInfo = JSON.parse(res._bodyInit).teams[0];
+                  if (JSON.parse(res._bodyInit)) {
+                    await this.setState({
+                      teamInfo: teamInfo
+                    });
+                    await AsyncStorage.setItem(
+                      "userToken",
+                      "aasertetdbc" +
+                        "-" +
+                        teamInfo.sex +
+                        "-" +
+                        teamInfo.count +
+                        "-" +
+                        teamInfo.age +
+                        "-" +
+                        teamInfo.comment +
+                        "-" +
+                        teamInfo.teamname +
+                        "-" +
+                        teamInfo.locationId +
+                        "-" +
+                        teamInfo.userId +
+                        "-" +
+                        teamInfo.id
+                    );
+                  }
                 }
-                await this._signInAsync();
               }
             });
           }
+          await this._signInAsync();
         });
 
         /////
@@ -161,7 +157,7 @@ export default class SignUp extends Component {
 
   //로그인 성공시, userToken 저장하고 ChooseSex로 보내주는 함수
   _signInAsync = async () => {
-    const { userId, teamInfo } = this.state;
+    const { userId, teamInfo } = await this.state;
     console.log("hi");
     console.log(teamInfo, "teamInfo!!!!!!");
     console.log(userId, "userId!!!!!!!!");

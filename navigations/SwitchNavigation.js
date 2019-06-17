@@ -1,5 +1,5 @@
-import createTeamStack from "./Navigations";
-import HomeStack from "./TapNavigations";
+import createTeamStack from "./CreateTeamStack";
+import HomeStack from "./BottomTabStack";
 import MainScreen from "../screens/main/Main";
 import SignInScreen from "../screens/signin/SignIn";
 import SignUpScreen from "../screens/signup/SignUp";
