@@ -39,6 +39,7 @@ export default class RenewProfile extends React.Component {
   };
 
   state = {
+    imageFlag: false,
     sex: null,
     count: null,
     age: null,
@@ -148,7 +149,7 @@ export default class RenewProfile extends React.Component {
   componentDidMount = () => {};
 
   render() {
-    console.log();
+    const { imageFlag } = this.state;
     return (
       <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
         <View
@@ -157,40 +158,42 @@ export default class RenewProfile extends React.Component {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
-            marginTop: "20%"
+            margin: "10%"
           }}
         >
           {/* 프로필 사진을 가져와서 띄워준다.  */}
           {/* 사진옆에 수정버튼을 누르면 사진의 수정이 가능하다. => 수정하게 될 경우, S3로 쏴주고 그 사진을 다시 불러온다.   */}
-          <TouchableOpacity onPress={this._changeProfilePicture}>
-            <IconBadge
-              MainElement={
-                <Image
-                  source={{
-                    uri:
-                      "http://img1.daumcdn.net/thumb/C246x358/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fmovie%2F91340b7a23541ea5697f7d765948446e75e40f7b"
-                  }}
-                  style={styles.avatar}
-                />
-              }
-              BadgeElement={
-                <View>
-                  <Text style={{ color: "ghostwhite", fontSize: 15 }}>
-                    {" + "}
-                  </Text>
-                </View>
-              }
-              IconBadgeStyle={{
-                width: 30,
-                height: 30,
-                backgroundColor: "rgba(0, 0, 0, 0.3)"
-              }}
-              Hidden={this.state.BadgeCount == 0}
-            />
-          </TouchableOpacity>
+          {imageFlag ? null : (
+            <TouchableOpacity onPress={this._changeProfilePicture}>
+              <IconBadge
+                MainElement={
+                  <Image
+                    source={{
+                      uri:
+                        "http://img1.daumcdn.net/thumb/C246x358/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fmovie%2F91340b7a23541ea5697f7d765948446e75e40f7b"
+                    }}
+                    style={styles.avatar}
+                  />
+                }
+                BadgeElement={
+                  <View>
+                    <Text style={{ color: "ghostwhite", fontSize: 15 }}>
+                      {" + "}
+                    </Text>
+                  </View>
+                }
+                IconBadgeStyle={{
+                  width: 30,
+                  height: 30,
+                  backgroundColor: "rgba(0, 0, 0, 0.3)"
+                }}
+                Hidden={this.state.BadgeCount == 0}
+              />
+            </TouchableOpacity>
+          )}
         </View>
 
-        <Text
+        {/* <Text
           style={{
             fontSize: 35,
             textAlign: "center",
@@ -199,7 +202,7 @@ export default class RenewProfile extends React.Component {
           }}
         >
           Who we Are?
-        </Text>
+        </Text> */}
 
         {/* 스크롤뷰는 아래부터 */}
         <View
@@ -212,9 +215,9 @@ export default class RenewProfile extends React.Component {
         >
           <ScrollView style={{ width: "85%" }}>
             <View style={styles.scrollBox}>
+              {/*
               <View style={styles.infoBox}>
-                <Text>팀이름</Text>
-                {/* 팀이름 */}
+                <Text style={{ paddingBottom: 5 }}>팀이름</Text>
                 <SearchBar
                   noIcon
                   lightTheme
@@ -222,12 +225,24 @@ export default class RenewProfile extends React.Component {
                   onChangeText={this._changeTeamNameValue}
                   noIcon
                 />
+              </View> */}
+
+              <View style={styles.infoBox}>
+                <Text style={{ paddingBottom: 5 }}>팀이름</Text>
+                {/* 인원수 */}
+                <Input
+                  containerStyle={{}}
+                  value={this.state.teamname}
+                  onChangeText={this._changeTeamNameValue}
+                  leftIcon={{ type: "font-awesome", name: "chevron-right" }}
+                />
               </View>
 
               <View style={styles.infoBox}>
-                <Text>인원수</Text>
+                <Text style={{ paddingBottom: 5 }}>인원수</Text>
                 {/* 인원수 */}
                 <Input
+                  containerStyle={{}}
                   value={this.state.count}
                   onChange={this._changeCountValue}
                   leftIcon={{ type: "font-awesome", name: "chevron-right" }}
@@ -235,9 +250,10 @@ export default class RenewProfile extends React.Component {
               </View>
 
               <View style={styles.infoBox}>
-                <Text>평균나이</Text>
+                <Text style={{ paddingBottom: 5 }}>평균나이</Text>
                 {/* 평균나이 */}
                 <Input
+                  containerStyle={{}}
                   value={this.state.age}
                   onChange={this._changeAgeValue}
                   leftIcon={{ type: "font-awesome", name: "chevron-right" }}
@@ -245,7 +261,7 @@ export default class RenewProfile extends React.Component {
               </View>
 
               <View style={styles.infoBox}>
-                <Text>필살멘트</Text>
+                <Text style={{ paddingBottom: 5 }}>필살멘트</Text>
                 {/* 코멘트 */}
                 <Input
                   style={{ height: 50, width: 300 }}
@@ -281,9 +297,9 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   avatar: {
-    width: 150,
-    height: 150,
-    borderRadius: 150 / 2
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2
   },
   buttonGroup: {
     flex: 60,
@@ -306,5 +322,9 @@ const styles = StyleSheet.create({
     paddingTop: "10%",
     paddingBottom: "20%"
   },
-  infoBox: {}
+  infoBox: {
+    flex: 1,
+    flexDirection: "column",
+    paddingVertical: 10
+  }
 });

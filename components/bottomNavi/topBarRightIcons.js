@@ -10,7 +10,6 @@ export default class TopBarRightIcons extends React.Component {
   openNewsModal = () => {};
 
   movetoChatList = () => {
-    console.log(11111111111);
     // let userToken = await AsyncStorage.getItem("userToken");
     // let userTokenArray = userToken.split("-");
 
