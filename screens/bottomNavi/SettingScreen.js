@@ -66,6 +66,7 @@ export default class SettingScreen extends React.Component {
           width: "100%",
           height: "100%",
           alignItems: "center",
+          backgroundColor: "#222222",
           padding: "5%"
         }}
       >
@@ -89,7 +90,7 @@ export default class SettingScreen extends React.Component {
           <View style={styles.buttonGroup}>
             <Button
               title="정보수정"
-              type="outline"
+              // type="outline"
               icon={{
                 type: "font-awesome",
                 name: "check-circle",
@@ -104,7 +105,7 @@ export default class SettingScreen extends React.Component {
             />
             <Button
               title="이용약관"
-              type="outline"
+              // type="outline"
               icon={{
                 type: "font-awesome",
                 name: "check-circle",
@@ -117,7 +118,7 @@ export default class SettingScreen extends React.Component {
             />
             <Button
               title="로그아웃"
-              type="outline"
+              // type="outline"
               icon={{
                 type: "font-awesome",
                 name: "check-circle",
@@ -130,7 +131,7 @@ export default class SettingScreen extends React.Component {
             />
             <Button
               title="계정삭제"
-              type="outline"
+              // type="outline"
               icon={{
                 type: "font-awesome",
                 name: "check-circle",

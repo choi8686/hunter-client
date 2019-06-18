@@ -284,7 +284,14 @@ export default class RenewProfile extends React.Component {
     const { imageFlag, buttonsDistrict, buttonsStore } = this.state;
 
     return (
-      <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          alignItems: "center",
+          backgroundColor: "#222222"
+        }}
+      >
         <View
           style={{
             flex: 1,

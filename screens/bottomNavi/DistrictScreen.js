@@ -402,6 +402,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     height: "100%",
     width: "100%",
+    backgroundColor: "#222222",
     color: "#F9F9F8"
   },
   likeBorder: {
