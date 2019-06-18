@@ -6,28 +6,34 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  AsyncStorage,
-  icon
+  AsyncStorage
 } from "react-native";
 
-import {
-  Input,
-  Icon,
-  Button,
-  SearchBar,
-  ButtonGroup
-} from "react-native-elements";
+import { Input, Button, ButtonGroup } from "react-native-elements";
 import IconBadge from "react-native-icon-badge";
 
 import { url } from "../../url";
 
 //district 버튼
 class ButtonsGroup1 extends React.Component {
-  state = {
-    buttonsDistrict: ["홍대입구역", "이태원역", "강남역", "건대입구역"],
-    districtName: null,
-    districtId: null,
-    selectedIndex: null
+  constructor() {
+    super();
+    this.state = {
+      buttonsDistrict: ["홍대입구역", "이태원역", "강남역", "건대입구역"],
+      districtName: null,
+      districtId: null,
+      selectedIndex: null
+    };
+    this._getUserToken();
+  }
+
+  _getUserToken = async () => {
+    userToken = await AsyncStorage.getItem("userToken");
+    userTokenArr = userToken.split("-");
+    this.setState({
+      //userTokenArr.length-4는 DistrictId 를 뜻함.
+      selectedIndex: Number(userTokenArr[userTokenArr.length - 4]) - 1
+    });
   };
 
   _updateIndexDistrict = selectedIndex => {
@@ -54,11 +60,24 @@ class ButtonsGroup1 extends React.Component {
 
 //store 버튼
 class ButtonsGroup2 extends React.Component {
-  state = {
-    buttonsStore: ["그린라이트", "한신포차", "삼거리포차", "베라"],
-    storeName: null,
-    storeId: null,
-    selectedIndex: null
+  constructor() {
+    super();
+    this.state = {
+      buttonsStore: ["그린라이트", "한신포차", "삼거리포차", "베라"],
+      storeName: null,
+      storeId: null,
+      selectedIndex: null
+    };
+    this._getUserToken();
+  }
+
+  _getUserToken = async () => {
+    userToken = await AsyncStorage.getItem("userToken");
+    userTokenArr = userToken.split("-");
+    this.setState({
+      //userTokenArr.length-3는 storeId 를 뜻함.
+      selectedIndex: Number(userTokenArr[userTokenArr.length - 3]) - 1
+    });
   };
 
   _updateIndexStore = selectedIndex => {
@@ -105,7 +124,6 @@ export default class RenewProfile extends React.Component {
       storeId: userTokenArr[userTokenArr.length - 3],
       userId: userTokenArr[userTokenArr.length - 2],
       id: userTokenArr[userTokenArr.length - 1],
-
       selectedIndex: userTokenArr[userTokenArr.length - 4]
     });
   };
@@ -147,118 +165,132 @@ export default class RenewProfile extends React.Component {
     });
   };
 
-  //개인의 유저 id 를 통해 데이터를 끌고 오는게 먼저!
-  _bringProfileData = () => {
-    //JWT
-    fetch(`${url}/users/info`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${JWT}`
-      }
-    }).then(async res => {
-      if (res.ok) {
-        await this.setState({
-          userId: JSON.parse(res._bodyInit).userInfo.id
-        });
-
-        fetch(`${url}/teams/getUserIdTeam/` + this.state.userId, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }).then(async res => {
-          if (res.ok) {
-            console.log(
-              JSON.parse(res._bodyInit),
-              "teamInfo SignIn.js Lines:113"
-            );
-            if (JSON.parse(res._bodyInit)) {
-              await this.setState({
-                teamInfo: JSON.parse(res._bodyInit).teams[0]
-              });
-            }
-          }
-        });
-      }
-    });
-  };
-
   _changeProfilePicture = () => {
     console.log("ok change your Profile Picture");
   };
 
-  _saveNewProfile = () => {
-    console.log("_saveNewProfile");
-  };
   //프로필을 수정할 때 필요한 함수
-  _renewProfileData = () => {
-    fetch(`${url}/users/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({})
-    }).then(async res => {
-      if (res.ok) {
-        console.log("--------Renew success---------", res.ok);
-        flag = true;
-        await this.setState({
-          //여기서 state에 새로 수정한 내용들을 다시 담는다.
-        });
-        this._signInAsync();
-      } else {
-        console.log("--------Renew fail---------", res.ok);
-        flag = false;
-      }
-    });
+  _renewProfileData = async () => {
+    const {
+      sex,
+      count,
+      age,
+      comment,
+      teamname,
+      districtId,
+      storeId,
+      userId,
+      id
+    } = await this.state;
+
+    count.length !== 0 &&
+    age.length !== 0 &&
+    comment.length !== 0 &&
+    teamname.length !== 0 &&
+    districtId.length !== 0 &&
+    storeId.length !== 0 &&
+    userId.length !== 0
+      ? fetch(`${url}/teams/change`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            count: count,
+            age: age,
+            comment: comment,
+            teamname: teamname,
+            districtId: districtId,
+            storeId: storeId,
+            userId: userId
+          })
+        }).then(async res => {
+          console.log(res, "res =>  RenewProfile.js 211 Lines ");
+          if (res.ok) {
+            console.log("--------Renew success---------", res.ok);
+            flag = true;
+
+            AsyncStorage.removeItem("userToken");
+
+            //여기서  AsyncStorage에 새로 수정한 내용들을 다시 담는다.!!!!!!!!!!!
+
+            await AsyncStorage.setItem(
+              "userToken",
+              "aasertetdbc" +
+                "-" +
+                sex +
+                "-" +
+                count +
+                "-" +
+                age +
+                "-" +
+                comment +
+                "-" +
+                teamname +
+                "-" +
+                districtId +
+                "-" +
+                storeId +
+                "-" +
+                userId +
+                "-" +
+                id
+            );
+
+            let userToken2 = await AsyncStorage.getItem("userToken");
+            console.log(userToken2, "userToken2!!!!!!~~~~~~~~");
+          } else {
+            console.log("--------Renew fail---------", res.ok);
+            flag = false;
+          }
+        })
+      : alert("정보를 빠드리지 말고 입력해주세요");
   };
 
   // 개인프로필정보를 onChange를 통해 바꾸는 함수
   _changeTeamNameValue = e => {
-    console.log(e, "!!!!!!!!!!!");
-
     this.setState({
-      teamname: e
+      teamname: e.nativeEvent.text
     });
   };
 
   _changeCommentValue = e => {
     this.setState({
-      comment: e.nativeEvent.value
+      comment: e.nativeEvent.text
     });
   };
 
   _changeAgeValue = e => {
     this.setState({
-      age: e.nativeEvent.value
+      age: e.nativeEvent.text
     });
   };
 
   _changeCountValue = e => {
     this.setState({
-      count: e.nativeEvent.value
+      count: e.nativeEvent.text
+    });
+  };
+
+  _changeCommentValue = e => {
+    this.setState({
+      comment: e.nativeEvent.text
     });
   };
 
   componentDidMount = () => {};
 
   render() {
-    console.log(this.state, "에~~~집에가자!!!!!!!!!!!!시발 집에좀 가자!!!!!");
-    const {
-      imageFlag,
-      // selectedIndex,
-      buttonsDistrict,
-      buttonsStore
-    } = this.state;
+    const { imageFlag, buttonsDistrict, buttonsStore } = this.state;
+
     return (
       <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
         <View
           style={{
             flex: 1,
-            flexDirection: "row",
+            flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "between-space",
             margin: "10%"
           }}
         >
@@ -294,17 +326,6 @@ export default class RenewProfile extends React.Component {
           )}
         </View>
 
-        {/* <Text
-          style={{
-            fontSize: 35,
-            textAlign: "center",
-            marginTop: "5%",
-            marginBottom: "5%"
-          }}
-        >
-          Who we Are?
-        </Text> */}
-
         {/* 스크롤뷰는 아래부터 */}
         <View
           style={{
@@ -314,16 +335,8 @@ export default class RenewProfile extends React.Component {
             backgroundColor: "gainsboro"
           }}
         >
-          <ScrollView style={{ width: "85%" }}>
+          <ScrollView style={{ width: "85%", height: "100%" }}>
             <View style={styles.scrollBox}>
-              {/* <View style={styles.buttonBox}>
-                <Text style={{ paddingBottom: 5 }}>테스트</Text>
-                <ButtonsGroup1
-                  _updateIndex_D={this._updateIndex_D}
-                  buttonsDistrict={buttonsDistrict}
-                  containerStyle={{ height: 50 }}
-                />
-              </View> */}
               <View style={styles.buttonBox}>
                 <Text style={{ paddingBottom: 5 }}>지역명</Text>
                 <ButtonsGroup1
@@ -341,25 +354,14 @@ export default class RenewProfile extends React.Component {
                   containerStyle={{ height: 50 }}
                 />
               </View>
-              {/*
-              <View style={styles.infoBox}>
-                <Text style={{ paddingBottom: 5 }}>팀이름</Text>
-                <SearchBar
-                  noIcon
-                  lightTheme
-                  value={this.state.teamname}
-                  onChangeText={this._changeTeamNameValue}
-                  noIcon
-                />
-              </View> */}
 
               <View style={styles.infoBox}>
                 <Text style={{ paddingBottom: 5 }}>팀이름</Text>
-                {/* 인원수 */}
+                {/* 팀이름 */}
                 <Input
                   containerStyle={{}}
                   value={this.state.teamname}
-                  onChangeText={this._changeTeamNameValue}
+                  onChange={this._changeTeamNameValue}
                   leftIcon={{ type: "font-awesome", name: "chevron-right" }}
                 />
               </View>
@@ -402,7 +404,7 @@ export default class RenewProfile extends React.Component {
                 title="Submit "
                 color="black"
                 alignItems="center"
-                onPress={this._saveNewProfile}
+                onPress={this._renewProfileData}
               />
             </View>
           </ScrollView>
@@ -441,13 +443,13 @@ const styles = StyleSheet.create({
     marginRight: 15
   },
   scrollBox: {
-    height: 700,
+    height: 1000,
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
     paddingTop: "10%",
     paddingBottom: "20%",
-    paddingVertical: 10
+    paddingVertical: 20
   },
   buttonBox: {
     flex: 1,
