@@ -231,7 +231,7 @@ export default class SignUp extends Component {
             <Button
               title=" SignIn"
               color="white"
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "deeppink" }}
               alignText="right"
               // style={styles.nextButton}
               icon={{
@@ -250,7 +250,10 @@ export default class SignUp extends Component {
               textAlign="center"
               title=" SignUp"
               color="white"
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{
+                width: "100%",
+                backgroundColor: "mediumturquoise"
+              }}
               onPress={() => {
                 this.props.navigation.navigate("SignUp");
               }}

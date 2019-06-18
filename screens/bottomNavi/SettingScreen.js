@@ -61,6 +61,12 @@ export default class SettingScreen extends React.Component {
 
   render() {
     return (
+      // <LinearGradient
+      //   colors={["#10356c", "#a13388"]}
+      //   style={{ flex: 1 }}
+      //   start={{ x: 0, y: 0 }}
+      //   end={{ x: 1, y: 0 }}
+      // >
       <View
         style={{
           width: "100%",
@@ -70,15 +76,9 @@ export default class SettingScreen extends React.Component {
           padding: "5%"
         }}
       >
-        <Avatar
-          size="medium"
-          rounded
-          icon={{ name: "rocket", color: "white", type: "font-awesome" }}
-          overlayContainerStyle={{ backgroundColor: "gainsboro" }}
-          onPress={() => console.log("Works!")}
-          activeOpacity={0.7}
-        />
-
+        <TouchableOpacity onPress={() => alert("고민하지 말고 직진!")}>
+          <Image source={require("../../logo/Logo.png")} />
+        </TouchableOpacity>
         <View
           style={{
             flex: 1,
@@ -90,18 +90,19 @@ export default class SettingScreen extends React.Component {
           <View style={styles.buttonGroup}>
             <Button
               title="정보수정"
+              titleStyle={{ color: "ghostwhite" }}
               // type="outline"
               icon={{
                 type: "font-awesome",
                 name: "check-circle",
-                color: "pink",
+                color: "deeppink",
                 marginBottom: "5%"
               }}
               onPress={() => {
                 this.props.navigation.navigate("RenewProfile");
               }}
               containerViewStyle={{ width: "100%" }}
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
             <Button
               title="이용약관"
@@ -109,12 +110,12 @@ export default class SettingScreen extends React.Component {
               icon={{
                 type: "font-awesome",
                 name: "check-circle",
-                color: "pink",
+                color: "deeppink",
                 marginBottom: "5%"
               }}
               onPress={() => this.props.navigation.navigate("Conditions")}
               containerViewStyle={{ width: "100%" }}
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
             <Button
               title="로그아웃"
@@ -122,12 +123,12 @@ export default class SettingScreen extends React.Component {
               icon={{
                 type: "font-awesome",
                 name: "check-circle",
-                color: "pink",
+                color: "deeppink",
                 marginBottom: "5%"
               }}
               onPress={this._handleLogOut}
               containerViewStyle={{ width: "100%" }}
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
             <Button
               title="계정삭제"
@@ -135,18 +136,19 @@ export default class SettingScreen extends React.Component {
               icon={{
                 type: "font-awesome",
                 name: "check-circle",
-                color: "pink",
+                color: "deeppink",
                 marginBottom: "5%"
               }}
               onPress={() => {
                 this._handleButton(4);
               }}
               containerViewStyle={{ width: "100%" }}
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
           </View>
         </View>
       </View>
+      // </LinearGradient>
     );
   }
 }
@@ -169,9 +171,10 @@ const styles = StyleSheet.create({
   buttonGroup: {
     flex: 1,
     flexDirection: "column",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "space-evenly",
-    height: "100%"
+    height: "50%",
+    width: "100%"
   },
   headerRightIcon: {
     marginRight: 15
