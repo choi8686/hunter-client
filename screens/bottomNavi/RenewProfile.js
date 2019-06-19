@@ -297,7 +297,7 @@ export default class RenewProfile extends React.Component {
             flex: 1,
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "between-space",
+            justifyContent: "space-between",
             margin: "10%"
           }}
         >
