@@ -270,7 +270,7 @@ export default class StoreScreen extends Component {
         if (i < this.state.currentIndex) {
           return null;
         } else if (i === this.state.currentIndex) {
-          return (
+          return item.teamimages[0] ? (
             <Animated.View
               {...this.PanResponder.panHandlers}
               key={item.id}
@@ -342,9 +342,9 @@ export default class StoreScreen extends Component {
                 </Text>
               </Animated.View>
             </Animated.View>
-          );
+          ) : null;
         } else {
-          return (
+          return item.teamimages[0] ? (
             <Animated.View
               key={item.id}
               style={[
@@ -370,7 +370,7 @@ export default class StoreScreen extends Component {
                 source={{ uri: `${item.teamimages[0].imgUrl}` }}
               />
             </Animated.View>
-          );
+          ) : null;
         }
       })
       .reverse();

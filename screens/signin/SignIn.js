@@ -115,6 +115,7 @@ export default class SignUp extends Component {
                     await this.setState({
                       teamInfo: teamInfo
                     });
+
                     await AsyncStorage.setItem(
                       "userToken",
                       "aasertetdbc" +
