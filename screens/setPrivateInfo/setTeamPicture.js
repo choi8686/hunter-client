@@ -136,7 +136,7 @@ export default class TeamPicture extends Component {
           <View style={styles.titleContainer}>
             <Title
               name="팀 사진을 저장해주세요"
-              style={{ fontWeight: "bold", fontSize: 15 }}
+              style={{ fontWeight: "bold", fontSize: 25 }}
             />
             <Title
               name="(사진 누르면 수정가능)"
@@ -267,6 +267,7 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     width: "100%",
     color: "white",
+    fontWeight: "bold",
     fontSize: 15
   },
 

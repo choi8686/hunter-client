@@ -76,7 +76,7 @@ export default class TeamInfo1 extends Component {
               <Input
                 placeholder="     10글자 이내 "
                 textAlign={"center"}
-                containerStyle={{ width: "50%" }}
+                containerStyle={{ width: "80%" }}
                 clearButtonMode="always"
                 onChange={this._saveTeamName}
               />
