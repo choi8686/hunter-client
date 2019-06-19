@@ -14,16 +14,25 @@ import ChatListScreen from "../screens/chatlist/ChatList";
 
 import RenewProfileScreen from "../screens/bottomNavi/RenewProfile";
 import { FontAwesome } from "@expo/vector-icons";
-import { LinearGradient } from "react-native-linear-gradient";
+import { LinearGradient, constant } from "expo";
 
 //District 스텍
 const DistrictStack = createStackNavigator({
   DistrictHome: {
     screen: DistrictScreen,
     navigationOptions: {
-      headerStyle: {
-        backgroundColor: "#FE7B53"
-      }
+      headerBackground: (
+        <LinearGradient
+          colors={["#5B1ABE", "#C11490"]}
+          start={[0.0, 0.5]}
+          end={[1.0, 0.5]}
+          locations={[0.0, 1.0]}
+          style={{
+            flex: 1,
+            paddingTop: "20%"
+          }}
+        />
+      )
     }
   }
 });
@@ -33,34 +42,60 @@ const SettingStack = createStackNavigator({
   SettingHome: {
     screen: SettingScreen,
     navigationOptions: {
-      // header: props => <GradientHeader {...props} />
-      headerStyle: {
-        backgroundColor: "#FE7B53"
-      }
+      headerBackground: (
+        <LinearGradient
+          colors={["#5B1ABE", "#C11490"]}
+          start={[0.0, 0.5]}
+          end={[1.0, 0.5]}
+          locations={[0.0, 1.0]}
+          style={{
+            flex: 1,
+            paddingTop: "20%"
+          }}
+        />
+      )
     }
   },
   RenewProfile: {
     screen: RenewProfileScreen,
     navigationOptions: {
-      navigationOptions: {
-        // header: props => <GradientHeader {...props} />
-        headerStyle: {
-          backgroundColor: "#FE7B53"
-        }
-      },
-      title: "프로필수정"
+      headerBackground: (
+        <LinearGradient
+          colors={["#5B1ABE", "#C11490"]}
+          start={[0.0, 0.5]}
+          end={[1.0, 0.5]}
+          locations={[0.0, 1.0]}
+          style={{
+            flex: 1,
+            paddingTop: "20%"
+          }}
+        />
+      ),
+      title: "정보수정",
+      headerTitleStyle: {
+        color: "#FAFBFB"
+      }
     }
   },
   Conditions: {
     screen: ConditionsScreen,
     navigationOptions: {
-      navigationOptions: {
-        // header: props => <GradientHeader {...props} />
-        headerStyle: {
-          backgroundColor: "#FE7B53"
-        }
-      },
-      title: "이용약관"
+      headerBackground: (
+        <LinearGradient
+          colors={["#5B1ABE", "#C11490"]}
+          start={[0.0, 0.5]}
+          end={[1.0, 0.5]}
+          locations={[0.0, 1.0]}
+          style={{
+            flex: 1,
+            paddingTop: "20%"
+          }}
+        />
+      ),
+      title: "이용약관",
+      headerTitleStyle: {
+        color: "#FAFBFB"
+      }
     }
   }
 });
@@ -70,11 +105,23 @@ const StoreStack = createStackNavigator({
   StoreHome: {
     screen: StoreScreen,
     navigationOptions: {
-      headerStyle: {
-        backgroundColor: "#FE7B53"
-      },
+      headerBackground: (
+        <LinearGradient
+          colors={["#5B1ABE", "#C11490"]}
+          start={[0.0, 0.5]}
+          end={[1.0, 0.5]}
+          locations={[0.0, 1.0]}
+          style={{
+            flex: 1,
+            paddingTop: "20%"
+          }}
+        />
+      ),
 
-      title: "저기어때"
+      title: "저기어때",
+      headerTitleStyle: {
+        color: "#FAFBFB"
+      }
     }
   }
 });
@@ -90,10 +137,10 @@ const TabNavigator = createBottomTabNavigator({
       // ({ tintColor }) => <AntDesign name="run" color={tintColor} size={24} />
       tabBarOptions: {
         showLabel: false, // hide labels
-        activeTintColor: "hotpink", // active icon color
+        activeTintColor: "#E92D50", // active icon color
         inactiveTintColor: "darkgray", // inactive icon color
         style: {
-          backgroundColor: "ghostwhite" // TabBar background
+          backgroundColor: "#131313" // TabBar background
         }
       }
     }
@@ -106,10 +153,10 @@ const TabNavigator = createBottomTabNavigator({
       ),
       tabBarOptions: {
         showLabel: false, // hide labels
-        activeTintColor: "hotpink", // active icon color
+        activeTintColor: "#E92D50", // active icon color
         inactiveTintColor: "darkgray", // inactive icon color
         style: {
-          backgroundColor: "ghostwhite" // TabBar background
+          backgroundColor: "#131313" // TabBar background
         }
       }
     }
@@ -122,10 +169,10 @@ const TabNavigator = createBottomTabNavigator({
       ),
       tabBarOptions: {
         showLabel: false, // hide labels
-        activeTintColor: "hotpink", // active icon color
+        activeTintColor: "#E92D50", // active icon color
         inactiveTintColor: "darkgray", // inactive icon color
         style: {
-          backgroundColor: "ghostwhite" // TabBar background
+          backgroundColor: "#131313" // TabBar background
         }
       }
     }
@@ -150,22 +197,22 @@ const HomeStack = createStackNavigator(
     }
   },
   {
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <FontAwesome size={24} name={"info"} color={tintColor} />
-      ),
-      tabBarOptions: {
-        showLabel: false, // hide labels
-        activeTintColor: "hotpink", // active icon color
-        inactiveTintColor: "darkgray", // inactive icon color
-        style: {
-          backgroundColor: "ghostwhite" // TabBar background
-        }
-      }
+    initialRouteName: "TabNavigator",
+    defaultNavigationOptions: {
+      //채팅방 gradient
+      headerBackground: (
+        <LinearGradient
+          colors={["#5B1ABE", "#C11490"]}
+          start={[0.0, 0.5]}
+          end={[1.0, 0.5]}
+          locations={[0.0, 1.0]}
+          style={{
+            flex: 1,
+            paddingTop: "20%"
+          }}
+        />
+      )
     }
-  },
-  {
-    initialRouteName: "TabNavigator"
   }
 );
 

@@ -20,6 +20,21 @@ export default class SettingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "설정",
+      headerBackground: (
+        <LinearGradient
+          colors={["#514A9D", "#24C6DC"]}
+          start={[0.0, 0.5]}
+          end={[1.0, 0.5]}
+          locations={[0.0, 1.0]}
+          style={{
+            flex: 1,
+            paddingTop: "20%"
+          }}
+        />
+      ),
+      headerTitleStyle: {
+        color: "#FAFBFB"
+      },
       headerRight: <TopBarRightIcons navigation={navigation} />
     };
   };
@@ -46,23 +61,24 @@ export default class SettingScreen extends React.Component {
 
   render() {
     return (
+      // <LinearGradient
+      //   colors={["#10356c", "#a13388"]}
+      //   style={{ flex: 1 }}
+      //   start={{ x: 0, y: 0 }}
+      //   end={{ x: 1, y: 0 }}
+      // >
       <View
         style={{
           width: "100%",
           height: "100%",
           alignItems: "center",
+          backgroundColor: "#222222",
           padding: "5%"
         }}
       >
-        <Avatar
-          size="medium"
-          rounded
-          icon={{ name: "rocket", color: "white", type: "font-awesome" }}
-          overlayContainerStyle={{ backgroundColor: "gainsboro" }}
-          onPress={() => console.log("Works!")}
-          activeOpacity={0.7}
-        />
-
+        <TouchableOpacity onPress={() => alert("고민하지 말고 직진!")}>
+          <Image source={require("../../logo/Logo.png")} />
+        </TouchableOpacity>
         <View
           style={{
             flex: 1,
@@ -74,63 +90,65 @@ export default class SettingScreen extends React.Component {
           <View style={styles.buttonGroup}>
             <Button
               title="정보수정"
-              type="outline"
+              titleStyle={{ color: "ghostwhite" }}
+              // type="outline"
               icon={{
                 type: "font-awesome",
                 name: "check-circle",
-                color: "pink",
+                color: "deeppink",
                 marginBottom: "5%"
               }}
               onPress={() => {
                 this.props.navigation.navigate("RenewProfile");
               }}
               containerViewStyle={{ width: "100%" }}
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
             <Button
               title="이용약관"
-              type="outline"
+              // type="outline"
               icon={{
                 type: "font-awesome",
                 name: "check-circle",
-                color: "pink",
+                color: "deeppink",
                 marginBottom: "5%"
               }}
               onPress={() => this.props.navigation.navigate("Conditions")}
               containerViewStyle={{ width: "100%" }}
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
             <Button
               title="로그아웃"
-              type="outline"
+              // type="outline"
               icon={{
                 type: "font-awesome",
                 name: "check-circle",
-                color: "pink",
+                color: "deeppink",
                 marginBottom: "5%"
               }}
               onPress={this._handleLogOut}
               containerViewStyle={{ width: "100%" }}
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
             <Button
               title="계정삭제"
-              type="outline"
+              // type="outline"
               icon={{
                 type: "font-awesome",
                 name: "check-circle",
-                color: "pink",
+                color: "deeppink",
                 marginBottom: "5%"
               }}
               onPress={() => {
                 this._handleButton(4);
               }}
               containerViewStyle={{ width: "100%" }}
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
           </View>
         </View>
       </View>
+      // </LinearGradient>
     );
   }
 }
@@ -153,9 +171,10 @@ const styles = StyleSheet.create({
   buttonGroup: {
     flex: 1,
     flexDirection: "column",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "space-evenly",
-    height: "100%"
+    height: "50%",
+    width: "100%"
   },
   headerRightIcon: {
     marginRight: 15

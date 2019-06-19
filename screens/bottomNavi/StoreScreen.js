@@ -7,8 +7,10 @@ import {
   Dimensions,
   Animated,
   PanResponder,
-  AsyncStorage
+  AsyncStorage,
+  Modal
 } from "react-native";
+import InputModal from "./InputModal";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo";
 import { Icon } from "react-native-elements";
@@ -27,7 +29,8 @@ export default class StoreScreen extends Component {
     this.state = {
       teams: [],
       currentIndex: 0,
-      pictrueIndex: 0
+      pictrueIndex: 0,
+      modalVisible: false
     };
 
     this.rotate = this.position.x.interpolate({
@@ -104,11 +107,14 @@ export default class StoreScreen extends Component {
           }).start(() => {
             //사라진 다음 다음 사진을 0,0 좌표에 set 하는 부분
             this.setState(
-              { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+              {
+                currentIndex: this.state.currentIndex + 1,
+                pictrueIndex: 0,
+                modalVisible: true
+              },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
-              },
-              this._snedToLike()
+              }
             );
           });
         }
@@ -119,7 +125,11 @@ export default class StoreScreen extends Component {
             toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
           }).start(() => {
             this.setState(
-              { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+              {
+                currentIndex: this.state.currentIndex + 1,
+                pictrueIndex: 0,
+                modalVisible: false
+              },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
               }
@@ -137,11 +147,17 @@ export default class StoreScreen extends Component {
     });
   }
 
+  _visibleHandler = () => {
+    this.setState({
+      modalVisible: !this.state.modalVisible
+    });
+  };
+
   _getTeamsOnStore = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
     userToken = userToken.split("-");
 
-    console.log(userToken);
+    // console.log(userToken);
     console.log("-----------------TeamGetOnStore-----------------");
     // 토큰을 항상 문자열 형태로 가져오기 때문에
     // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
@@ -387,6 +403,11 @@ export default class StoreScreen extends Component {
             onPress={() => this._onChangeIndex("rightArrow")}
           />
         </View>
+        <View>
+          {this.state.modalVisible && (
+            <InputModal visibleHandler={this._visibleHandler} />
+          )}
+        </View>
       </View>
     );
   }
@@ -399,6 +420,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "100%",
     width: "100%",
+    backgroundColor: "#222222",
     color: "#F9F9F8"
   },
   headerRightIcon: {

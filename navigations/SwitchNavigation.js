@@ -3,6 +3,7 @@ import HomeStack from "./BottomTabStack";
 import MainScreen from "../screens/main/Main";
 import SignInScreen from "../screens/signin/SignIn";
 import SignUpScreen from "../screens/signup/SignUp";
+import test from "../screens/setPrivateInfo/blurTest";
 
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 
@@ -10,6 +11,7 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 //각각의 화면들 사이에 이동은 할 수 있지만, SwitchNavigator이기 때문에 뒤로가기는 할 수 없다.
 const AppNavigator = createSwitchNavigator(
   {
+    test: test,
     Main: MainScreen,
     SignIn: SignInScreen,
     SignUp: SignUpScreen,

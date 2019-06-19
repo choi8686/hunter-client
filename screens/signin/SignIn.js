@@ -92,7 +92,6 @@ export default class SignUp extends Component {
           flag = false;
           this.setModalVisible(true);
         }
-        //////
 
         //JWT
         fetch(`${url}/users/info`, {
@@ -119,6 +118,7 @@ export default class SignUp extends Component {
                 if (JSON.parse(res._bodyInit)) {
                   console.log(JSON.parse(res._bodyInit));
                   const teamInfo = JSON.parse(res._bodyInit).teams[0];
+
                   await this.setState({
                     teamInfo: teamInfo
                   });
@@ -159,39 +159,12 @@ export default class SignUp extends Component {
   //로그인 성공시, userToken 저장하고 ChooseSex로 보내주는 함수
   _signInAsync = async () => {
     const { userId, teamInfo } = await this.state;
-    console.log(teamInfo, "teamInfo!!!!!!");
-    console.log(userId, "userId!!!!!!!!");
+    console.log(teamInfo, "teamInfo!!!!!! SignIn.js 161 lines");
+    console.log(userId, "userId!!!!!!!!  SignIn.js 162 lines");
 
     teamInfo
       ? this.props.navigation.navigate("Home", { userId, teamInfo })
       : this.props.navigation.navigate("ChooseSex", { userId });
-
-    ////////////////////////////////////////////////////////////
-    // await AsyncStorage.getItem("userToken");
-    // console.log(userToken,'userToken')
-
-    // const userTokenArr = userToken.split("-");
-
-    // //유저의 아이디
-    // const userId = userTokenArr[userTokenArr.length - 1];
-    // const locationId = userTokenArr[userTokenArr.length -2];
-    // const teamname = userTokenArr[userTokenArr.length -3];
-    // const comment = userTokenArr[userTokenArr.length -4];
-    // const age = userTokenArr[userTokenArr.length -5];
-    // const count = userTokenArr[userTokenArr.length -5];
-    // const sex = userTokenArr[userTokenArr.length -6];
-
-    // //team아디
-    // const id = userTokenArr[userTokenArr.length -7];
-
-    // userId && locationId && teamname && comment && age && count && sex && id ?
-    // this.props.navigation.navigate( "Home", {userId, locationId, teamname, comment, age, count, sex, id} )
-    // :
-    // this.props.navigation.navigate("SignIn");
-
-    ////////////////////////////////////////////////////////////
-
-    //asyncstorage의 userToken에 userId를 같이 저장하여 어떤 screen에서든 userId를 통해 데이터베이스에서 정보를 가져올 수 있게 한다.
   };
 
   //id, password 에러 잡아내는 함수 에러 없다면 this._submit함수 실행시켜서 로그인 시도
@@ -259,7 +232,7 @@ export default class SignUp extends Component {
             <Button
               title=" SignIn"
               color="white"
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "deeppink" }}
               alignText="right"
               // style={styles.nextButton}
               icon={{
@@ -278,7 +251,10 @@ export default class SignUp extends Component {
               textAlign="center"
               title=" SignUp"
               color="white"
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{
+                width: "100%",
+                backgroundColor: "mediumturquoise"
+              }}
               onPress={() => {
                 this.props.navigation.navigate("SignUp");
               }}

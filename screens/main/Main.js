@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from "react";
-import { StyleSheet, Text, View, AsyncStorage } from "react-native";
+import { StyleSheet, Text, View, AsyncStorage, Image } from "react-native";
 import { Button } from "react-native-elements";
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo";
@@ -81,7 +81,11 @@ export default class Main extends Component {
       >
         <View style={styles.titleHouse}>
           <Title name="  저기 어때 " />
-          <AntDesign id="leftArrow" name="rocket1" size={25} style={{}} />
+          {/* <AntDesign id="leftArrow" name="rocket1" size={25} style={{}} /> */}
+          <Image
+            source={require("../../logo/Logo.png")}
+            style={{ height: "15%", width: "15%" }}
+          />
         </View>
 
         <Button
