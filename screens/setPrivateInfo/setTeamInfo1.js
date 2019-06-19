@@ -1,5 +1,11 @@
 import React, { Fragment, Component } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  KeyboardAvoidingView
+} from "react-native";
 import { Input, Button, ButtonGroup, Icon } from "react-native-elements";
 import { LinearGradient, Constants } from "expo";
 
@@ -25,12 +31,12 @@ export default class TeamInfo1 extends Component {
   };
 
   _saveTeamName = e => {
-    if (e.nativeEvent.text.length < 7) {
+    if (e.nativeEvent.text.length <= 10) {
       this.setState({
         teamname: e.nativeEvent.text
       });
     } else {
-      alert("7글자 이내로 작성해주세요");
+      alert("10글자 이내로 작성해주세요");
     }
   };
 
@@ -44,17 +50,31 @@ export default class TeamInfo1 extends Component {
   componentDidMount = () => {};
 
   render() {
-    const { teamname, count, sex, userId, selectedIndex, countButtons } = this.state;
+    const {
+      teamname,
+      count,
+      sex,
+      userId,
+      selectedIndex,
+      countButtons
+    } = this.state;
 
     return (
-      <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
+      <LinearGradient
+        colors={["coral", "#f44283", "#f441bb", "#8341f4"]}
+        style={styles.backGround}
+      >
         <Title name="팀 정보를 입력해주세요" style={styles.title} />
-        <KeyboardAvoidingView style={styles.KeyboardAvoidingViewStyle} behavior="padding" enabled>
+        <KeyboardAvoidingView
+          style={styles.KeyboardAvoidingViewStyle}
+          behavior="padding"
+          enabled
+        >
           <View style={styles.contentsList}>
             <View style={styles.content}>
               <Text>팀 이름을 만들어주세요</Text>
               <Input
-                placeholder="     6글자 이내 "
+                placeholder="     10글자 이내 "
                 textAlign={"center"}
                 containerStyle={{ width: "50%" }}
                 clearButtonMode="always"
@@ -76,10 +96,16 @@ export default class TeamInfo1 extends Component {
           <Button
             title=" Submit"
             color="white"
+            buttonStyle={{ width: "100%", backgroundColor: "deeppink" }}
             icon={<Icon name="check-circle" size={15} color="pink" />}
             onPress={() => {
               teamname && count
-                ? this.props.navigation.navigate("SetTeamInfo2", { teamname, count, sex, userId })
+                ? this.props.navigation.navigate("SetTeamInfo2", {
+                    teamname,
+                    count,
+                    sex,
+                    userId
+                  })
                 : alert("팀 이름과 인원수를 설정해주세요");
             }}
           />
@@ -110,7 +136,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20
   },
-  KeyboardAvoidingViewStyle: { flex: 0.6, width: "100%", paddingTop: Constants.statusBarHeight },
+  KeyboardAvoidingViewStyle: {
+    flex: 0.6,
+    width: "100%",
+    paddingTop: Constants.statusBarHeight
+  },
   contentsList: {
     flex: 1,
     flexDirection: "column",

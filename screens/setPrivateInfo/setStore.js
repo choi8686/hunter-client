@@ -170,6 +170,7 @@ export default class SetStore extends Component {
             <Button
               title="Next"
               color="white"
+              buttonStyle={{ width: "100%", backgroundColor: "deeppink" }}
               onPress={() => {
                 presentStore ? this._submit() : alert("위치를 설정해주세요");
               }}

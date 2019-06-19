@@ -24,8 +24,9 @@ export default class Main extends Component {
   // 처음 접속시, userToken이 있으면 database에서 나의 해당정보를 가져오고 그 정보를 가지고 DistrictScreen에 접속한다.
   // 데이터 베이스에서 해당정보를 가지고 와야 홍대의 사람들을 보여줄지, 이태원의 사람들을 보여줄지 그리고 또 홍대의 그린라이트를 보여줄지, 한신포차를 보여줄지 알 수 있다.
   _bootstrapAsync = async () => {
-    if ((await AsyncStorage.getItem("userToken")) !== undefined) {
+    if ((await AsyncStorage.getItem("userToken")) !== null) {
       const userToken = await AsyncStorage.getItem("userToken");
+      console.log(userToken, "userToken@@@@@@@@");
       const userTokenArr = userToken.split("-");
       "aasertetdbc" +
         sex +
@@ -84,7 +85,7 @@ export default class Main extends Component {
           {/* <AntDesign id="leftArrow" name="rocket1" size={25} style={{}} /> */}
           <Image
             source={require("../../logo/Logo.png")}
-            style={{ height: "15%", width: "15%" }}
+            style={{ height: "13%", width: "13%" }}
           />
         </View>
 
@@ -120,8 +121,9 @@ const styles = StyleSheet.create({
     top: 0
   },
   titleHouse: {
-    flex: 0.7,
+    flex: 1,
     marginTop: "40%",
+    height: 150,
     flexDirection: "row",
     justifyContent: "space-evenly",
     color: "white"
