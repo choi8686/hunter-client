@@ -11,6 +11,7 @@ import SettingScreen from "../screens/bottomNavi/SettingScreen";
 import ConditionsScreen from "../components/bottomNavi/Conditions";
 import ChatScreen from "../screens/chat/Chat";
 import ChatListScreen from "../screens/chatlist/ChatList";
+
 import RenewProfileScreen from "../screens/bottomNavi/RenewProfile";
 import { FontAwesome } from "@expo/vector-icons";
 import { LinearGradient, constant } from "expo";

@@ -10,51 +10,62 @@ export default class ChatList extends React.Component {
     super(props);
 
     this.state = {
-      chatList: fakeListBox
+      chatList: []
     };
   }
 
-  _moveToChatroom = (chatBoxIdx, teamName) => {
+  _moveToChatroom = (
+    myTeamName,
+    myTeamId,
+    teamName,
+    teamId,
+    uuid,
+    avatarURL
+  ) => {
     this.props.navigation.navigate("Chat", {
-      chatBoxIdx,
-      teamName
+      myTeamName,
+      myTeamId,
+      teamName,
+      teamId,
+      uuid,
+      avatarURL
     });
   };
 
-  // componentDidMount() {
-  //   const { teamId, teamName, userId } = this.props.navigation.state.params;
+  componentDidMount() {
+    const { myTeamId, myTeamName } = this.props.navigation.state.params;
 
-  //   const getHeaders = {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   };
+    const getHeaders = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    // teamName, idx, avatarURL, conversation
 
-  //   fetch(`${url}/messages/${teamId}`, getHeaders)
-  //     .then(res => res.json())
-  //     .then(data => console.log(data, 1111111111111111111111))
-  //     .then(data => {
-  // teamName, idx, avatarURL, conversation
-  // let idx = null;
-  // let teamName = null;
-  // let avatarURL = "https://images.unsplash.com/photo-1529903384028-929ae5dccdf1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80"
-  // data.map()
-  // });
-  // }
+    fetch(`${url}/messages/${myTeamId}`, getHeaders)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          chatList: data
+        });
+      });
+  }
 
   render() {
+    console.log(this.state.chatList, "---------------chatList---------------");
     return (
       <ScrollView style={styles.chatListContainer}>
-        {this.state.chatList.map(chatBox => (
+        {this.state.chatList.map((chatBox, idx) => (
           <ChatListBox
-            teamName={chatBox.teamName}
-            chatBoxIdx={chatBox.idx}
-            avatarURL={chatBox.avatarURL}
-            conversation={
-              chatBox.conversation[chatBox.conversation.length - 1].text
-            }
-            key={chatBox.idx}
+            myTeamName={this.props.navigation.state.params.myTeamName}
+            teamName={chatBox.otherTeam.teamname}
+            teamId={chatBox.otherTeam.id}
+            myTeamId={chatBox.teamId}
+            conversation={chatBox.otherTeam.comment}
+            uuid={chatBox.uuid}
+            avatarURL={chatBox.otherTeam.teamimages[0].imgUrl}
+            key={idx}
             moveToChatroom={this._moveToChatroom}
           />
         ))}

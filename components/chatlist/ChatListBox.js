@@ -8,7 +8,16 @@ class ChatListBox extends React.Component {
   }
 
   render() {
-    const { avatarURL, teamName, conversation, chatBoxIdx, moveToChatroom } = this.props;
+    const {
+      myTeamName,
+      myTeamId,
+      avatarURL,
+      teamName,
+      teamId,
+      conversation,
+      uuid,
+      moveToChatroom
+    } = this.props;
     return (
       <ListItem
         leftAvatar={{
@@ -31,7 +40,14 @@ class ChatListBox extends React.Component {
         tension={100}
         style={styles.chatBoxContainer}
         onPress={() => {
-          moveToChatroom(chatBoxIdx, teamName);
+          moveToChatroom(
+            myTeamName,
+            myTeamId,
+            teamName,
+            teamId,
+            uuid,
+            avatarURL
+          );
         }}
       />
     );
