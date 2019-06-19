@@ -270,14 +270,14 @@ export default class StoreScreen extends Component {
         if (i < this.state.currentIndex) {
           return null;
         } else if (i === this.state.currentIndex) {
-          return (
+          return item.teamimages[0] ? (
             <Animated.View
               {...this.PanResponder.panHandlers}
               key={item.id}
               style={[
                 this.rotateAndTranslate,
                 {
-                  height: (SCREEN_HEIGHT * 4) / 4,
+                  height: (SCREEN_HEIGHT * 3) / 4,
                   width: SCREEN_WIDTH,
                   padding: 10,
                   paddingBottom: 20,
@@ -342,9 +342,9 @@ export default class StoreScreen extends Component {
                 </Text>
               </Animated.View>
             </Animated.View>
-          );
+          ) : null;
         } else {
-          return (
+          return item.teamimages[0] ? (
             <Animated.View
               key={item.id}
               style={[
@@ -370,7 +370,7 @@ export default class StoreScreen extends Component {
                 source={{ uri: `${item.teamimages[0].imgUrl}` }}
               />
             </Animated.View>
-          );
+          ) : null;
         }
       })
       .reverse();
@@ -478,9 +478,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     height: "100%",
     width: "100%",
+    alignContent: "center",
     alignItems: "center",
-    paddingRight: "10%",
-    paddingLeft: "10%"
+    padding: "5%"
   },
   rigthArrow: {
     height: "100%",

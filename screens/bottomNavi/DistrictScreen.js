@@ -263,7 +263,7 @@ export default class DistrictScreen extends Component {
               style={[
                 this.rotateAndTranslate,
                 {
-                  height: (SCREEN_HEIGHT * 4) / 4,
+                  height: (SCREEN_HEIGHT * 3) / 4,
                   width: SCREEN_WIDTH,
                   padding: 10,
                   paddingBottom: 20,
