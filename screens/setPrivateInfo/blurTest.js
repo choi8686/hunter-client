@@ -1,41 +1,26 @@
 import React from "react";
-import { Image, StyleSheet, View, StatusBar,Text } from "react-native";
-import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
+import { Text, View } from "react-native";
+import { LinearGradient } from "expo";
 
-
-
-
-export default class BlurViewExample extends React.Component {
+export default class FacebookButton extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <View>
-  <Avatar
-    rounded
-    source={{
-      uri: 'https://randomuser.me/api/portraits/men/41.jpg',
-    }}
-    size="large"
-  />
-<Icon type="ionicon" name="md-cart" />
-  <Badge status="warning" />
-{/* <Badge value={<Text>My Custom Badge</Text>}/> */}
-
-
-    </View>
-
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <LinearGradient
+          colors={["#4c669f", "#3b5998", "#192f6a"]}
+          style={{ padding: 15, alignItems: "center", borderRadius: 5 }}
+        >
+          <Text
+            style={{
+              backgroundColor: "transparent",
+              fontSize: 15,
+              color: "#fff"
+            }}
+          >
+            Sign in with Facebook
+          </Text>
+        </LinearGradient>
       </View>
     );
   }
 }
-
-{/* <Badge
-    status="success"
-    containerStyle={{ position: 'absolute', top: -4, right: -4 }}
-  /> */}
-
-  {/* <Badge status="success" /> */}
-{/* <Badge status="error" /> */}
-{/* <Badge status="primary" /> */}
-
-{/* <Badge value="99+" status="error" /> */}

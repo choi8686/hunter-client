@@ -179,6 +179,7 @@ export default class DistrictScreen extends Component {
     const whoLikeId = loginUser.userId;
     const toLikeId = this.state.teams[this.state.currentIndex].userId;
 
+    console.log(whoLikeId, toLikeId);
     fetch(`${url}/like`, {
       method: "POST",
       headers: {
