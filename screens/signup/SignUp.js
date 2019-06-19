@@ -1,5 +1,11 @@
 import React, { Fragment, Component } from "react";
-import { StyleSheet, Text, View, Modal, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  KeyboardAvoidingView
+} from "react-native";
 import { Input, Button } from "react-native-elements";
 
 import { LinearGradient, Constants } from "expo";
@@ -136,7 +142,9 @@ export default class SignUp extends Component {
       this.setState(() => ({ errorNickname: "아이디를 작성해주세요" }));
       flag = false;
     } else if (!regTypeID.test(this.state.nickname)) {
-      this.setState(() => ({ errorNickname: "아이디는 영문, 숫자 포함 4-8글자입니다" }));
+      this.setState(() => ({
+        errorNickname: "아이디는 영문, 숫자 포함 4-8글자입니다"
+      }));
       flag = false;
     } else {
       this.setState(() => ({ errorNickname: "" }));
@@ -146,7 +154,10 @@ export default class SignUp extends Component {
       this.setState(() => ({ errorPassword: "비밀번호를 작성해주세요" }));
       flag = false;
     } else if (!regTypePW.test(this.state.password)) {
-      this.setState(() => ({ errorPassword: "비밀번호는 영문 및 숫자 혹은 특수문자 포함 6-20글자입니다" }));
+      this.setState(() => ({
+        errorPassword:
+          "비밀번호는 영문 및 숫자 혹은 특수문자 포함 6-20글자입니다"
+      }));
       flag = false;
     } else {
       this.setState(() => ({ errorPassword: "" }));
@@ -159,7 +170,11 @@ export default class SignUp extends Component {
       this.setState(() => ({ errorCheck: "" }));
       flag = true;
     }
-    if (this.state.nickname === "" || this.state.password === "" || this.state.password_CHECK === "") {
+    if (
+      this.state.nickname === "" ||
+      this.state.password === "" ||
+      this.state.password_CHECK === ""
+    ) {
       flag = false;
     }
     return flag;
@@ -168,9 +183,16 @@ export default class SignUp extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
+        <LinearGradient
+          colors={["coral", "#f44283", "#f441bb", "#8341f4"]}
+          style={styles.backGround}
+        >
           <SignUpTitle />
-          <KeyboardAvoidingView style={styles.KeyboardAvoidingViewStyle} behavior="padding" enabled>
+          <KeyboardAvoidingView
+            style={styles.KeyboardAvoidingViewStyle}
+            behavior="padding"
+            enabled
+          >
             <InputBars changeErr={this._changeErr} errorMsg={this._errorMsg} />
           </KeyboardAvoidingView>
           <View style={styles.buttonHouse}>
@@ -178,16 +200,27 @@ export default class SignUp extends Component {
               title=" Submit"
               color="white"
               alignText="center"
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "deeppink" }}
               onPress={this._submit}
-              icon={{ type: "font-awesome", name: "check-circle", color: "pink" }}
+              icon={{
+                type: "font-awesome",
+                name: "check-circle",
+                color: "pink"
+              }}
             />
             <Button
-              icon={{ type: "font-awesome", name: "check-circle", color: "pink" }}
+              icon={{
+                type: "font-awesome",
+                name: "check-circle",
+                color: "pink"
+              }}
               title=" SignIn "
               color="white"
               alignText="center"
-              buttonStyle={{ width: "100%" }}
+              buttonStyle={{
+                width: "100%",
+                backgroundColor: "mediumturquoise"
+              }}
               onPress={() => {
                 this.props.navigation.navigate("SignIn");
               }}
@@ -204,7 +237,14 @@ export default class SignUp extends Component {
           >
             <View style={styles.modalStyle}>
               <View style={styles.inModalStyle}>
-                <Text style={{ color: "white", fontSize: 15, fontWeight: "bold", padding: 15 }}>
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    padding: 15
+                  }}
+                >
                   {" "}
                   아이디가 이미 존재합니다{" "}
                 </Text>
@@ -253,7 +293,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 30
   },
-  KeyboardAvoidingViewStyle: { flex: 0.5, width: "100%", paddingTop: Constants.statusBarHeight },
+  KeyboardAvoidingViewStyle: {
+    flex: 0.5,
+    width: "100%",
+    paddingTop: Constants.statusBarHeight
+  },
   inputContainer: {
     flex: 1,
     flexDirection: "column",

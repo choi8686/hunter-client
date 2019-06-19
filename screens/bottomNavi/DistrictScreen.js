@@ -76,9 +76,10 @@ export default class DistrictScreen extends Component {
   //상단탭 부분_우측상단바관리_윤민수
   static navigationOptions = ({ navigation }) => {
     return {
-      headerStyle: { backGroundColor: "black" },
       headerTitle: "저기어때",
-      color: "ghostwhite",
+      headerTitleStyle: {
+        color: "#FAFBFB"
+      },
       headerRight: <TopBarRightIcons navigation={navigation} />
     };
   };
@@ -141,7 +142,7 @@ export default class DistrictScreen extends Component {
     const getToken = await AsyncStorage.getItem("userToken");
     const userToken = getToken.split("-");
 
-    console.log(userToken);
+    console.log(getToken, "userToken DistrictScreen.js!!!!!!!! lines 144");
     console.log("-----------------TeamGetOnDistrict-----------------");
 
     loginUser = {
@@ -402,6 +403,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     height: "100%",
     width: "100%",
+    backgroundColor: "#222222",
     color: "#F9F9F8"
   },
   likeBorder: {
