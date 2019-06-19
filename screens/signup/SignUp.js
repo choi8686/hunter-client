@@ -1,13 +1,13 @@
 import React, { Fragment, Component } from "react";
 import {
   StyleSheet,
+  Image,
+  TouchableOpacity,
+  Platform,
   Text,
   View,
   Modal,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-  Image
+  KeyboardAvoidingView
 } from "react-native";
 import { Input, Button } from "react-native-elements";
 
@@ -29,12 +29,16 @@ class InputBars extends Component {
   constructor() {
     super();
 
-    this.state = { hidePassword: true };
+    this.state = { hidePassword: true, hidePasswordCheck: true };
   }
 
   // 비밀번호 가려주는 함수
   managePasswordVisibility = () => {
     this.setState({ hidePassword: !this.state.hidePassword });
+  };
+
+  managePasswordVisibilityCheck = () => {
+    this.setState({ hidePasswordCheck: !this.state.hidePasswordCheck });
   };
   render() {
     const { changeErr, errorMsg } = this.props;
@@ -60,6 +64,9 @@ class InputBars extends Component {
             containerStyle={{ marginBottom: 20, width: "90%" }}
             onChangeText={text => changeErr("password", "errorPassword", text)}
             clearButtonMode="always"
+            underlineColorAndroid="transparent"
+            secureTextEntry={this.state.hidePassword}
+            style={styles.textBox}
           />
           <TouchableOpacity
             activeOpacity={0.8}
@@ -87,15 +94,18 @@ class InputBars extends Component {
               changeErr("password_CHECK", "errorCheck", text)
             }
             clearButtonMode="always"
+            underlineColorAndroid="transparent"
+            secureTextEntry={this.state.hidePasswordCheck}
+            style={styles.textBox}
           />
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.visibilityBtn}
-            onPress={this.managePasswordVisibility}
+            onPress={this.managePasswordVisibilityCheck}
           >
             <Image
               source={
-                this.state.hidePassword
+                this.state.hidePasswordCheck
                   ? require("../../assets/hide.png")
                   : require("../../assets/view.png")
               }
@@ -392,11 +402,12 @@ const styles = StyleSheet.create({
   },
 
   btnImage: {
-    marginTop: "-20%",
+    marginTop: "10%",
     resizeMode: "contain",
     height: "100%",
     width: "100%"
   },
+
   buttonHouse: {
     flex: 0.3,
     flexDirection: "column",
