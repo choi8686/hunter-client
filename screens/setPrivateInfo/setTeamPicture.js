@@ -134,8 +134,14 @@ export default class TeamPicture extends Component {
       >
         <View style={styles.container}>
           <View style={styles.titleContainer}>
-            <Title name="팀 사진을 저장해주세요" />
-            <Title name="(사진 누르면 수정가능)" />
+            <Title
+              name="팀 사진을 저장해주세요"
+              style={{ fontWeight: "bold", fontSize: 25 }}
+            />
+            <Title
+              name="(사진 누르면 수정가능)"
+              style={{ fontWeight: "bold", fontSize: 15 }}
+            />
           </View>
           <ScrollView
             contentContainerStyle={{
@@ -145,7 +151,7 @@ export default class TeamPicture extends Component {
             }}
           >
             <View>
-              <Title name="가장 섹시한 사진을 넣어주세요" />
+              <Title name="대표 사진을 올려주세요" />
             </View>
             {firstImage === null ? (
               <TouchableOpacity
@@ -168,7 +174,7 @@ export default class TeamPicture extends Component {
             )}
 
             <View>
-              <Title name="가장 귀여운 사진을 넣어주세요" />
+              <Title name="가장 매력적인 사진을 올려주세요" />
             </View>
             {secondImage === null ? (
               <TouchableOpacity
@@ -261,6 +267,7 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     width: "100%",
     color: "white",
+    fontWeight: "bold",
     fontSize: 15
   },
 

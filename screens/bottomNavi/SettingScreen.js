@@ -5,18 +5,25 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  Modal
 } from "react-native";
 import { LinearGradient } from "expo";
 import { Avatar, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-
 import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
+import { url } from "../../url";
+
 export default class SettingScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+
+    this._bootstrapAsync();
   }
+
+  state = {
+    modalVisible: false
+  };
   static navigationOptions = ({ navigation }) => {
     return {
       title: "설정",
@@ -38,35 +45,73 @@ export default class SettingScreen extends React.Component {
       headerRight: <TopBarRightIcons navigation={navigation} />
     };
   };
-  _handleButton = num => {
-    switch (num) {
-      case 1:
-        alert("프로필수정");
-        break;
-      case 3:
-        alert("로그아웃");
-        break;
-      case 4:
-        alert("계정삭제");
+
+  ///화면 로딩되자마자 AsyncStorage에 있는 userId를 추출하여 state에 저장해서 계정탈퇴 할때
+  _bootstrapAsync = async () => {
+    if ((await AsyncStorage.getItem("userToken")) !== undefined) {
+      const userToken = await AsyncStorage.getItem("userToken");
+      const userTokenArr = userToken.split("-");
+
+      //유저의 아이디
+      const userId = userTokenArr[userTokenArr.length - 1];
+      const storeId = userTokenArr[userTokenArr.length - 2];
+      const districtId = userTokenArr[userTokenArr.length - 3];
+      const teamname = userTokenArr[userTokenArr.length - 4];
+      const comment = userTokenArr[userTokenArr.length - 5];
+      const age = userTokenArr[userTokenArr.length - 6];
+      const count = userTokenArr[userTokenArr.length - 7];
+      const sex = userTokenArr[userTokenArr.length - 8];
+      //team아디
+      const id = userTokenArr[userTokenArr.length - 9];
+
+      await this.setState({
+        userId: userId
+      });
+    } else {
+      Alert.alert("잠시 후 다시 시도해주세요");
     }
+  };
+
+  //모달 true, false로 구분해주는 함수 ( true, false에 따라 모달창이 생기고 사라짐)
+  //진심으로 계정삭제를 할건지 한번 더 체크하기 위해, 모달을 띄워준다
+  _setModalVisible = async visible => {
+    await this.setState({ modalVisible: visible });
+  };
+
+  _deleteAccount = async () => {
+    fetch(`${url}/users/destroy/` + this.state.userId, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId: this.state.userId
+      })
+    }).then(async res => {
+      if (res.ok) {
+        console.log(res._bodyInit, "res SettingScreen.js 94 lines");
+        console.log("--------Delete Account success---------", res.ok);
+        AsyncStorage.removeItem("userToken ");
+        this.props.navigation.navigate("SignUp");
+      } else {
+        console.log("--------Delete Account fail---------", res.ok);
+      }
+    });
   };
 
   _handleLogOut = async () => {
     AsyncStorage.removeItem("userToken");
-    let session = await AsyncStorage.getItem("userToken");
-    console.log(session, "세션없냐 개새꺄 SettingScreen.js 35 lines !!!!!!!");
-    console.log(this.props);
+    let userToken = await AsyncStorage.getItem("userToken");
+    console.log(
+      userToken,
+      "유저토큰 없냐 개새꺄 SettingScreen.js 35 lines !!!!!!!"
+    );
+
     this.props.navigation.navigate("SignIn");
   };
 
   render() {
     return (
-      // <LinearGradient
-      //   colors={["#10356c", "#a13388"]}
-      //   style={{ flex: 1 }}
-      //   start={{ x: 0, y: 0 }}
-      //   end={{ x: 1, y: 0 }}
-      // >
       <View
         style={{
           width: "100%",
@@ -140,13 +185,62 @@ export default class SettingScreen extends React.Component {
                 marginBottom: "5%"
               }}
               onPress={() => {
-                this._handleButton(4);
+                this._setModalVisible(true);
               }}
+              // onPress={this._deleteAccount}
               containerViewStyle={{ width: "100%" }}
               buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
           </View>
         </View>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={styles.modalStyle}>
+            <View style={styles.inModalStyle}>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  padding: 15
+                }}
+              >
+                {" "}
+                계정을 삭제하시겠습니까?{" "}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  width: "100%"
+                }}
+              >
+                <Button
+                  title="YES  "
+                  color="black"
+                  alignItems="center"
+                  onPress={this._deleteAccount}
+                />
+                <Button
+                  title="NO   "
+                  color="black"
+                  alignItems="center"
+                  onPress={() => {
+                    this._setModalVisible(!this.state.modalVisible);
+                  }}
+                >
+                  <Text> OK </Text>
+                </Button>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </View>
       // </LinearGradient>
     );
@@ -178,5 +272,22 @@ const styles = StyleSheet.create({
   },
   headerRightIcon: {
     marginRight: 15
+  },
+  modalStyle: {
+    flex: 1,
+    // flexDirection: 'column',
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  inModalStyle: {
+    height: "25%",
+    width: "80%",
+    borderColor: "pink",
+    borderWidth: 1.5,
+    borderRadius: 20,
+    borderStyle: "solid",
+    backgroundColor: "rgba(52, 52, 52, 0.7)",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });

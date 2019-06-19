@@ -72,6 +72,7 @@ export default class SetDistrict extends Component {
             <Button
               title="Submit"
               color="white"
+              buttonStyle={{ width: "100%", backgroundColor: "deeppink" }}
               onPress={() => {
                 presentDistrict
                   ? this.props.navigation.navigate("ChooseStore", {
