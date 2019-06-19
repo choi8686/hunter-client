@@ -9,8 +9,7 @@ import {
   PanResponder,
   AsyncStorage
 } from "react-native";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo";
+import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
 import { url } from "../../url";
 
@@ -109,7 +108,7 @@ export default class DistrictScreen extends Component {
               () => {
                 this.position.setValue({ x: 0, y: 0 });
               },
-              this._snedToLike()
+              this._sendToLike()
             );
           });
         }
@@ -176,11 +175,14 @@ export default class DistrictScreen extends Component {
       );
   };
 
-  _snedToLike = () => {
-    const whoLikeId = loginUser.userId;
-    const toLikeId = this.state.teams[this.state.currentIndex].userId;
+  _sendToLike = async () => {
+    let getTeamId = await this._getTeamId(
+      this.state.teams[this.state.currentIndex].userId
+    );
 
-    console.log(whoLikeId, toLikeId);
+    let whoLikeId = loginUser.teamId;
+    let toLikeId = getTeamId;
+
     fetch(`${url}/like`, {
       method: "POST",
       headers: {
@@ -192,6 +194,20 @@ export default class DistrictScreen extends Component {
         introText: "같은 매장이면 메세지를 볼 수 있습니다."
       })
     });
+  };
+
+  _getTeamId = async userId => {
+    let teamId;
+    await fetch(`${url}/teams/getUserIdTeam/` + userId, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(result => result.json())
+      .then(data => (teamId = data.teams[0].id));
+
+    return teamId;
   };
 
   _onChangeIndex = e => {
@@ -263,7 +279,7 @@ export default class DistrictScreen extends Component {
               style={[
                 this.rotateAndTranslate,
                 {
-                  height: (SCREEN_HEIGHT * 4) / 4,
+                  height: (SCREEN_HEIGHT * 3) / 4,
                   width: SCREEN_WIDTH,
                   padding: 10,
                   paddingBottom: 20,
@@ -367,31 +383,66 @@ export default class DistrictScreen extends Component {
   render() {
     return (
       <View style={{ ...styles.backGround }}>
-        <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>
+        <View
+          style={{
+            flex: 0.9,
+            height: "100%",
+            flexDirection: "column"
+          }}
+        >
           {this.renderUsers()}
         </View>
-        <View style={styles.arrow}>
-          <AntDesign
-            id="leftArrow"
-            name="leftcircleo"
-            style={styles.leftArrow}
-            onPress={() => this._onChangeIndex("leftArrow")}
-          />
 
+        <View style={{ flex: 0.1, width: "17%", padding: "5%" }}>
           <Ionicons
             name="md-refresh"
             style={styles.refreshButton}
             onPress={() => this._onPresRefresh()}
           />
+        </View>
 
-          <AntDesign
+        <View style={{ ...styles.arrow }}>
+          <SimpleLineIcons
+            id="leftArrow"
+            name="arrow-left"
+            style={styles.leftArrow}
+            onPress={() => this._onChangeIndex("leftArrow")}
+          />
+
+          <SimpleLineIcons
             id="rightArrow"
-            name="rightcircleo"
+            name="arrow-right"
             style={styles.rigthArrow}
             onPress={() => this._onChangeIndex("rightArrow")}
           />
         </View>
       </View>
+      // <View style={{ ...styles.backGround }}>
+      //   <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>
+      //     {this.renderUsers()}
+      //   </View>
+      //   <View style={styles.arrow}>
+      //     <AntDesign
+      //       id="leftArrow"
+      //       name="leftcircleo"
+      //       style={styles.leftArrow}
+      //       onPress={() => this._onChangeIndex("leftArrow")}
+      //     />
+
+      //     <Ionicons
+      //       name="md-refresh"
+      //       style={styles.refreshButton}
+      //       onPress={() => this._onPresRefresh()}
+      //     />
+
+      //     <AntDesign
+      //       id="rightArrow"
+      //       name="rightcircleo"
+      //       style={styles.rigthArrow}
+      //       onPress={() => this._onChangeIndex("rightArrow")}
+      //     />
+      //   </View>
+      // </View>
     );
   }
 }
@@ -399,10 +450,6 @@ export default class DistrictScreen extends Component {
 const styles = StyleSheet.create({
   backGround: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "flex-start",
-    height: "100%",
-    width: "100%",
     backgroundColor: "#222222",
     color: "#F9F9F8"
   },
@@ -453,25 +500,23 @@ const styles = StyleSheet.create({
   arrow: {
     flex: 0.1,
     flexDirection: "row",
-    justifyContent: "space-between",
-    height: "100%",
-    width: "100%",
-    alignContent: "center",
-    alignItems: "center",
-    padding: "5%"
+    justifyContent: "space-around",
+    alignContent: "center"
   },
   rigthArrow: {
     height: "100%",
-    fontSize: 23
+    color: "#dd00ff",
+    fontSize: 30
   },
   leftArrow: {
     height: "100%",
-    fontSize: 23
+    color: "#dd00ff",
+    fontSize: 30
   },
   refreshButton: {
     height: "100%",
     color: "mediumturquoise",
-    fontSize: 28
+    fontSize: 30
   },
   headerRightIcon: {
     marginRight: 15

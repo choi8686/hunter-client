@@ -11,9 +11,7 @@ import {
   Modal
 } from "react-native";
 import InputModal from "./InputModal";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo";
-import { Icon } from "react-native-elements";
+import { SimpleLineIcons, Ionicons } from "@expo/vector-icons";
 
 import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
 import { url } from "../../url";
@@ -114,7 +112,8 @@ export default class StoreScreen extends Component {
               },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
-              }
+              },
+              this._sendToLike()
             );
           });
         }
@@ -193,9 +192,14 @@ export default class StoreScreen extends Component {
       );
   };
 
-  _snedToLike = () => {
-    const whoLikeId = loginUser.userId;
-    const toLikeId = this.state.teams[this.state.currentIndex].userId;
+  _sendToLike = async () => {
+    let getTeamId = await this._getTeamId(
+      this.state.teams[this.state.currentIndex].userId
+    );
+
+    let whoLikeId = loginUser.teamId;
+    let toLikeId = getTeamId;
+    console.log(whoLikeId, toLikeId);
 
     fetch(`${url}/like`, {
       method: "POST",
@@ -205,10 +209,23 @@ export default class StoreScreen extends Component {
       body: JSON.stringify({
         whoLikeId: whoLikeId,
         toLikeId: toLikeId,
-        // Store에서 멘트를 추가하는 기능을 만든다음 해당 멘트를 담을 것
-        introText: "저희 15번 자리입니다 눈길한번만 주세요"
+        introText: "우리 15번자리인데 합석하쉴?"
       })
     });
+  };
+
+  _getTeamId = async userId => {
+    let teamId;
+    await fetch(`${url}/teams/getUserIdTeam/` + userId, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(result => result.json())
+      .then(data => (teamId = data.teams[0].id));
+
+    return teamId;
   };
 
   _onChangeIndex = e => {
@@ -270,14 +287,14 @@ export default class StoreScreen extends Component {
         if (i < this.state.currentIndex) {
           return null;
         } else if (i === this.state.currentIndex) {
-          return (
+          return item.teamimages[0] ? (
             <Animated.View
               {...this.PanResponder.panHandlers}
               key={item.id}
               style={[
                 this.rotateAndTranslate,
                 {
-                  height: (SCREEN_HEIGHT * 4) / 4,
+                  height: (SCREEN_HEIGHT * 3) / 4,
                   width: SCREEN_WIDTH,
                   padding: 10,
                   paddingBottom: 20,
@@ -318,7 +335,7 @@ export default class StoreScreen extends Component {
                   zIndex: 1000,
                   position: "absolute",
                   marginTop: "96%",
-                  height: 200,
+                  height: 100,
                   marginLeft: "5%"
                 }}
               >
@@ -342,9 +359,9 @@ export default class StoreScreen extends Component {
                 </Text>
               </Animated.View>
             </Animated.View>
-          );
+          ) : null;
         } else {
-          return (
+          return item.teamimages[0] ? (
             <Animated.View
               key={item.id}
               style={[
@@ -370,7 +387,7 @@ export default class StoreScreen extends Component {
                 source={{ uri: `${item.teamimages[0].imgUrl}` }}
               />
             </Animated.View>
-          );
+          ) : null;
         }
       })
       .reverse();
@@ -379,26 +396,35 @@ export default class StoreScreen extends Component {
   render() {
     return (
       <View style={{ ...styles.backGround }}>
-        <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>
+        <View
+          style={{
+            flex: 0.9,
+            height: "100%",
+            flexDirection: "column"
+          }}
+        >
           {this.renderUsers()}
         </View>
-        <View style={styles.arrow}>
-          <AntDesign
+
+        <View style={{ flex: 0.1, width: "17%", padding: "5%" }}>
+          <Ionicons
+            name="md-refresh"
+            style={styles.refreshButton}
+            onPress={() => this._onPresRefresh()}
+          />
+        </View>
+
+        <View style={{ ...styles.arrow }}>
+          <SimpleLineIcons
             id="leftArrow"
-            name="leftcircleo"
+            name="arrow-left"
             style={styles.leftArrow}
             onPress={() => this._onChangeIndex("leftArrow")}
           />
-          <View>
-            <Ionicons
-              name="md-refresh"
-              style={styles.refreshButton}
-              onPress={() => this._onPresRefresh()}
-            />
-          </View>
-          <AntDesign
+
+          <SimpleLineIcons
             id="rightArrow"
-            name="rightcircleo"
+            name="arrow-right"
             style={styles.rigthArrow}
             onPress={() => this._onChangeIndex("rightArrow")}
           />
@@ -416,10 +442,6 @@ export default class StoreScreen extends Component {
 const styles = StyleSheet.create({
   backGround: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    height: "100%",
-    width: "100%",
     backgroundColor: "#222222",
     color: "#F9F9F8"
   },
@@ -475,25 +497,23 @@ const styles = StyleSheet.create({
   arrow: {
     flex: 0.1,
     flexDirection: "row",
-    justifyContent: "space-between",
-    height: "100%",
-    width: "100%",
-    alignItems: "center",
-    paddingRight: "10%",
-    paddingLeft: "10%"
+    justifyContent: "space-around",
+    alignContent: "center"
   },
   rigthArrow: {
     height: "100%",
-    fontSize: 23
+    color: "#dd00ff",
+    fontSize: 30
   },
   leftArrow: {
     height: "100%",
-    fontSize: 23
+    color: "#dd00ff",
+    fontSize: 30
   },
   refreshButton: {
     height: "100%",
     color: "mediumturquoise",
-    fontSize: 28
+    fontSize: 30
   },
   headerRightIcon: {
     marginRight: 15
