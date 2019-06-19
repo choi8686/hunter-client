@@ -25,7 +25,7 @@ export default class DistrictScreen extends Component {
     this.state = {
       teams: [],
       currentIndex: 0,
-      pictrueIndex: 0
+      pictureIndex: 0
     };
     this.rotate = this.position.x.interpolate({
       inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
@@ -105,7 +105,7 @@ export default class DistrictScreen extends Component {
           }).start(() => {
             //사라진 다음 다음 사진을 0,0 좌표에 set 하는 부분
             this.setState(
-              { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+              { currentIndex: this.state.currentIndex + 1, pictureIndex: 0 },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
               },
@@ -120,7 +120,7 @@ export default class DistrictScreen extends Component {
             toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
           }).start(() => {
             this.setState(
-              { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+              { currentIndex: this.state.currentIndex + 1, pictureIndex: 0 },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
               }
@@ -197,17 +197,17 @@ export default class DistrictScreen extends Component {
   _onChangeIndex = e => {
     if (
       e === "rightArrow" &&
-      this.state.pictrueIndex <
+      this.state.pictureIndex <
         this.state.teams[this.state.currentIndex].teamimages.length - 1
     ) {
       this.setState({
-        pictrueIndex: this.state.pictrueIndex + 1
+        pictureIndex: this.state.pictureIndex + 1
       });
     }
 
-    if (e === "leftArrow" && this.state.pictrueIndex > 0) {
+    if (e === "leftArrow" && this.state.pictureIndex > 0) {
       this.setState({
-        pictrueIndex: this.state.pictrueIndex - 1
+        pictureIndex: this.state.pictureIndex - 1
       });
     }
   };
@@ -217,7 +217,7 @@ export default class DistrictScreen extends Component {
   //     toValue: { x: -SCREEN_WIDTH - 100, y: -20 }
   //   }).start(() => {
   //     this.setState(
-  //       { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+  //       { currentIndex: this.state.currentIndex + 1, pictureIndex: 0 },
   //       () => {
   //         this.position.setValue({ x: 0, y: 0 });
   //       }
@@ -230,7 +230,7 @@ export default class DistrictScreen extends Component {
   //     toValue: { x: SCREEN_WIDTH + 100, y: -20 }
   //   }).start(() => {
   //     this.setState(
-  //       { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+  //       { currentIndex: this.state.currentIndex + 1, pictureIndex: 0 },
   //       () => {
   //         this.position.setValue({ x: 0, y: 0 });
   //       }
@@ -241,7 +241,7 @@ export default class DistrictScreen extends Component {
   _onPresRefresh = () => {
     this.setState({
       currentIndex: 0,
-      pictrueIndex: 0
+      pictureIndex: 0
     });
     this._getTeamsOnDistrict();
   };
@@ -256,7 +256,7 @@ export default class DistrictScreen extends Component {
           return null;
         } else if (i === this.state.currentIndex) {
           // 맨 윗장에 있는 팀의 상태
-          return (
+          return item.teamimages[0] ? (
             <Animated.View
               {...this.PanResponder.panHandlers}
               key={item.id}
@@ -295,7 +295,7 @@ export default class DistrictScreen extends Component {
                   borderRadius: 20
                 }}
                 source={{
-                  uri: `${item.teamimages[this.state.pictrueIndex].imgUrl}`
+                  uri: `${item.teamimages[this.state.pictureIndex].imgUrl}`
                 }}
               />
 
@@ -329,10 +329,10 @@ export default class DistrictScreen extends Component {
                 </Text>
               </Animated.View>
             </Animated.View>
-          );
+          ) : null;
         } else {
           // 맨 윗장을 제외한 나머지. 아직 넘기지 않은 팀의 상태
-          return (
+          return item.teamimages[0] ? (
             <Animated.View
               key={item.id}
               style={[
@@ -358,7 +358,7 @@ export default class DistrictScreen extends Component {
                 source={{ uri: `${item.teamimages[0].imgUrl}` }}
               />
             </Animated.View>
-          );
+          ) : null;
         }
       })
       .reverse();
