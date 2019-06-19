@@ -87,6 +87,64 @@ export default class SignUp extends Component {
           JWT = JSON.parse(res._bodyInit).token;
           console.log("--------login success---------", res.ok);
           flag = true;
+          fetch(`${url}/users/info`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `JWT ${JWT}`
+            }
+          }).then(async res => {
+            console.log(JWT, "JWT!!!!!! SignIn.js lines 102");
+
+            if (res.ok) {
+              await this.setState({
+                userId: JSON.parse(res._bodyInit).userInfo.id
+              });
+
+              fetch(`${url}/teams/getUserIdTeam/` + this.state.userId, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json"
+                }
+              }).then(async res => {
+                if (res.ok) {
+                  if (JSON.parse(res._bodyInit)) {
+                    console.log(JSON.parse(res._bodyInit));
+                    const teamInfo = JSON.parse(res._bodyInit).teams[0];
+
+                    await this.setState({
+                      teamInfo: teamInfo
+                    });
+                    await AsyncStorage.setItem(
+                      "userToken",
+                      "aasertetdbc" +
+                        "-" +
+                        teamInfo.sex +
+                        "-" +
+                        teamInfo.count +
+                        "-" +
+                        teamInfo.age +
+                        "-" +
+                        teamInfo.comment +
+                        "-" +
+                        teamInfo.teamname +
+                        "-" +
+                        teamInfo.districtId +
+                        "-" +
+                        teamInfo.storeId +
+                        "-" +
+                        teamInfo.userId +
+                        "-" +
+                        teamInfo.id
+                    );
+                    await this._signInAsync();
+                  } else {
+                    await this._signInAsync();
+                  }
+                }
+              });
+            }
+          });
         } else {
           console.log("--------login fail---------", res.ok);
           flag = false;
@@ -94,64 +152,6 @@ export default class SignUp extends Component {
         }
 
         //JWT
-        fetch(`${url}/users/info`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `JWT ${JWT}`
-          }
-        }).then(async res => {
-          console.log(JWT, "JWT!!!!!! SignIn.js lines 102");
-
-          if (res.ok) {
-            await this.setState({
-              userId: JSON.parse(res._bodyInit).userInfo.id
-            });
-
-            fetch(`${url}/teams/getUserIdTeam/` + this.state.userId, {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json"
-              }
-            }).then(async res => {
-              if (res.ok) {
-                if (JSON.parse(res._bodyInit)) {
-                  console.log(JSON.parse(res._bodyInit));
-                  const teamInfo = JSON.parse(res._bodyInit).teams[0];
-
-                  await this.setState({
-                    teamInfo: teamInfo
-                  });
-                  await AsyncStorage.setItem(
-                    "userToken",
-                    "aasertetdbc" +
-                      "-" +
-                      teamInfo.sex +
-                      "-" +
-                      teamInfo.count +
-                      "-" +
-                      teamInfo.age +
-                      "-" +
-                      teamInfo.comment +
-                      "-" +
-                      teamInfo.teamname +
-                      "-" +
-                      teamInfo.districtId +
-                      "-" +
-                      teamInfo.storeId +
-                      "-" +
-                      teamInfo.userId +
-                      "-" +
-                      teamInfo.id
-                  );
-                  await this._signInAsync();
-                } else {
-                  await this._signInAsync();
-                }
-              }
-            });
-          }
-        });
       });
     }
   };
