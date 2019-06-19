@@ -2,11 +2,13 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 
-const LeftMessageBubble = ({ text, teamId }) => {
+const LeftMessageBubble = ({ text }) => {
   return (
     <View style={[styles.item, styles.itemIn]}>
       <View style={[styles.balloon, { backgroundColor: "grey" }]}>
-        <Text style={{ paddingTop: 5, color: "white", fontSize: 16 }}>{text}</Text>
+        <Text style={{ paddingTop: 5, color: "white", fontSize: 16 }}>
+          {text}
+        </Text>
       </View>
     </View>
   );

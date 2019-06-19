@@ -11,9 +11,17 @@ import { Avatar } from "react-native-elements";
 //4. 발신인 팀이름
 //5. 발신인 사진
 
-const MessageBox = ({ text, teamId, teamName, createdAt, img }) => {
-  if (teamId === 31) {
-    return <RightMessageBubble teamId={teamId} text={text} />;
+const MessageBox = ({
+  myTeamIdfromServer,
+  myTeamId,
+  teamId,
+  text,
+  createdAt,
+  teamName,
+  img
+}) => {
+  if (myTeamId == myTeamIdfromServer) {
+    return <RightMessageBubble text={text} />;
   } else {
     return (
       <View style={styles.messageBox}>
@@ -31,7 +39,7 @@ const MessageBox = ({ text, teamId, teamName, createdAt, img }) => {
             <Text>{teamName}</Text>
           </View>
           <View style={styles.bubble}>
-            <LeftMessageBubble teamId={teamId} text={text} />
+            <LeftMessageBubble text={text} />
           </View>
         </View>
       </View>

@@ -22,13 +22,12 @@ export default class TopBarRightIcons extends React.Component {
   movetoChatList = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
     let userTokenArray = userToken.split("-");
+    console.log(userTokenArray, "22223232323232323");
+    //sex, count, age, comment, teamname, locationId, storeId, userId, teamId
+    const myTeamId = userTokenArray[9];
+    const myTeamName = userTokenArray[5];
 
-    //sex, count, age, comment, teamname, locationId, userId, id
-    const teamId = userTokenArray[7];
-    const userId = userTokenArray[6];
-    const teamName = userTokenArray[4];
-
-    this.props.navigation.navigate("ChatList", { teamId, userId, teamName });
+    this.props.navigation.navigate("ChatList", { myTeamId, myTeamName });
   };
 
   render() {

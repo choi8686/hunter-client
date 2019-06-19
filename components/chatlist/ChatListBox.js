@@ -9,10 +9,13 @@ class ChatListBox extends React.Component {
 
   render() {
     const {
+      myTeamName,
+      myTeamId,
       avatarURL,
       teamName,
+      teamId,
       conversation,
-      chatBoxIdx,
+      uuid,
       moveToChatroom
     } = this.props;
     return (
@@ -37,7 +40,14 @@ class ChatListBox extends React.Component {
         tension={100}
         style={styles.chatBoxContainer}
         onPress={() => {
-          moveToChatroom(chatBoxIdx, teamName);
+          moveToChatroom(
+            myTeamName,
+            myTeamId,
+            teamName,
+            teamId,
+            uuid,
+            avatarURL
+          );
         }}
       />
     );

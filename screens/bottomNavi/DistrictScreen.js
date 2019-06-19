@@ -138,20 +138,10 @@ export default class DistrictScreen extends Component {
   }
 
   _getTeamsOnDistrict = async () => {
-<<<<<<< HEAD
-    let userToken = await AsyncStorage.getItem("userToken");
-    userToken = userToken.split("-");
-    console.log(userToken, "userToken DistrictScreen 141 lines");
-    console.log(userToken);
-    // sex, count, age, comment, teamname, locationId, userId;
-
-    // test1 의 토큰을 가져왔다고 가정한다면
-=======
     const getToken = await AsyncStorage.getItem("userToken");
     const userToken = getToken.split("-");
 
     console.log(userToken);
->>>>>>> 676642ae8cc55a2db8e96c064610734398072266
     console.log("-----------------TeamGetOnDistrict-----------------");
 
     loginUser = {
@@ -168,11 +158,7 @@ export default class DistrictScreen extends Component {
 
     console.log(loginUser);
     // 토큰에 location.district 의 값을 추가해야 할것 같다.. 혁님 파이팅
-<<<<<<< HEAD
-    fetch(`${url}/teams/district/1`, {
-=======
     fetch(`${url}/teams/district/${loginUser.districtId}`, {
->>>>>>> 676642ae8cc55a2db8e96c064610734398072266
       method: "GET",
       headers: {
         "Content-Type": "application/json"
