@@ -118,6 +118,7 @@ export default class SignUp extends Component {
                 if (JSON.parse(res._bodyInit)) {
                   console.log(JSON.parse(res._bodyInit));
                   const teamInfo = JSON.parse(res._bodyInit).teams[0];
+
                   await this.setState({
                     teamInfo: teamInfo
                   });

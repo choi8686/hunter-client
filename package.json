@@ -21,6 +21,7 @@
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-linear-gradient": "^2.5.4",
     "react-native-size-matters": "^0.2.1",
+    "react-native-sweet-alert": "^2.1.0",
     "react-native-view-overflow": "0.0.4",
     "react-navigation": "^3.11.0",
     "socket.io-client": "^2.2.0"
