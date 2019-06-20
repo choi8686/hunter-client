@@ -7,11 +7,15 @@ import {
   Dimensions,
   Animated,
   PanResponder,
-  AsyncStorage,
-  Modal
+  AsyncStorage
 } from "react-native";
 import InputModal from "./InputModal";
-import { SimpleLineIcons, Ionicons } from "@expo/vector-icons";
+import {
+  SimpleLineIcons,
+  FontAwesome,
+  Foundation,
+  MaterialIcons
+} from "@expo/vector-icons";
 
 import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
 import { url } from "../../url";
@@ -107,13 +111,12 @@ export default class StoreScreen extends Component {
             this.setState(
               {
                 currentIndex: this.state.currentIndex + 1,
-                pictrueIndex: 0,
-                modalVisible: true
+                pictrueIndex: 0
               },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
-              },
-              this._sendToLike()
+              }
+              // this._sendToLike()
             );
           });
         }
@@ -126,8 +129,7 @@ export default class StoreScreen extends Component {
             this.setState(
               {
                 currentIndex: this.state.currentIndex + 1,
-                pictrueIndex: 0,
-                modalVisible: false
+                pictrueIndex: 0
               },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
@@ -405,11 +407,17 @@ export default class StoreScreen extends Component {
         >
           {this.renderUsers()}
         </View>
-
-        <View style={{ flex: 0.1, width: "17%", padding: "5%" }}>
-          <Ionicons
-            name="md-refresh"
+        <View style={{ ...styles.featrueIcon }}>
+          <Foundation
+            // 새로고침
+            name="refresh"
             style={styles.refreshButton}
+            onPress={() => this._onPresRefresh()}
+          />
+          <FontAwesome
+            // 쪽지 보내기
+            name="send"
+            style={styles.sendLetter}
             onPress={() => this._onPresRefresh()}
           />
         </View>
@@ -494,26 +502,41 @@ const styles = StyleSheet.create({
     width: 120,
     padding: 6
   },
+  featrueIcon: {
+    flex: 0.1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: "5%",
+    marginRight: "7%",
+    paddingBottom: "5%",
+    alignContent: "center"
+  },
   arrow: {
     flex: 0.1,
     flexDirection: "row",
     justifyContent: "space-around",
-    alignContent: "center"
+    alignContent: "center",
+    marginBottom: "1%"
   },
   rigthArrow: {
     height: "100%",
     color: "#dd00ff",
-    fontSize: 30
+    fontSize: 40
   },
   leftArrow: {
     height: "100%",
     color: "#dd00ff",
-    fontSize: 30
+    fontSize: 40
   },
   refreshButton: {
     height: "100%",
     color: "mediumturquoise",
-    fontSize: 30
+    fontSize: 38
+  },
+  sendLetter: {
+    height: "100%",
+    color: "mediumturquoise",
+    fontSize: 33
   },
   headerRightIcon: {
     marginRight: 15
