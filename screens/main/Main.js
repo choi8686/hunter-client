@@ -24,8 +24,9 @@ export default class Main extends Component {
   // 처음 접속시, userToken이 있으면 database에서 나의 해당정보를 가져오고 그 정보를 가지고 DistrictScreen에 접속한다.
   // 데이터 베이스에서 해당정보를 가지고 와야 홍대의 사람들을 보여줄지, 이태원의 사람들을 보여줄지 그리고 또 홍대의 그린라이트를 보여줄지, 한신포차를 보여줄지 알 수 있다.
   _bootstrapAsync = async () => {
-    if (await AsyncStorage.getItem("userToken")) {
+    if ((await AsyncStorage.getItem("userToken")) !== null) {
       const userToken = await AsyncStorage.getItem("userToken");
+      console.log(userToken, "userToken@@@@@@@@");
       const userTokenArr = userToken.split("-");
       "aasertetdbc" +
         sex +
@@ -81,28 +82,29 @@ export default class Main extends Component {
       >
         <View style={styles.titleHouse}>
           <Title name="  저기 어때 " />
-          {/* <AntDesign id="leftArrow" name="rocket1" size={25} style={{}} /> */}
           <Image
             source={require("../../logo/Logo.png")}
-            style={{ height: "15%", width: "15%" }}
+            style={{ height: "13%", width: "13%" }}
           />
         </View>
 
-        <Button
-          title="Loading"
-          type="clear"
-          titleStyle={{ color: "white" }}
-          buttonStyle={{}}
-        />
-        <Button
-          loading
-          type="clear"
-          loadingProps={{ size: "small", color: "white" }}
-          onPress={() => {
-            this.props.navigation.navigate("SignIn");
-          }}
-          underlayColor="transparent"
-        />
+        <View style={styles.buttonHouse}>
+          <Button
+            title="Loading"
+            type="clear"
+            titleStyle={{ color: "white" }}
+            buttonStyle={{}}
+          />
+          <Button
+            loading
+            type="clear"
+            loadingProps={{ size: "small", color: "white" }}
+            onPress={() => {
+              this.props.navigation.navigate("SignIn");
+            }}
+            underlayColor="transparent"
+          />
+        </View>
       </LinearGradient>
     );
   }
@@ -110,18 +112,20 @@ export default class Main extends Component {
 
 const styles = StyleSheet.create({
   backGround: {
+    paddingTop: "30%",
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     width: "100%",
     left: 0,
     right: 0,
     top: 0
   },
   titleHouse: {
-    flex: 0.7,
-    marginTop: "40%",
+    flex: 0.8,
+    marginTop: "30%",
+    height: 500,
     flexDirection: "row",
     justifyContent: "space-evenly",
     color: "white"
@@ -131,5 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: "bold"
   },
-  rocket: {}
+  buttonHouse: {
+    flex: 0.2
+  }
 });

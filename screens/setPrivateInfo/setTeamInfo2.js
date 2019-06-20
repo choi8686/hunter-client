@@ -1,5 +1,11 @@
 import React, { Fragment, Component } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  KeyboardAvoidingView
+} from "react-native";
 import { Input, Button, Icon } from "react-native-elements";
 import { LinearGradient, Constants } from "expo";
 
@@ -29,14 +35,20 @@ export default class TeamInfo2 extends Component {
   };
 
   _saveComment = e => {
-    this.setState({
-      comment: e.nativeEvent.text
-    });
+    if (e.nativeEvent.text.length <= 25) {
+      this.setState({
+        comment: e.nativeEvent.text
+      });
+    } else {
+      alert("글자수는 25개 이하여야 합니다.");
+    }
   };
 
   //나이 범위 설정해주는 함수
   _ageRange = (start, stop, step) => {
-    return Array.from({ length: (stop - start) / step }, (_, i) => String(start + i * step));
+    return Array.from({ length: (stop - start) / step }, (_, i) =>
+      String(start + i * step)
+    );
   };
 
   //나이선택 클릭시 picker(modal) 창 띄워주는 함수
@@ -46,7 +58,10 @@ export default class TeamInfo2 extends Component {
       selectedValue: this.state.selectedLetter,
       doneButtonText: "선택",
       onValueChange: selectedValueFromPicker =>
-        this.setState({ selectedLetter: selectedValueFromPicker, averageAge: selectedValueFromPicker }),
+        this.setState({
+          selectedLetter: selectedValueFromPicker,
+          averageAge: selectedValueFromPicker
+        }),
       useNativeDriver: true,
 
       itemStyleAndroid: {
@@ -71,15 +86,22 @@ export default class TeamInfo2 extends Component {
   render() {
     const { sex, teamname, count, averageAge, comment, userId } = this.state;
     return (
-      <LinearGradient colors={["coral", "#f44283", "#f441bb", "#8341f4"]} style={styles.backGround}>
+      <LinearGradient
+        colors={["coral", "#f44283", "#f441bb", "#8341f4"]}
+        style={styles.backGround}
+      >
         <Title name="팀 정보를 입력해주세요" style={styles.title} />
-        <KeyboardAvoidingView style={styles.KeyboardAvoidingViewStyle} behavior="padding" enabled>
+        <KeyboardAvoidingView
+          style={styles.KeyboardAvoidingViewStyle}
+          behavior="padding"
+          enabled
+        >
           <View style={styles.contentsList}>
             <View style={styles.comment}>
               <Text>필살 멘트</Text>
 
               <Input
-                placeholder="      이성에게 남길 우리팀의 필살멘트"
+                placeholder="      우리팀의 필살멘트( 20글자 제한) "
                 textAlign={"center"}
                 containerStyle={styles.content}
                 clearButtonMode="always"
@@ -92,7 +114,9 @@ export default class TeamInfo2 extends Component {
               <Text>평균 나이</Text>
               <View style={styles.container}>
                 <TouchableOpacity native={false} onPress={this._onPressText}>
-                  <Text style={styles.averageAge}>{this.state.selectedLetter}</Text>
+                  <Text style={styles.averageAge}>
+                    {this.state.selectedLetter}
+                  </Text>
                 </TouchableOpacity>
                 <QuickPicker />
               </View>
@@ -103,6 +127,8 @@ export default class TeamInfo2 extends Component {
           <Button
             title=" Submit"
             color="white"
+            buttonStyle={{ width: "100%", backgroundColor: "deeppink" }}
+            containerViewStyle={{ width: "100%" }}
             icon={<Icon name="check-circle" size={15} color="pink" />}
             onPress={() => {
               averageAge && comment
@@ -148,7 +174,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20
   },
-  KeyboardAvoidingViewStyle: { flex: 0.6, width: "100%", paddingTop: Constants.statusBarHeight },
+  KeyboardAvoidingViewStyle: {
+    flex: 0.6,
+    width: "100%",
+    paddingTop: Constants.statusBarHeight
+  },
   contentsList: {
     flex: 1,
     flexDirection: "column",

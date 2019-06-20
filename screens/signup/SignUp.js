@@ -1,6 +1,9 @@
 import React, { Fragment, Component } from "react";
 import {
   StyleSheet,
+  Image,
+  TouchableOpacity,
+  Platform,
   Text,
   View,
   Modal,
@@ -21,38 +24,95 @@ class SignUpTitle extends Component {
   }
 }
 
+//로그인 입력창
 class InputBars extends Component {
+  constructor() {
+    super();
+
+    this.state = { hidePassword: true, hidePasswordCheck: true };
+  }
+
+  // 비밀번호 가려주는 함수
+  managePasswordVisibility = () => {
+    this.setState({ hidePassword: !this.state.hidePassword });
+  };
+
+  managePasswordVisibilityCheck = () => {
+    this.setState({ hidePasswordCheck: !this.state.hidePasswordCheck });
+  };
   render() {
     const { changeErr, errorMsg } = this.props;
 
     return (
-      <View style={styles.inputContainer}>
-        <Input
-          placeholder="  Write ID"
-          textAlign={"center"}
-          leftIcon={{ type: "font-awesome", name: "user" }}
-          containerStyle={{ marginBottom: 20, width: "90%" }}
-          clearButtonMode="always"
-          onChangeText={text => changeErr("nickname", "errorNickname", text)}
-        />
+      <View style={styles.passwordContainer}>
+        <View style={styles.textBoxBtnHolder}>
+          <Input
+            placeholder="   ID"
+            textAlign={"center"}
+            leftIcon={{ type: "font-awesome", name: "user" }}
+            containerStyle={{ marginBottom: 20, width: "90%" }}
+            clearButtonMode="always"
+            onChangeText={text => changeErr("nickname", "errorNickname", text)}
+          />
+        </View>
         {errorMsg("errorNickname")}
-        <Input
-          placeholder="  Write PASSWORD"
-          textAlign={"center"}
-          leftIcon={{ type: "font-awesome", name: "lock" }}
-          containerStyle={{ marginBottom: 20, width: "90%" }}
-          onChangeText={text => changeErr("password", "errorPassword", text)}
-          clearButtonMode="always"
-        />
+        <View style={styles.textBoxBtnHolder}>
+          <Input
+            placeholder="   PASSWORD"
+            textAlign={"center"}
+            leftIcon={{ type: "font-awesome", name: "lock" }}
+            containerStyle={{ marginBottom: 20, width: "90%" }}
+            onChangeText={text => changeErr("password", "errorPassword", text)}
+            clearButtonMode="always"
+            underlineColorAndroid="transparent"
+            secureTextEntry={this.state.hidePassword}
+            style={styles.textBox}
+          />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.visibilityBtn}
+            onPress={this.managePasswordVisibility}
+          >
+            <Image
+              source={
+                this.state.hidePassword
+                  ? require("../../assets/hide.png")
+                  : require("../../assets/view.png")
+              }
+              style={styles.btnImage}
+            />
+          </TouchableOpacity>
+        </View>
         {errorMsg("errorPassword")}
-        <Input
-          placeholder="  Write PASSWORD again"
-          textAlign={"center"}
-          leftIcon={{ type: "font-awesome", name: "lock" }}
-          containerStyle={{ marginBottom: 20, width: "90%" }}
-          onChangeText={text => changeErr("password_CHECK", "errorCheck", text)}
-          clearButtonMode="always"
-        />
+        <View style={styles.textBoxBtnHolder}>
+          <Input
+            placeholder="  PASSWORD again"
+            textAlign={"center"}
+            leftIcon={{ type: "font-awesome", name: "lock" }}
+            containerStyle={{ marginBottom: 20, width: "90%" }}
+            onChangeText={text =>
+              changeErr("password_CHECK", "errorCheck", text)
+            }
+            clearButtonMode="always"
+            underlineColorAndroid="transparent"
+            secureTextEntry={this.state.hidePasswordCheck}
+            style={styles.textBox}
+          />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.visibilityBtn}
+            onPress={this.managePasswordVisibilityCheck}
+          >
+            <Image
+              source={
+                this.state.hidePasswordCheck
+                  ? require("../../assets/hide.png")
+                  : require("../../assets/view.png")
+              }
+              style={styles.btnImage}
+            />
+          </TouchableOpacity>
+        </View>
         {errorMsg("errorCheck")}
       </View>
     );
@@ -94,10 +154,12 @@ export default class SignUp extends Component {
     this.props.navigation.navigate("SignIn");
   };
 
+  //아이디 or 비밀번호 틀렸을 시, modal 창 띄우기
   _setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }
 
+  // DB에 아이디랑 비밀번호 가입 요청
   _submit = async () => {
     await this._errorMessages();
 
@@ -135,7 +197,7 @@ export default class SignUp extends Component {
   //id, password 에러 잡아내는 함수 에러 없다면 this._submit함수 실행시켜서 회원가입시도
   _errorMessages = () => {
     //닉네임은 한글 영문 숫자 포함 4~8글자
-    var regTypeID = /^[a-zA-Z0-9+]{4,9}$/gi;
+    var regTypeID = /^[a-zA-Z0-9+]{6,11}$/gi;
     //비밀번호는 영문 대소문자 및 숫자 또는 특수문자 포함 6-20글자
     var regTypePW = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
     if (this.state.nickname === "") {
@@ -143,7 +205,7 @@ export default class SignUp extends Component {
       flag = false;
     } else if (!regTypeID.test(this.state.nickname)) {
       this.setState(() => ({
-        errorNickname: "아이디는 영문, 숫자 포함 4-8글자입니다"
+        errorNickname: "아이디는 영문, 숫자 포함 6-10글자입니다"
       }));
       flag = false;
     } else {
@@ -201,6 +263,7 @@ export default class SignUp extends Component {
               color="white"
               alignText="center"
               buttonStyle={{ width: "100%", backgroundColor: "deeppink" }}
+              containerViewStyle={{ width: "100%" }}
               onPress={this._submit}
               icon={{
                 type: "font-awesome",
@@ -221,6 +284,7 @@ export default class SignUp extends Component {
                 width: "100%",
                 backgroundColor: "mediumturquoise"
               }}
+              containerViewStyle={{ width: "100%" }}
               onPress={() => {
                 this.props.navigation.navigate("SignIn");
               }}
@@ -298,22 +362,60 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingTop: Constants.statusBarHeight
   },
-  inputContainer: {
+  passwordContainer: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    color: "white",
     width: "100%",
-    fontSize: 20
+    height: "100%",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 25,
+    paddingTop: Platform.OS === "ios" ? 20 : 0
   },
+
+  textBoxBtnHolder: {
+    height: "40%",
+    position: "relative",
+    alignSelf: "stretch",
+    justifyContent: "center"
+  },
+
+  textBox: {
+    height: "100%",
+    fontSize: 18,
+    alignSelf: "stretch",
+    height: 45,
+    paddingRight: 45,
+    paddingLeft: 8,
+    borderWidth: 1,
+    paddingVertical: 0,
+    borderColor: "grey",
+    borderRadius: 5
+  },
+
+  visibilityBtn: {
+    position: "absolute",
+    right: 3,
+    height: 70,
+    width: 35,
+    padding: 5,
+    paddingBottom: 25
+  },
+
+  btnImage: {
+    marginTop: "0%",
+    resizeMode: "contain",
+    height: "100%",
+    width: "100%"
+  },
+
   buttonHouse: {
     flex: 0.3,
     flexDirection: "column",
     justifyContent: "space-evenly",
-    alignItems: "center",
+    // alignItems: "center",
     width: "100%",
-    marginBottom: "10%"
+    marginBottom: "5%"
   },
   modalStyle: {
     flex: 1,

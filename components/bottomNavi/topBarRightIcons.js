@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon } from "react-native-elements";
-import { View, StyleSheet, AsyncStorage } from "react-native";
+import { View, StyleSheet, AsyncStorage, TouchableOpacity } from "react-native";
 
 export default class TopBarRightIcons extends React.Component {
   constructor(props) {
@@ -29,18 +29,20 @@ export default class TopBarRightIcons extends React.Component {
   render() {
     return (
       <View style={{ flexDirection: "row", marginRight: 5 }}>
-        <Icon
-          type="font-awesome"
-          iconStyle={styles.headerRightIcon}
-          name="envelope"
-          onPress={() => this.movetoLetterScreen()}
-        />
-        <Icon
-          type="font-awesome"
-          iconStyle={styles.headerRightIcon}
-          name="comment-o"
-          onPress={() => this.movetoChatList()}
-        />
+        <TouchableOpacity onPress={() => this.movetoLetterScreen()}>
+          <Icon
+            type="font-awesome"
+            iconStyle={styles.headerRightIcon}
+            name="envelope-o"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.movetoChatList()}>
+          <Icon
+            type="font-awesome"
+            iconStyle={styles.headerRightIcon}
+            name="comment-o"
+          />
+        </TouchableOpacity>
       </View>
     );
   }

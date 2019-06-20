@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
+  Image,
+  TouchableOpacity,
+  Platform,
   Text,
   View,
   Modal,
@@ -20,29 +23,64 @@ class SignInTitle extends Component {
 }
 //로그인 입력창
 class InputBars extends Component {
+  constructor() {
+    super();
+
+    this.state = { hidePassword: true };
+  }
+
+  // 비밀번호 가려주는 함수
+  managePasswordVisibility = () => {
+    this.setState({ hidePassword: !this.state.hidePassword });
+  };
+
   render() {
     const { changeErr, errorMsg } = this.props;
     return (
-      <View style={styles.inputContainer}>
-        <Input
-          placeholder="   ID required"
-          textAlign={"center"}
-          leftIcon={{ type: "font-awesome", name: "user" }}
-          containerStyle={{ width: "90%" }}
-          clearButtonMode="always"
-          onChangeText={text => changeErr("nickname", "errorNickname", text)}
-        />
+      // <View style={styles.inputContainer}>
+      <View style={styles.passwordContainer}>
+        <View style={styles.textBoxBtnHolder}>
+          <Input
+            placeholder="   ID "
+            textAlign={"center"}
+            leftIcon={{ type: "font-awesome", name: "user" }}
+            containerStyle={{ width: "90%" }}
+            clearButtonMode="always"
+            onChangeText={text => changeErr("nickname", "errorNickname", text)}
+            style={styles.textBox}
+          />
+        </View>
         {errorMsg("errorNickname")}
-        <Input
-          placeholder="   PASSWORD required"
-          textAlign={"center"}
-          leftIcon={{ type: "font-awesome", name: "lock" }}
-          containerStyle={{ width: "90%" }}
-          clearButtonMode="always"
-          onChangeText={text => changeErr("password", "errorPassword", text)}
-        />
+        <View style={styles.textBoxBtnHolder}>
+          <Input
+            placeholder="   PASSWORD "
+            textAlign={"center"}
+            leftIcon={{ type: "font-awesome", name: "lock" }}
+            containerStyle={{ width: "90%" }}
+            clearButtonMode="always"
+            onChangeText={text => changeErr("password", "errorPassword", text)}
+            underlineColorAndroid="transparent"
+            secureTextEntry={this.state.hidePassword}
+            style={styles.textBox}
+          />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.visibilityBtn}
+            onPress={this.managePasswordVisibility}
+          >
+            <Image
+              source={
+                this.state.hidePassword
+                  ? require("../../assets/hide.png")
+                  : require("../../assets/view.png")
+              }
+              style={styles.btnImage}
+            />
+          </TouchableOpacity>
+        </View>
         {errorMsg("errorPassword")}
       </View>
+      // </View>
     );
   }
 }
@@ -87,6 +125,65 @@ export default class SignUp extends Component {
           JWT = JSON.parse(res._bodyInit).token;
           console.log("--------login success---------", res.ok);
           flag = true;
+          fetch(`${url}/users/info`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `JWT ${JWT}`
+            }
+          }).then(async res => {
+            console.log(JWT, "JWT!!!!!! SignIn.js lines 102");
+
+            if (res.ok) {
+              await this.setState({
+                userId: JSON.parse(res._bodyInit).userInfo.id
+              });
+
+              fetch(`${url}/teams/getUserIdTeam/` + this.state.userId, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json"
+                }
+              }).then(async res => {
+                if (res.ok) {
+                  if (JSON.parse(res._bodyInit)) {
+                    console.log(JSON.parse(res._bodyInit));
+                    const teamInfo = JSON.parse(res._bodyInit).teams[0];
+
+                    await this.setState({
+                      teamInfo: teamInfo
+                    });
+
+                    await AsyncStorage.setItem(
+                      "userToken",
+                      "aasertetdbc" +
+                        "-" +
+                        teamInfo.sex +
+                        "-" +
+                        teamInfo.count +
+                        "-" +
+                        teamInfo.age +
+                        "-" +
+                        teamInfo.comment +
+                        "-" +
+                        teamInfo.teamname +
+                        "-" +
+                        teamInfo.districtId +
+                        "-" +
+                        teamInfo.storeId +
+                        "-" +
+                        teamInfo.userId +
+                        "-" +
+                        teamInfo.id
+                    );
+                    await this._signInAsync();
+                  } else {
+                    await this._signInAsync();
+                  }
+                }
+              });
+            }
+          });
         } else {
           console.log("--------login fail---------", res.ok);
           flag = false;
@@ -94,64 +191,6 @@ export default class SignUp extends Component {
         }
 
         //JWT
-        fetch(`${url}/users/info`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `JWT ${JWT}`
-          }
-        }).then(async res => {
-          console.log(JWT, "JWT!!!!!! SignIn.js lines 102");
-
-          if (res.ok) {
-            await this.setState({
-              userId: JSON.parse(res._bodyInit).userInfo.id
-            });
-
-            fetch(`${url}/teams/getUserIdTeam/` + this.state.userId, {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json"
-              }
-            }).then(async res => {
-              if (res.ok) {
-                if (JSON.parse(res._bodyInit)) {
-                  console.log(JSON.parse(res._bodyInit));
-                  const teamInfo = JSON.parse(res._bodyInit).teams[0];
-
-                  await this.setState({
-                    teamInfo: teamInfo
-                  });
-                  await AsyncStorage.setItem(
-                    "userToken",
-                    "aasertetdbc" +
-                      "-" +
-                      teamInfo.sex +
-                      "-" +
-                      teamInfo.count +
-                      "-" +
-                      teamInfo.age +
-                      "-" +
-                      teamInfo.comment +
-                      "-" +
-                      teamInfo.teamname +
-                      "-" +
-                      teamInfo.districtId +
-                      "-" +
-                      teamInfo.storeId +
-                      "-" +
-                      teamInfo.userId +
-                      "-" +
-                      teamInfo.id
-                  );
-                  await this._signInAsync();
-                } else {
-                  await this._signInAsync();
-                }
-              }
-            });
-          }
-        });
       });
     }
   };
@@ -232,7 +271,12 @@ export default class SignUp extends Component {
             <Button
               title=" SignIn"
               color="white"
-              buttonStyle={{ width: "100%", backgroundColor: "deeppink" }}
+              buttonStyle={{
+                width: "100%",
+                backgroundColor: "deeppink",
+                alignItems: "center"
+              }}
+              containerViewStyle={{ width: "100%", alignItems: "center" }}
               alignText="right"
               // style={styles.nextButton}
               icon={{
@@ -316,12 +360,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingTop: "10%",
     width: "100%",
+    height: "100%",
     left: 0,
     right: 0,
     top: 0
   },
   title: {
-    marginTop: "10%",
+    marginTop: "5%",
     flex: 0.2,
     flexDirection: "column",
     color: "white",
@@ -332,20 +377,58 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingTop: Constants.statusBarHeight
   },
-  inputContainer: {
+
+  passwordContainer: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    color: "white",
     width: "100%",
-    fontSize: 20
+    height: "100%",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 25,
+    paddingTop: Platform.OS === "ios" ? 20 : 0
   },
+
+  textBoxBtnHolder: {
+    height: "40%",
+    position: "relative",
+    alignSelf: "stretch",
+    justifyContent: "center"
+  },
+
+  textBox: {
+    height: "100%",
+    fontSize: 18,
+    alignSelf: "stretch",
+    height: 45,
+    paddingRight: 45,
+    paddingLeft: 8,
+    borderWidth: 1,
+    paddingVertical: 0,
+    borderColor: "grey",
+    borderRadius: 5
+  },
+
+  visibilityBtn: {
+    position: "absolute",
+    right: 3,
+    height: 40,
+    width: 35,
+    padding: 5
+  },
+
+  btnImage: {
+    marginTop: "10%",
+    resizeMode: "contain",
+    height: "100%",
+    width: "100%"
+  },
+
   buttonHouse: {
     flex: 0.3,
     flexDirection: "column",
     justifyContent: "space-evenly",
-    alignItems: "center",
+    // alignItems: "center",
     width: "100%"
   },
   modalStyle: {
