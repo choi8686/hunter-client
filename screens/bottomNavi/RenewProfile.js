@@ -255,7 +255,9 @@ export default class RenewProfile extends React.Component {
             flag = false;
           }
         })
-      : alert("정보를 빠뜨리지 말고 입력해주세요");
+      : this.state.age < 20
+      ? Alert.alert("나이는 20살 이상이어야 합니다.")
+      : Alert.alert("정보를 정확히 입력해주세요");
   };
 
   // 개인프로필정보를 onChange를 통해 바꾸는 함수
@@ -284,12 +286,15 @@ export default class RenewProfile extends React.Component {
   };
 
   _changeCountValue = e => {
-    if (Number(e.nativeEvent.text) - e.nativeEvent.text == 0) {
+    if (
+      Number(e.nativeEvent.text) - e.nativeEvent.text == 0 &&
+      Number(e.nativeEvent.text) <= 4
+    ) {
       this.setState({
         count: e.nativeEvent.text
       });
     } else {
-      Alert.alert("인원 수를 정확히 기입해주세요");
+      Alert.alert("인원 수는 0~4인 이어야 합니다.");
     }
   };
 
