@@ -281,7 +281,7 @@ export default class RenewProfile extends React.Component {
         age: e.nativeEvent.text
       });
     } else {
-      Alert.alert("숫자를 확인해주세요");
+      Alert.alert("나이를 정확히 기입해주세요");
     }
   };
 
