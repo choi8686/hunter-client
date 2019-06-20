@@ -9,6 +9,7 @@ import {
 import { Input, Button } from "react-native-elements";
 import io from "socket.io-client";
 import MessageBox from "../../components/Chat/messageBox";
+import CancelMatchModal from "../../components/Chat/cancelMatchModal";
 import { url } from "../../url";
 
 //웹소켓 실행시 뜨는 노란색 경고창 무시하는 코드
@@ -29,16 +30,30 @@ export default class App extends Component {
       avatarURL: "",
       myTeamName: "",
       myTeamId: null,
-      uuid: ""
+      uuid: "",
+      visibleModal: false
     };
   }
   static navigationOptions = ({ navigation }) => {
     return {
-      headerTitle: navigation.getParam("teamName")
+      headerTitle: navigation.getParam("teamName"),
+      headerTintColor: "white",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      },
+      headerRight: (
+        <Button
+          title="매칭취소"
+          titleStyle={{ color: "white" }}
+          style={styles.cancelMatch}
+          onPress={navigation.getParam("toggleModal")}
+        />
+      )
     };
   };
 
   componentDidMount() {
+    //ChatList로 부터 받는 navigation Props 값들
     const {
       myTeamId,
       myTeamName,
@@ -47,7 +62,7 @@ export default class App extends Component {
       avatarURL,
       uuid
     } = this.props.navigation.state.params;
-
+    //넘겨받은 props를 이용해 setState해줌
     this.setState({
       myTeamId,
       myTeamName,
@@ -56,24 +71,82 @@ export default class App extends Component {
       avatarURL,
       uuid
     });
+    //채팅방 열리자마자, 상대방과의 대화목록 불러 오는 Get요청
+    const loadingMsgData = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
 
+    fetch(`${url}/messages/getMessages/${uuid}`, loadingMsgData)
+      .then(res => res.json())
+      .then(msgData => {
+        console.log(msgData, "111111111111112333333333123");
+        this.setState({ chatMessages: msgData });
+      });
+
+    //상단바 '매칭취소'버튼을 누를 시 모달(toggleModal)이 열리도록 toggleModal함수와 '매칭취소'버튼 연결해주는 로직
+    const data = {
+      uuid,
+      myTeamName
+    };
+    this.props.navigation.setParams({ toggleModal: this.toggleModal });
+
+    //-------------socket.io---------------
+    //socket.io연결
     this.socket = io(`${url}`);
+    //상대방과의 특정룸(uuid)에 join 하도록 emit
+    this.socket.emit("joinRoom", data);
+    //상대방과의 특정룸(uuid) 연결에 성공하면 console을 띄움
+    this.socket.on("joinRoom", data =>
+      console.log(data.myTeamName + "님이 입장하셨습니다.")
+    );
+    //'매칭취소'를 하게 되면 대화방에서 나가도록 하는 요청
+    this.socket.on("leaveRoom", data => {
+      console.log(data.myTeamName + " 님이 나가셨습니다");
+    });
+    //상대방에게 메시지를 보내는 로직
     this.socket.on("chat message", msgData => {
-      this.setState({ chatMessages: msgData });
+      this.setState({ chatMessages: [...this.state.chatMessages, msgData] });
     });
   }
 
+  //visibleModal Toggle함수
+  toggleModal = () => {
+    this.setState({
+      visibleModal: !this.state.visibleModal
+    });
+  };
+
+  //match 취소하고 대화방 나가게 됨.
+  cancelMatch = async () => {
+    this.toggleModal();
+    const cancelData = {
+      myTeamName: this.state.myTeamName,
+      uuid: this.state.uuid
+    };
+
+    const cancelMatchReq = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    fetch(`${url}/match/cancelMatch/${this.state.uuid}`, cancelMatchReq)
+      .then(res => res.json())
+      .then(msgData => this.socket.emit("leaveRoom", cancelData))
+      .then(() => this.props.navigation.navigate("TabNavigator"));
+  };
+  //Input창 typing 처리
   handleMessage = chatMessage => {
     this.setState({
       chatMessage
     });
   };
-
+  //메시지 상대방에게 보내는 로직
   submitChatMessage = () => {
-    const fullTime = new Date();
-    const hour = fullTime.getHours();
-    const minutes = fullTime.getMinutes();
-
     //Server로 소켓 보내는 데이터형식
     const messageData = {
       myTeamId: this.state.myTeamId,
@@ -81,13 +154,13 @@ export default class App extends Component {
       teamName: this.state.teamName,
       uuid: this.state.uuid,
       img: this.state.avatarURL,
-      text: this.state.chatMessage,
-      createdAt: `${hour} : ${minutes}`
+      text: this.state.chatMessage
     };
-
+    //인풋창에 빈값이 아니면 메시지를 보내도록 함
     if (this.state.chatMessage.trim().length !== 0) {
       this.socket.emit("chat message", messageData);
     }
+    //그리고 인풋창은 빈값으로 반들어준다
     this.setState({ chatMessage: "" });
   };
 
@@ -123,6 +196,12 @@ export default class App extends Component {
           }}
         >
           {chatMessages}
+          {this.state.visibleModal && (
+            <CancelMatchModal
+              toggleModal={this.toggleModal}
+              cancelMatch={this.cancelMatch}
+            />
+          )}
         </ScrollView>
         {/* Input Box & 보내기버튼 */}
         <View style={{ flex: 0.1, marginTop: 3 }}>
@@ -162,5 +241,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F5FCFF",
     justifyContent: "center"
+  },
+  cancelMatch: {
+    fontWeight: "bold",
+    marginRight: 5
   }
 });

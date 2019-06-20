@@ -11,6 +11,7 @@ import SettingScreen from "../screens/bottomNavi/SettingScreen";
 import ConditionsScreen from "../components/bottomNavi/Conditions";
 import ChatScreen from "../screens/chat/Chat";
 import ChatListScreen from "../screens/chatlist/ChatList";
+import LetterListScreen from "../screens/letterList/LetterList";
 
 import RenewProfileScreen from "../screens/bottomNavi/RenewProfile";
 import {
@@ -184,8 +185,11 @@ const TabNavigator = createBottomTabNavigator({
         }
       }
     }
+  },
+  {
+    initialRouteName: "StoreTap"
   }
-});
+);
 
 //HomeStack - Disctrict, Store, Setting Tab에 있는 모든 스크린들을 하나로 모은 Stack
 //이 HomeStack에 담겨있는 모든 스크린들 사이에서는 Stack 인과관계가 생긴다. (즉, navigation.navigate를 통해 이동할 수 있다는 뜻이다)
@@ -198,10 +202,19 @@ const HomeStack = createStackNavigator(
       }
     },
     ChatList: {
-      screen: ChatListScreen
+      screen: ChatListScreen,
+      navigationOptions: {
+        title: "채팅목록",
+        headerTitleStyle: {
+          color: "white"
+        }
+      }
     },
     Chat: {
       screen: ChatScreen
+    },
+    LetterList: {
+      screen: LetterListScreen
     }
   },
   {
