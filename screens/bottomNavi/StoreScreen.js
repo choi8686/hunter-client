@@ -230,6 +230,12 @@ export default class StoreScreen extends Component {
     return teamId;
   };
 
+  _popModal = () => {
+    this.setState({
+      modalVisible: true
+    });
+  };
+
   _onChangeIndex = e => {
     if (
       e === "rightArrow" &&
@@ -418,7 +424,7 @@ export default class StoreScreen extends Component {
             // 쪽지 보내기
             name="send"
             style={styles.sendLetter}
-            onPress={() => this._onPresRefresh()}
+            onPress={() => this._popModal()}
           />
         </View>
 
