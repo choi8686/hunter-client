@@ -396,13 +396,14 @@ const styles = StyleSheet.create({
   visibilityBtn: {
     position: "absolute",
     right: 3,
-    height: 40,
+    height: 70,
     width: 35,
-    padding: 5
+    padding: 5,
+    paddingBottom: 25
   },
 
   btnImage: {
-    marginTop: "10%",
+    marginTop: "0%",
     resizeMode: "contain",
     height: "100%",
     width: "100%"
