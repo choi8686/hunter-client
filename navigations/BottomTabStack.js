@@ -11,9 +11,14 @@ import SettingScreen from "../screens/bottomNavi/SettingScreen";
 import ConditionsScreen from "../components/bottomNavi/Conditions";
 import ChatScreen from "../screens/chat/Chat";
 import ChatListScreen from "../screens/chatlist/ChatList";
+import LetterListScreen from "../screens/letterList/LetterList";
 
 import RenewProfileScreen from "../screens/bottomNavi/RenewProfile";
-import { FontAwesome } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  MaterialCommunityIcons,
+  AntDesign
+} from "@expo/vector-icons";
 import { LinearGradient, constant } from "expo";
 
 //District 스텍
@@ -127,58 +132,56 @@ const StoreStack = createStackNavigator({
 });
 
 //하단탭네비게이션 - 하단 탭 각각의 버튼(disctrict, store, setting)에 담긴 screen들을 담아놓은 BottomTabNavigator다.
-const TabNavigator = createBottomTabNavigator(
-  {
-    DistrictTap: {
-      screen: DistrictStack,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <FontAwesome
-            size={24}
-            name={"thermometer-quarter"}
-            color={tintColor}
-          />
-        ),
-        // ({ tintColor }) => <AntDesign name="run" color={tintColor} size={24} />
-        tabBarOptions: {
-          showLabel: false, // hide labels
-          activeTintColor: "#E92D50", // active icon color
-          inactiveTintColor: "darkgray", // inactive icon color
-          style: {
-            backgroundColor: "#131313" // TabBar background
-          }
+const TabNavigator = createBottomTabNavigator({
+  DistrictTap: {
+    screen: DistrictStack,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <AntDesign size={25} name={"meho"} color={tintColor} marginTop="20%" />
+      ),
+      // ({ tintColor }) => <AntDesign name="run" color={tintColor} size={24} />
+      tabBarOptions: {
+        showLabel: false, // hide labels
+        activeTintColor: "#E92D50", // active icon color
+        inactiveTintColor: "darkgray", // inactive icon color
+        style: {
+          backgroundColor: "#131313" // TabBar background
         }
       }
-    },
-    StoreTap: {
-      screen: StoreStack,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <FontAwesome size={24} name={"thermometer-full"} color={tintColor} />
-        ),
-        tabBarOptions: {
-          showLabel: false, // hide labels
-          activeTintColor: "#E92D50", // active icon color
-          inactiveTintColor: "darkgray", // inactive icon color
-          style: {
-            backgroundColor: "#131313" // TabBar background
-          }
+    }
+  },
+  StoreTap: {
+    screen: StoreStack,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <AntDesign size={25} name={"smile-circle"} color={tintColor} />
+      ),
+      tabBarOptions: {
+        showLabel: false, // hide labels
+        activeTintColor: "#E92D50", // active icon color
+        inactiveTintColor: "darkgray", // inactive icon color
+        style: {
+          backgroundColor: "#131313" // TabBar background
         }
       }
-    },
-    SettingTap: {
-      screen: SettingStack,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <FontAwesome size={24} name={"info"} color={tintColor} />
-        ),
-        tabBarOptions: {
-          showLabel: false, // hide labels
-          activeTintColor: "#E92D50", // active icon color
-          inactiveTintColor: "darkgray", // inactive icon color
-          style: {
-            backgroundColor: "#131313" // TabBar background
-          }
+    }
+  },
+  SettingTap: {
+    screen: SettingStack,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <MaterialCommunityIcons
+          size={30}
+          name={"information"}
+          color={tintColor}
+        />
+      ),
+      tabBarOptions: {
+        showLabel: false, // hide labels
+        activeTintColor: "#E92D50", // active icon color
+        inactiveTintColor: "darkgray", // inactive icon color
+        style: {
+          backgroundColor: "#131313" // TabBar background
         }
       }
     }
@@ -199,10 +202,19 @@ const HomeStack = createStackNavigator(
       }
     },
     ChatList: {
-      screen: ChatListScreen
+      screen: ChatListScreen,
+      navigationOptions: {
+        title: "채팅목록",
+        headerTitleStyle: {
+          color: "white"
+        }
+      }
     },
     Chat: {
       screen: ChatScreen
+    },
+    LetterList: {
+      screen: LetterListScreen
     }
   },
   {

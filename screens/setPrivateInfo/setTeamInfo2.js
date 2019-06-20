@@ -128,6 +128,7 @@ export default class TeamInfo2 extends Component {
             title=" Submit"
             color="white"
             buttonStyle={{ width: "100%", backgroundColor: "deeppink" }}
+            containerViewStyle={{ width: "100%" }}
             icon={<Icon name="check-circle" size={15} color="pink" />}
             onPress={() => {
               averageAge && comment

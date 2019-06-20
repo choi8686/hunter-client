@@ -51,7 +51,9 @@ export default class Sex extends Component {
           <Button
             title="Submit"
             color="white"
+            alignText="center"
             buttonStyle={{ width: "100%", backgroundColor: "deeppink" }}
+            containerViewStyle={{ width: "100%" }}
             icon={{ type: "font-awesome", name: "check-circle", color: "pink" }}
             onPress={() => {
               sex

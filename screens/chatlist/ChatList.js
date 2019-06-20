@@ -43,7 +43,7 @@ export default class ChatList extends React.Component {
     };
     // teamName, idx, avatarURL, conversation
 
-    fetch(`${url}/messages/${myTeamId}`, getHeaders)
+    fetch(`${url}/match/${myTeamId}`, getHeaders)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -56,19 +56,23 @@ export default class ChatList extends React.Component {
     console.log(this.state.chatList, "---------------chatList---------------");
     return (
       <ScrollView style={styles.chatListContainer}>
-        {this.state.chatList.map((chatBox, idx) => (
-          <ChatListBox
-            myTeamName={this.props.navigation.state.params.myTeamName}
-            teamName={chatBox.otherTeam.teamname}
-            teamId={chatBox.otherTeam.id}
-            myTeamId={chatBox.teamId}
-            conversation={chatBox.otherTeam.comment}
-            uuid={chatBox.uuid}
-            avatarURL={chatBox.otherTeam.teamimages[0].imgUrl}
-            key={idx}
-            moveToChatroom={this._moveToChatroom}
-          />
-        ))}
+        {this.state.chatList.map((chatBox, idx) => {
+          if (chatBox.status) {
+            return (
+              <ChatListBox
+                myTeamName={this.props.navigation.state.params.myTeamName}
+                teamName={chatBox.otherTeam.teamname}
+                teamId={chatBox.otherTeam.id}
+                myTeamId={chatBox.teamId}
+                conversation={chatBox.otherTeam.comment}
+                uuid={chatBox.uuid}
+                avatarURL={chatBox.otherTeam.teamimages[0].imgUrl}
+                key={idx}
+                moveToChatroom={this._moveToChatroom}
+              />
+            );
+          }
+        })}
         <Button
           title="Submit"
           color="white"
