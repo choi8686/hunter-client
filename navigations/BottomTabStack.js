@@ -13,7 +13,11 @@ import ChatScreen from "../screens/chat/Chat";
 import ChatListScreen from "../screens/chatlist/ChatList";
 
 import RenewProfileScreen from "../screens/bottomNavi/RenewProfile";
-import { FontAwesome } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  MaterialCommunityIcons,
+  AntDesign
+} from "@expo/vector-icons";
 import { LinearGradient, constant } from "expo";
 
 //District 스텍
@@ -132,7 +136,7 @@ const TabNavigator = createBottomTabNavigator({
     screen: DistrictStack,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <FontAwesome size={24} name={"thermometer-quarter"} color={tintColor} />
+        <AntDesign size={25} name={"meho"} color={tintColor} marginTop="20%" />
       ),
       // ({ tintColor }) => <AntDesign name="run" color={tintColor} size={24} />
       tabBarOptions: {
@@ -149,7 +153,7 @@ const TabNavigator = createBottomTabNavigator({
     screen: StoreStack,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <FontAwesome size={24} name={"thermometer-full"} color={tintColor} />
+        <AntDesign size={25} name={"smile-circle"} color={tintColor} />
       ),
       tabBarOptions: {
         showLabel: false, // hide labels
@@ -165,7 +169,11 @@ const TabNavigator = createBottomTabNavigator({
     screen: SettingStack,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <FontAwesome size={24} name={"info"} color={tintColor} />
+        <MaterialCommunityIcons
+          size={30}
+          name={"information"}
+          color={tintColor}
+        />
       ),
       tabBarOptions: {
         showLabel: false, // hide labels

@@ -6,7 +6,8 @@ import {
   Text,
   TouchableOpacity,
   AsyncStorage,
-  Modal
+  Modal,
+  Alert
 } from "react-native";
 import { LinearGradient } from "expo";
 import { Avatar, Button } from "react-native-elements";
@@ -22,7 +23,8 @@ export default class SettingScreen extends React.Component {
   }
 
   state = {
-    modalVisible: false
+    modalVisible: false,
+    userId: null
   };
   static navigationOptions = ({ navigation }) => {
     return {
@@ -52,17 +54,17 @@ export default class SettingScreen extends React.Component {
       const userToken = await AsyncStorage.getItem("userToken");
       const userTokenArr = userToken.split("-");
 
-      //유저의 아이디
-      const userId = userTokenArr[userTokenArr.length - 1];
-      const storeId = userTokenArr[userTokenArr.length - 2];
-      const districtId = userTokenArr[userTokenArr.length - 3];
-      const teamname = userTokenArr[userTokenArr.length - 4];
-      const comment = userTokenArr[userTokenArr.length - 5];
-      const age = userTokenArr[userTokenArr.length - 6];
-      const count = userTokenArr[userTokenArr.length - 7];
-      const sex = userTokenArr[userTokenArr.length - 8];
       //team아디
-      const id = userTokenArr[userTokenArr.length - 9];
+      const id = userTokenArr[userTokenArr.length - 1];
+      //유저의 아이디
+      const userId = userTokenArr[userTokenArr.length - 2];
+      const storeId = userTokenArr[userTokenArr.length - 3];
+      const districtId = userTokenArr[userTokenArr.length - 4];
+      const teamname = userTokenArr[userTokenArr.length - 5];
+      const comment = userTokenArr[userTokenArr.length - 6];
+      const age = userTokenArr[userTokenArr.length - 7];
+      const count = userTokenArr[userTokenArr.length - 8];
+      const sex = userTokenArr[userTokenArr.length - 9];
 
       await this.setState({
         userId: userId
@@ -91,9 +93,12 @@ export default class SettingScreen extends React.Component {
       if (res.ok) {
         console.log(res._bodyInit, "res SettingScreen.js 94 lines");
         console.log("--------Delete Account success---------", res.ok);
-        AsyncStorage.removeItem("userToken ");
-        this.props.navigation.navigate("SignUp");
+        await AsyncStorage.removeItem("userToken");
+        console.log(await AsyncStorage.getItem("userToken"), "???????????????");
+
+        await this.props.navigation.navigate("SignUp");
       } else {
+        Alert.alert("죄송합니다. 잠시 후 다시 시도해주세요.");
         console.log("--------Delete Account fail---------", res.ok);
       }
     });
