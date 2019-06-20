@@ -6,7 +6,8 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  Alert
 } from "react-native";
 
 import { Input, Button, ButtonGroup } from "react-native-elements";
@@ -22,7 +23,7 @@ class ButtonsGroup1 extends React.Component {
       buttonsDistrict: ["홍대입구역", "이태원역", "강남역", "건대입구역"],
       districtName: null,
       districtId: null,
-      selectedIndex: null
+      selectedIndex: 1
     };
     this._getUserToken();
   }
@@ -37,12 +38,17 @@ class ButtonsGroup1 extends React.Component {
   };
 
   _updateIndexDistrict = selectedIndex => {
-    this.setState({
-      selectedIndex,
-      storeName: this.state.buttonsDistrict[selectedIndex],
-      districtId: selectedIndex + 1
-    });
-    this.props._updateIndex_D(selectedIndex);
+    if (selectedIndex !== 0) {
+      Alert.alert(" 준비중입니다. ");
+    }
+
+    // 홍대입구역을 제외한 다른 역도 활성화시, 누르는 index를 지정해주기 위함.
+    // this.setState({
+    //   selectedIndex,
+    //   storeName: this.state.buttonsDistrict[selectedIndex],
+    //   districtId: selectedIndex + 1
+    // });
+    // this.props._updateIndex_D(selectedIndex);
   };
 
   render() {
@@ -58,7 +64,7 @@ class ButtonsGroup1 extends React.Component {
   }
 }
 
-//store 버튼
+// 홍대입구 store 버튼
 class ButtonsGroup2 extends React.Component {
   constructor() {
     super();
@@ -102,6 +108,139 @@ class ButtonsGroup2 extends React.Component {
   }
 }
 
+// // 이태원역 store 버튼
+// class ButtonsGroup3 extends React.Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       buttonsStore: ["그린라이트", "한신포차", "삼거리포차", "베라"],
+//       storeName: null,
+//       storeId: null,
+//       selectedIndex: null
+//     };
+//     this._getUserToken();
+//   }
+
+//   _getUserToken = async () => {
+//     userToken = await AsyncStorage.getItem("userToken");
+//     userTokenArr = userToken.split("-");
+//     this.setState({
+//       //userTokenArr.length-3는 storeId 를 뜻함.
+//       selectedIndex: Number(userTokenArr[userTokenArr.length - 3]) - 1
+//     });
+//   };
+
+//   _updateIndexStore = selectedIndex => {
+//     this.setState({
+//       selectedIndex,
+//       storeName: this.state.buttonsStore[selectedIndex],
+//       storeId: selectedIndex + 1
+//     });
+//     this.props._updateIndex_S(selectedIndex);
+//   };
+
+//   render() {
+//     const { selectedIndex, buttonsStore } = this.state;
+//     return (
+//       <ButtonGroup
+//         onPress={this._updateIndexStore}
+//         selectedIndex={selectedIndex}
+//         buttons={buttonsStore}
+//         containerStyle={{ height: 50 }}
+//       />
+//     );
+//   }
+// }
+
+// // 강남역 store 버튼
+// class ButtonsGroup4 extends React.Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       buttonsStore: ["그린라이트", "한신포차", "삼거리포차", "베라"],
+//       storeName: null,
+//       storeId: null,
+//       selectedIndex: null
+//     };
+//     this._getUserToken();
+//   }
+
+//   _getUserToken = async () => {
+//     userToken = await AsyncStorage.getItem("userToken");
+//     userTokenArr = userToken.split("-");
+//     this.setState({
+//       //userTokenArr.length-3는 storeId 를 뜻함.
+//       selectedIndex: Number(userTokenArr[userTokenArr.length - 3]) - 1
+//     });
+//   };
+
+//   _updateIndexStore = selectedIndex => {
+//     this.setState({
+//       selectedIndex,
+//       storeName: this.state.buttonsStore[selectedIndex],
+//       storeId: selectedIndex + 1
+//     });
+//     this.props._updateIndex_S(selectedIndex);
+//   };
+
+//   render() {
+//     const { selectedIndex, buttonsStore } = this.state;
+//     return (
+//       <ButtonGroup
+//         onPress={this._updateIndexStore}
+//         selectedIndex={selectedIndex}
+//         buttons={buttonsStore}
+//         containerStyle={{ height: 50 }}
+//       />
+//     );
+//   }
+// }
+
+// // 건대입구역 store 버튼
+// class ButtonsGroup4 extends React.Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       buttonsStore: ["그린라이트", "한신포차", "삼거리포차", "베라"],
+//       storeName: null,
+//       storeId: null,
+//       selectedIndex: null
+//     };
+//     this._getUserToken();
+//     this._bringProfilePicture();
+//   }
+
+//   _getUserToken = async () => {
+//     userToken = await AsyncStorage.getItem("userToken");
+//     userTokenArr = userToken.split("-");
+//     this.setState({
+//       //userTokenArr.length-3는 storeId 를 뜻함.
+//       selectedIndex: Number(userTokenArr[userTokenArr.length - 3]) - 1
+//     });
+//   };
+
+//   _updateIndexStore = selectedIndex => {
+//     this.setState({
+//       selectedIndex,
+//       storeName: this.state.buttonsStore[selectedIndex],
+//       storeId: selectedIndex + 1
+//     });
+//     this.props._updateIndex_S(selectedIndex);
+//   };
+
+//   render() {
+//     const { selectedIndex, buttonsStore } = this.state;
+//     return (
+//       <ButtonGroup
+//         onPress={this._updateIndexStore}
+//         selectedIndex={selectedIndex}
+//         buttons={buttonsStore}
+//         containerStyle={{ height: 50 }}
+//       />
+//     );
+//   }
+// }
+
 export default class RenewProfile extends React.Component {
   //개인 프로필창을 클릭 시, 제일 먼저 실행되는 함수! 데이터베이스에서 개인프로필에 대한 정보를 가져온다.
 
@@ -109,7 +248,13 @@ export default class RenewProfile extends React.Component {
     super();
     //ㅇㅏ래 함수는 componentDidmount가 실행되기 전에 필요한 데이터들을 미리 정의시키져주기 위함이다.
     this._getUserToken();
+    this._bringProfilePicture();
   }
+
+  // 프로필 사진 가져오는 함수
+  _bringProfilePicture = () => {
+    console.log("응 프로필 사진 갖고와!~~");
+  };
 
   _getUserToken = async () => {
     userToken = await AsyncStorage.getItem("userToken");
@@ -244,7 +389,7 @@ export default class RenewProfile extends React.Component {
             flag = false;
           }
         })
-      : alert("정보를 빠드리지 말고 입력해주세요");
+      : alert("정보를 빠뜨리지 말고 입력해주세요");
   };
 
   // 개인프로필정보를 onChange를 통해 바꾸는 함수
@@ -347,7 +492,7 @@ export default class RenewProfile extends React.Component {
               <View style={styles.buttonBox}>
                 <Text style={{ paddingBottom: 5 }}>지역명</Text>
                 <ButtonsGroup1
-                  _updateIndex_D={this._updateIndex_D}
+                  // _updateIndex_D={this._updateIndex_D}
                   buttonsDistrict={buttonsDistrict}
                   containerStyle={{ height: 50 }}
                 />

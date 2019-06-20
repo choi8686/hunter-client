@@ -47,7 +47,7 @@ class InputBars extends Component {
       <View style={styles.passwordContainer}>
         <View style={styles.textBoxBtnHolder}>
           <Input
-            placeholder="  Write ID"
+            placeholder="   ID"
             textAlign={"center"}
             leftIcon={{ type: "font-awesome", name: "user" }}
             containerStyle={{ marginBottom: 20, width: "90%" }}
@@ -58,7 +58,7 @@ class InputBars extends Component {
         {errorMsg("errorNickname")}
         <View style={styles.textBoxBtnHolder}>
           <Input
-            placeholder="  Write PASSWORD"
+            placeholder="   PASSWORD"
             textAlign={"center"}
             leftIcon={{ type: "font-awesome", name: "lock" }}
             containerStyle={{ marginBottom: 20, width: "90%" }}
@@ -86,7 +86,7 @@ class InputBars extends Component {
         {errorMsg("errorPassword")}
         <View style={styles.textBoxBtnHolder}>
           <Input
-            placeholder="  Write PASSWORD again"
+            placeholder="  PASSWORD again"
             textAlign={"center"}
             leftIcon={{ type: "font-awesome", name: "lock" }}
             containerStyle={{ marginBottom: 20, width: "90%" }}
@@ -197,7 +197,7 @@ export default class SignUp extends Component {
   //id, password 에러 잡아내는 함수 에러 없다면 this._submit함수 실행시켜서 회원가입시도
   _errorMessages = () => {
     //닉네임은 한글 영문 숫자 포함 4~8글자
-    var regTypeID = /^[a-zA-Z0-9+]{4,9}$/gi;
+    var regTypeID = /^[a-zA-Z0-9+]{6,11}$/gi;
     //비밀번호는 영문 대소문자 및 숫자 또는 특수문자 포함 6-20글자
     var regTypePW = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
     if (this.state.nickname === "") {
@@ -205,7 +205,7 @@ export default class SignUp extends Component {
       flag = false;
     } else if (!regTypeID.test(this.state.nickname)) {
       this.setState(() => ({
-        errorNickname: "아이디는 영문, 숫자 포함 4-8글자입니다"
+        errorNickname: "아이디는 영문, 숫자 포함 6-10글자입니다"
       }));
       flag = false;
     } else {

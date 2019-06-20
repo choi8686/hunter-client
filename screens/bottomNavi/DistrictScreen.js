@@ -228,32 +228,6 @@ export default class DistrictScreen extends Component {
     }
   };
 
-  // _onPressNope = () => {
-  //   Animated.spring(this.position, {
-  //     toValue: { x: -SCREEN_WIDTH - 100, y: -20 }
-  //   }).start(() => {
-  //     this.setState(
-  //       { currentIndex: this.state.currentIndex + 1, pictureIndex: 0 },
-  //       () => {
-  //         this.position.setValue({ x: 0, y: 0 });
-  //       }
-  //     );
-  //   });
-  // };
-
-  // _onPressLike = () => {
-  //   Animated.spring(this.position, {
-  //     toValue: { x: SCREEN_WIDTH + 100, y: -20 }
-  //   }).start(() => {
-  //     this.setState(
-  //       { currentIndex: this.state.currentIndex + 1, pictureIndex: 0 },
-  //       () => {
-  //         this.position.setValue({ x: 0, y: 0 });
-  //       }
-  //     );
-  //   });
-  // };
-
   _onPresRefresh = () => {
     this.setState({
       currentIndex: 0,

@@ -82,28 +82,29 @@ export default class Main extends Component {
       >
         <View style={styles.titleHouse}>
           <Title name="  저기 어때 " />
-          {/* <AntDesign id="leftArrow" name="rocket1" size={25} style={{}} /> */}
           <Image
             source={require("../../logo/Logo.png")}
             style={{ height: "13%", width: "13%" }}
           />
         </View>
 
-        <Button
-          title="Loading"
-          type="clear"
-          titleStyle={{ color: "white" }}
-          buttonStyle={{}}
-        />
-        <Button
-          loading
-          type="clear"
-          loadingProps={{ size: "small", color: "white" }}
-          onPress={() => {
-            this.props.navigation.navigate("SignIn");
-          }}
-          underlayColor="transparent"
-        />
+        <View style={styles.buttonHouse}>
+          <Button
+            title="Loading"
+            type="clear"
+            titleStyle={{ color: "white" }}
+            buttonStyle={{}}
+          />
+          <Button
+            loading
+            type="clear"
+            loadingProps={{ size: "small", color: "white" }}
+            onPress={() => {
+              this.props.navigation.navigate("SignIn");
+            }}
+            underlayColor="transparent"
+          />
+        </View>
       </LinearGradient>
     );
   }
@@ -111,19 +112,20 @@ export default class Main extends Component {
 
 const styles = StyleSheet.create({
   backGround: {
+    paddingTop: "30%",
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     width: "100%",
     left: 0,
     right: 0,
     top: 0
   },
   titleHouse: {
-    flex: 1,
-    marginTop: "40%",
-    height: 150,
+    flex: 0.8,
+    marginTop: "30%",
+    height: 500,
     flexDirection: "row",
     justifyContent: "space-evenly",
     color: "white"
@@ -133,5 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: "bold"
   },
-  rocket: {}
+  buttonHouse: {
+    flex: 0.2
+  }
 });

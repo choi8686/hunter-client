@@ -7,7 +7,8 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  Alert
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { url } from "../../url";
@@ -81,7 +82,9 @@ export default class TeamPicture extends Component {
         teamId: this.props.navigation.state.params.data.teamId
       }
     };
-    return await fetch(apiUrl, options);
+    return await fetch(apiUrl, options).then(res =>
+      console.log(res, "사진 res다 이놈아 !!!")
+    );
   };
 
   _pickImage = async num => {
@@ -114,7 +117,7 @@ export default class TeamPicture extends Component {
       console.log({ uploadResponse });
       console.log({ uploadResult });
       console.log({ e });
-      alert(" 또안되네시발 ");
+      Alert.alert(" 또안되네시발 ");
     } finally {
       this.props.navigation.navigate("Home");
       console.log("upload!");

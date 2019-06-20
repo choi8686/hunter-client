@@ -37,7 +37,7 @@ export default class TopBarRightIcons extends React.Component {
           <Icon
             type="font-awesome"
             iconStyle={styles.headerRightIcon}
-            name="envelope"
+            name="envelope-o"
           />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this.movetoChatList()}>
