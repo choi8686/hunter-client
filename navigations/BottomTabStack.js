@@ -11,6 +11,7 @@ import SettingScreen from "../screens/bottomNavi/SettingScreen";
 import ConditionsScreen from "../components/bottomNavi/Conditions";
 import ChatScreen from "../screens/chat/Chat";
 import ChatListScreen from "../screens/chatlist/ChatList";
+import LetterListScreen from "../screens/letterList/LetterList";
 
 import RenewProfileScreen from "../screens/bottomNavi/RenewProfile";
 import {
@@ -198,10 +199,19 @@ const HomeStack = createStackNavigator(
       }
     },
     ChatList: {
-      screen: ChatListScreen
+      screen: ChatListScreen,
+      navigationOptions: {
+        title: "채팅목록",
+        headerTitleStyle: {
+          color: "white"
+        }
+      }
     },
     Chat: {
       screen: ChatScreen
+    },
+    LetterList: {
+      screen: LetterListScreen
     }
   },
   {
