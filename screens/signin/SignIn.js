@@ -148,16 +148,22 @@ export default class SignUp extends Component {
                   "Content-Type": "application/json"
                 }
               }).then(async res => {
-                console.log(res, "res!!!!");
+                console.log(res, "res!!!!+++++++++++++++++++++++++++++++");
                 if (res.ok) {
                   teamInfo = await res.json();
-                  console.log(teamInfo, "a!!!!");
+
+                  console.log(
+                    teamInfo.getUserId,
+                    "a!!!!------------------------------------"
+                  );
+
                   // console.log(teamInfo.getUserID === null, "a!!!!");
-                  if (teamInfo !== null) {
+                  if (teamInfo.getUserId !== null) {
+                    teamInfo = teamInfo.getUserId.teams[0];
                     // if (teamInfo.getUserId !== null) {
                     console.log("hi");
                     await this.setState({
-                      teamInfo: teamInfo[0]
+                      teamInfo: teamInfo
                     });
                     await AsyncStorage.setItem(
                       "userToken",
