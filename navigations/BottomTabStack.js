@@ -132,56 +132,63 @@ const StoreStack = createStackNavigator({
 });
 
 //하단탭네비게이션 - 하단 탭 각각의 버튼(disctrict, store, setting)에 담긴 screen들을 담아놓은 BottomTabNavigator다.
-const TabNavigator = createBottomTabNavigator({
-  DistrictTap: {
-    screen: DistrictStack,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <AntDesign size={25} name={"meho"} color={tintColor} marginTop="20%" />
-      ),
-      // ({ tintColor }) => <AntDesign name="run" color={tintColor} size={24} />
-      tabBarOptions: {
-        showLabel: false, // hide labels
-        activeTintColor: "#E92D50", // active icon color
-        inactiveTintColor: "darkgray", // inactive icon color
-        style: {
-          backgroundColor: "#131313" // TabBar background
+const TabNavigator = createBottomTabNavigator(
+  {
+    DistrictTap: {
+      screen: DistrictStack,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <AntDesign
+            size={25}
+            name={"meho"}
+            color={tintColor}
+            marginTop="20%"
+          />
+        ),
+        // ({ tintColor }) => <AntDesign name="run" color={tintColor} size={24} />
+        tabBarOptions: {
+          showLabel: false, // hide labels
+          activeTintColor: "#E92D50", // active icon color
+          inactiveTintColor: "darkgray", // inactive icon color
+          style: {
+            backgroundColor: "#131313" // TabBar background
+          }
         }
       }
-    }
-  },
-  StoreTap: {
-    screen: StoreStack,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <AntDesign size={25} name={"smile-circle"} color={tintColor} />
-      ),
-      tabBarOptions: {
-        showLabel: false, // hide labels
-        activeTintColor: "#E92D50", // active icon color
-        inactiveTintColor: "darkgray", // inactive icon color
-        style: {
-          backgroundColor: "#131313" // TabBar background
+    },
+    StoreTap: {
+      screen: StoreStack,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <AntDesign size={25} name={"smile-circle"} color={tintColor} />
+        ),
+        tabBarOptions: {
+          showLabel: false, // hide labels
+          activeTintColor: "#E92D50", // active icon color
+          inactiveTintColor: "darkgray", // inactive icon color
+          style: {
+            backgroundColor: "#131313" // TabBar background
+          }
         }
       }
-    }
-  },
-  SettingTap: {
-    screen: SettingStack,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <MaterialCommunityIcons
-          size={30}
-          name={"information"}
-          color={tintColor}
-        />
-      ),
-      tabBarOptions: {
-        showLabel: false, // hide labels
-        activeTintColor: "#E92D50", // active icon color
-        inactiveTintColor: "darkgray", // inactive icon color
-        style: {
-          backgroundColor: "#131313" // TabBar background
+    },
+    SettingTap: {
+      screen: SettingStack,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <MaterialCommunityIcons
+            size={30}
+            name={"information"}
+            color={tintColor}
+          />
+        ),
+        tabBarOptions: {
+          showLabel: false, // hide labels
+          activeTintColor: "#E92D50", // active icon color
+          inactiveTintColor: "darkgray", // inactive icon color
+          style: {
+            backgroundColor: "#131313" // TabBar background
+          }
         }
       }
     }

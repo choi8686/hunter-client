@@ -51,26 +51,36 @@ export default class TeamPicture extends Component {
       1: null,
       2: null
     },
-    sex: this.props.navigation.state.params.data.sex,
-    teamname: this.props.navigation.state.params.data.teamname,
-    count: this.props.navigation.state.params.data.count,
-    averageAge: this.props.navigation.state.params.data.age,
-    comment: this.props.navigation.state.params.data.comment,
-    userId: this.props.navigation.state.params.data.userId,
-    districtId: this.props.navigation.state.params.data.districtId,
-    storeId: this.props.navigation.state.params.data.storeId,
-    teamId: this.props.navigation.state.params.data.teamId
+    // sex: this.props.navigation.state.params.data.sex,
+    // teamname: this.props.navigation.state.params.data.teamname,
+    // count: this.props.navigation.state.params.data.count,
+    // averageAge: this.props.navigation.state.params.data.age,
+    // comment: this.props.navigation.state.params.data.comment,
+    // userId: this.props.navigation.state.params.data.userId,
+    // districtId: this.props.navigation.state.params.data.districtId,
+    // storeId: this.props.navigation.state.params.data.storeId,
+    // teamId: this.props.navigation.state.params.data.teamId
+
+    sex: 0,
+    teamname: "사진테스트",
+    count: 1,
+    averageAge: 20,
+    comment: "제발돼라",
+    userId: 8,
+    districtId: 1,
+    storeId: 1,
+    teamId: 14
   };
 
-  _uploadImageAsync = async uri => {
+  _uploadImageAsync = async (uri, num) => {
     let apiUrl = `${url}/upload`;
     let uriParts = uri.split(".");
     let fileType = uriParts[uriParts.length - 1];
-
+    console.log(this.state.teamname, num);
     let formData = new FormData();
     formData.append("photo", {
       uri,
-      name: `photo.${fileType}`,
+      name: `${this.state.teamId}-${num}.${fileType}`,
       type: `image/${fileType}`
     });
 
@@ -80,7 +90,8 @@ export default class TeamPicture extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
-        teamId: this.props.navigation.state.params.data.teamId
+        teamId: 14
+        // teamId: this.props.navigation.state.params.data.teamId
       }
     };
     return await fetch(apiUrl, options).then(res =>
@@ -110,9 +121,9 @@ export default class TeamPicture extends Component {
 
     try {
       // if (!pickerResult.cancelled) {
-      await this._uploadImageAsync(this.state.image[0]);
-      await this._uploadImageAsync(this.state.image[1]);
-      await this._uploadImageAsync(this.state.image[2]);
+      await this._uploadImageAsync(this.state.image[0], 4);
+      // await this._uploadImageAsync(this.state.image[1]);
+      // await this._uploadImageAsync(this.state.image[2]);
       // }
     } catch (e) {
       console.log({ uploadResponse });
