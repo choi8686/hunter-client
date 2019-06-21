@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Alert
 } from "react-native";
 import { Input, Button, ButtonGroup, Icon } from "react-native-elements";
 import { LinearGradient, Constants } from "expo";
@@ -107,7 +108,7 @@ export default class TeamInfo1 extends Component {
                     sex,
                     userId
                   })
-                : alert("팀 이름과 인원수를 설정해주세요");
+                : Alert.alert("정보를 정확히 입력해주세요");
             }}
           />
         </View>
