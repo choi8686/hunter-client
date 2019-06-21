@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19003,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 1606,
-  "expoServerNgrokUrl": "https://2f-hy2.anonymous.hunter-client-new.exp.direct",
-  "packagerNgrokUrl": "https://packager.2f-hy2.anonymous.hunter-client-new.exp.direct",
-  "ngrokPid": 1628
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

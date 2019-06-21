@@ -7,7 +7,8 @@ import {
   Image,
   TouchableOpacity,
   AsyncStorage,
-  Alert
+  Alert,
+  KeyboardAvoidingView
 } from "react-native";
 
 import { LinearGradient, ImagePicker, Permissions } from "expo";
@@ -32,24 +33,16 @@ export default class RenewProfile extends React.Component {
       <View
         style={{
           flex: 1,
-          width: "100%",
+          flexDirection: "column",
           alignItems: "center",
+          height: "100%",
+          width: "100%",
+          justifyContent: "space-around",
           backgroundColor: "#222222"
         }}
       >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "column",
-            alignItems: "center",
-            width: "100%",
-            justifyContent: "space-between",
-            margin: "10%"
-          }}
-        >
-          <RenewPicture />
-          <RenewPrivateInfo props={this.props} />
-        </View>
+        <RenewPicture />
+        <RenewPrivateInfo props={this.props} />
       </View>
     );
   }
@@ -515,14 +508,12 @@ class RenewPrivateInfo extends React.Component {
     const { imageFlag, buttonsDistrict, buttonsStore, images } = this.state;
 
     return (
-      <View
-        style={{
-          flex: 3,
-          height: "100%",
-          width: "100%",
-          alignItems: "center",
-          backgroundColor: "gainsboro"
-        }}
+      <KeyboardAvoidingView
+        style={styles.keyboardContainer}
+        behavior="padding"
+        keyboardShouldPersistTaps="always"
+        enabled
+        keyboardVerticalOffset={105}
       >
         <ScrollView style={{ width: "90%", height: "100%" }}>
           <View style={styles.scrollBox}>
@@ -598,7 +589,7 @@ class RenewPrivateInfo extends React.Component {
             />
           </View>
         </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -704,20 +695,30 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFF",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     width: "100%"
   },
   ImagesHouse: {
-    flex: 1.5,
+    flex: 1,
     flexDirection: "row",
-    alignItems: "stretch",
+    alignItems: "center",
     justifyContent: "space-evenly",
     width: "100%",
-    height: "100%"
+    height: "100%",
+    marginTop: "5%"
   },
   avatar: {
     width: 110,
     height: 110
+  },
+  keyboardContainer: {
+    flex: 3,
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "5%",
+    backgroundColor: "gainsboro"
   },
   buttonGroup: {
     flex: 60,

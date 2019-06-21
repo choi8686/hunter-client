@@ -110,9 +110,9 @@ export default class TeamPicture extends Component {
 
     try {
       // if (!pickerResult.cancelled) {
-      await this._uploadImageAsync(this.state.image[0]);
-      await this._uploadImageAsync(this.state.image[1]);
-      await this._uploadImageAsync(this.state.image[2]);
+      await this._uploadImageAsync(this.state.image[0], 1);
+      await this._uploadImageAsync(this.state.image[1], 2);
+      await this._uploadImageAsync(this.state.image[2], 3);
       // }
     } catch (e) {
       console.log({ uploadResponse });

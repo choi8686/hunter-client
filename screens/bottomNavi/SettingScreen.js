@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Modal,
-  Alert
+  Alert,
+  KeyboardAvoidingView
 } from "react-native";
 import { LinearGradient } from "expo";
 import { Avatar, Button } from "react-native-elements";
@@ -73,7 +74,6 @@ export default class SettingScreen extends React.Component {
       Alert.alert("잠시 후 다시 시도해주세요");
     }
   };
-
 
   //모달 true, false로 구분해주는 함수 ( true, false에 따라 모달창이 생기고 사라짐)
   //진심으로 계정삭제를 할건지 한번 더 체크하기 위해, 모달을 띄워준다
