@@ -285,7 +285,9 @@ export default class DistrictScreen extends Component {
                   borderRadius: 20
                 }}
                 source={{
-                  uri: `${item.teamimages[this.state.pictureIndex].imgUrl}`
+                  uri: `${item.teamimages[this.state.pictureIndex].imgUrl +
+                    "?" +
+                    new Date()}`
                 }}
               />
 
@@ -345,7 +347,9 @@ export default class DistrictScreen extends Component {
                   resizeMode: "cover",
                   borderRadius: 20
                 }}
-                source={{ uri: `${item.teamimages[0].imgUrl}` }}
+                source={{
+                  uri: `${item.teamimages[0].imgUrl}` + "?" + new Date()
+                }}
               />
             </Animated.View>
           ) : null;

@@ -13,7 +13,6 @@ import {
 import { LinearGradient, ImagePicker, Permissions } from "expo";
 import { Input, Button, ButtonGroup } from "react-native-elements";
 import IconBadge from "react-native-icon-badge";
-
 import { url } from "../../url";
 
 let pickerResult = null;
@@ -134,15 +133,17 @@ class RenewPicture extends React.Component {
   };
 
   // S3에 이미지 upload하는 함수
-  _uploadImageAsync = async uri => {
+  _uploadImageAsync = async (uri, num) => {
     let apiUrl = `${url}/upload`;
     let uriParts = uri.split(".");
     let fileType = uriParts[uriParts.length - 1];
 
+    console.log(this.state.id, num);
+
     let formData = new FormData();
     formData.append("photo", {
       uri,
-      name: `photo.${fileType}`,
+      name: `${this.state.id}-${num}.${fileType}`,
       type: `image/${fileType}`
     });
 
@@ -167,7 +168,7 @@ class RenewPicture extends React.Component {
     try {
       // if (!pickerResult.cancelled) {
 
-      await this._uploadImageAsync(this.state.images[num]);
+      await this._uploadImageAsync(this.state.images[num], num + 1);
       // await this._uploadImageAsync(this.state.images[1]);
       // await this._uploadImageAsync(this.state.images[2]);
       // }
@@ -204,7 +205,7 @@ class RenewPicture extends React.Component {
                     source={{
                       uri:
                         // "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/1561014040509.png"
-                        images[0]
+                        images[0] + "?" + new Date()
                     }}
                     style={styles.avatar}
                   />
@@ -243,7 +244,7 @@ class RenewPicture extends React.Component {
                     source={{
                       uri:
                         // "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/1561014041237.png"
-                        images[1]
+                        images[1] + "?" + new Date()
                     }}
                     style={styles.avatar}
                   />
@@ -282,7 +283,7 @@ class RenewPicture extends React.Component {
                     source={{
                       uri:
                         // "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/1561014041706.png"
-                        images[2]
+                        images[2] + "?" + new Date()
                     }}
                     style={styles.avatar}
                   />
