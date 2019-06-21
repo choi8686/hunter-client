@@ -19,7 +19,7 @@ const AppNavigator = createSwitchNavigator(
     Home: HomeStack
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Main"
   }
 );
 

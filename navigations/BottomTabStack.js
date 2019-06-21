@@ -194,7 +194,7 @@ const TabNavigator = createBottomTabNavigator(
     }
   },
   {
-    initialRouteName: "StoreTap"
+    initialRouteName: "DistrictTap"
   }
 );
 

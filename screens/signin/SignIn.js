@@ -44,19 +44,20 @@ class InputBars extends Component {
             placeholder="   ID "
             textAlign={"center"}
             leftIcon={{ type: "font-awesome", name: "user" }}
-            containerStyle={{ width: "90%" }}
+            containerStyle={{ marginBottom: 10, width: "90%" }}
             clearButtonMode="always"
             onChangeText={text => changeErr("nickname", "errorNickname", text)}
             style={styles.textBox}
           />
+          {errorMsg("errorNickname")}
         </View>
-        {errorMsg("errorNickname")}
+
         <View style={styles.textBoxBtnHolder}>
           <Input
             placeholder="   PASSWORD "
             textAlign={"center"}
             leftIcon={{ type: "font-awesome", name: "lock" }}
-            containerStyle={{ width: "90%" }}
+            containerStyle={{ marginBottom: 10, width: "90%" }}
             clearButtonMode="always"
             onChangeText={text => changeErr("password", "errorPassword", text)}
             underlineColorAndroid="transparent"
@@ -77,8 +78,8 @@ class InputBars extends Component {
               style={styles.btnImage}
             />
           </TouchableOpacity>
+          {errorMsg("errorPassword")}
         </View>
-        {errorMsg("errorPassword")}
       </View>
       // </View>
     );
@@ -233,7 +234,11 @@ export default class SignUp extends Component {
   _errorMsg = check => {
     const state = this.state;
     if (state[check]) {
-      return <Text style={{ color: "white" }}>{state[check]}</Text>;
+      return (
+        <Text style={{ color: "white", textAlign: "center" }}>
+          {state[check]}
+        </Text>
+      );
     }
   };
 
@@ -414,11 +419,12 @@ const styles = StyleSheet.create({
     right: 3,
     height: 40,
     width: 35,
-    padding: 5
+    padding: 5,
+    paddingBottom: 13
   },
 
   btnImage: {
-    marginTop: "10%",
+    paddingTop: "2%",
     resizeMode: "contain",
     height: "100%",
     width: "100%"
