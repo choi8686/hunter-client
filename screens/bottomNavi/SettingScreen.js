@@ -74,6 +74,7 @@ export default class SettingScreen extends React.Component {
     }
   };
 
+
   //모달 true, false로 구분해주는 함수 ( true, false에 따라 모달창이 생기고 사라짐)
   //진심으로 계정삭제를 할건지 한번 더 체크하기 위해, 모달을 띄워준다
   _setModalVisible = async visible => {
@@ -126,7 +127,11 @@ export default class SettingScreen extends React.Component {
           padding: "5%"
         }}
       >
-        <TouchableOpacity onPress={() => alert("고민하지 말고 직진!")}>
+        <TouchableOpacity
+          onPress={() =>
+            Alert.alert("숨겨진 운세", "오늘은 100%입니다. 믿으세요!")
+          }
+        >
           <Image source={require("../../logo/Logo.png")} />
         </TouchableOpacity>
         <View
@@ -139,7 +144,7 @@ export default class SettingScreen extends React.Component {
         >
           <View style={styles.buttonGroup}>
             <Button
-              title="정보수정"
+              title="   정보수정"
               titleStyle={{ color: "ghostwhite" }}
               // type="outline"
               icon={{
@@ -155,7 +160,7 @@ export default class SettingScreen extends React.Component {
               buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
             <Button
-              title="이용약관"
+              title="   이용약관"
               // type="outline"
               icon={{
                 type: "font-awesome",
@@ -168,20 +173,7 @@ export default class SettingScreen extends React.Component {
               buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
             <Button
-              title="로그아웃"
-              // type="outline"
-              icon={{
-                type: "font-awesome",
-                name: "check-circle",
-                color: "deeppink",
-                marginBottom: "5%"
-              }}
-              onPress={this._handleLogOut}
-              containerViewStyle={{ width: "100%" }}
-              buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
-            />
-            <Button
-              title="계정삭제"
+              title="   로그아웃"
               // type="outline"
               icon={{
                 type: "font-awesome",
@@ -192,12 +184,74 @@ export default class SettingScreen extends React.Component {
               onPress={() => {
                 this._setModalVisible(true);
               }}
-              // onPress={this._deleteAccount}
+              containerViewStyle={{ width: "100%" }}
+              buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
+            />
+            <Button
+              title="   계정삭제"
+              // type="outline"
+              icon={{
+                type: "font-awesome",
+                name: "check-circle",
+                color: "deeppink",
+                marginBottom: "5%"
+              }}
+              onPress={() => {
+                this._setModalVisible(true);
+              }}
               containerViewStyle={{ width: "100%" }}
               buttonStyle={{ width: "100%", backgroundColor: "#3A4044" }}
             />
           </View>
         </View>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={styles.modalStyle}>
+            <View style={styles.inModalStyle}>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  padding: 15
+                }}
+              >
+                {" "}
+                로그아웃 하시겠습니까?{" "}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  width: "100%"
+                }}
+              >
+                <Button
+                  title="YES  "
+                  color="black"
+                  alignItems="center"
+                  onPress={this._handleLogOut}
+                />
+                <Button
+                  title="NO   "
+                  color="black"
+                  alignItems="center"
+                  onPress={() => {
+                    this._setModalVisible(!this.state.modalVisible);
+                  }}
+                >
+                  <Text> OK </Text>
+                </Button>
+              </View>
+            </View>
+          </View>
+        </Modal>
         <Modal
           animationType="fade"
           transparent={true}
