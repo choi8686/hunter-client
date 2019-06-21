@@ -60,17 +60,6 @@ export default class TeamPicture extends Component {
     districtId: this.props.navigation.state.params.data.districtId,
     storeId: this.props.navigation.state.params.data.storeId,
     teamId: this.props.navigation.state.params.data.teamId
-
-    // 종욱
-    // sex: 0,
-    // teamname: "사진테스트",
-    // count: 1,
-    // averageAge: 20,
-    // comment: "제발돼라",
-    // userId: 8,
-    // districtId: 1,
-    // storeId: 1,
-    // teamId: 14
   };
 
   _uploadImageAsync = async (uri, num) => {
@@ -90,9 +79,7 @@ export default class TeamPicture extends Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
-        // teamId: 14
         teamId: this.props.navigation.state.params.data.teamId
-        // 종욱
       }
     };
     return await fetch(apiUrl, options).then(res =>

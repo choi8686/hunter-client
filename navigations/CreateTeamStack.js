@@ -54,9 +54,6 @@ const createTeamStack = createStackNavigator(
   },
   {
     initialRouteName: "ChooseSex"
-
-    // 김종욱이 테스트중
-    // initialRouteName: "SetTeamPicture"
   }
 );
 

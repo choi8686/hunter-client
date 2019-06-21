@@ -19,8 +19,6 @@ const AppNavigator = createSwitchNavigator(
     Home: HomeStack
   },
   {
-    // 김종욱 테스트중
-    // initialRouteName: "createTeam"
     initialRouteName: "Home"
   }
 );
