@@ -138,14 +138,9 @@ export default class TeamPicture extends Component {
       >
         <View style={styles.container}>
           <View style={styles.titleContainer}>
-            <Title
-              name="팀 사진을 저장해주세요"
-              style={{ fontWeight: "bold", fontSize: 30 }}
-            />
-            <Title
-              name="(사진 누르면 수정가능)"
-              style={{ fontWeight: "bold", fontSize: 15 }}
-            />
+            <Title name="팀 사진을 저장해주세요" />
+            {/* 아래 줄은 화면조율을 위해 필요한 부분 */}
+            <Title name=" " />
           </View>
           <ScrollView
             contentContainerStyle={{
@@ -155,10 +150,9 @@ export default class TeamPicture extends Component {
             }}
           >
             <View>
-              <Title
-                name="대표 사진을 올려주세요"
-                style={{ fontSize: 20, color: "darkturquoise" }}
-              />
+              <Text style={{ fontSize: 16, color: "black" }}>
+                대표 사진을 올려주세요
+              </Text>
             </View>
             {firstImage === null ? (
               <TouchableOpacity
@@ -181,10 +175,9 @@ export default class TeamPicture extends Component {
             )}
 
             <View>
-              <Title
-                name="가장 매력적인 사진을 올려주세요"
-                style={{ fontSize: 20, color: "darkturquoise" }}
-              />
+              <Text style={{ fontSize: 16, color: "black" }}>
+                매력포인트 사진을 올려주세요
+              </Text>
             </View>
             {secondImage === null ? (
               <TouchableOpacity
@@ -207,10 +200,9 @@ export default class TeamPicture extends Component {
             )}
 
             <View>
-              <Title
-                name="가장 우리 팀다운 사진을 넣어주세요"
-                style={{ fontSize: 20, color: "darkturquoise" }}
-              />
+              <Text style={{ fontSize: 16, color: "black" }}>
+                우리 팀을 잘 표현한 사진을 올려주세요
+              </Text>
             </View>
             {thirdImage === null ? (
               <TouchableOpacity
@@ -281,7 +273,7 @@ const styles = StyleSheet.create({
     width: "100%",
     color: "white",
     fontWeight: "bold",
-    fontSize: 15
+    fontSize: 20
   },
 
   text: {

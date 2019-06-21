@@ -7,12 +7,10 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Modal,
-  Alert,
-  KeyboardAvoidingView
+  Alert
 } from "react-native";
 import { LinearGradient } from "expo";
-import { Avatar, Button } from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { Button } from "react-native-elements";
 import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
 import { url } from "../../url";
 

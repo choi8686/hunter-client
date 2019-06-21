@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Alert
 } from "react-native";
 import { Input, Button, Icon } from "react-native-elements";
 import { LinearGradient, Constants } from "expo";
@@ -65,10 +66,12 @@ export default class TeamInfo2 extends Component {
       useNativeDriver: true,
 
       itemStyleAndroid: {
+        // height: 150,
         color: "grey",
         padding: 10
       },
       selectedItemStyleAndroid: {
+        height: 150,
         color: "#0076ff",
         fontWeight: "500"
       }
@@ -112,7 +115,7 @@ export default class TeamInfo2 extends Component {
             </View>
             <View style={styles.averageAgeBox}>
               <Text>평균 나이</Text>
-              <View style={styles.container}>
+              <View style={styles.ageContainer}>
                 <TouchableOpacity native={false} onPress={this._onPressText}>
                   <Text style={styles.averageAge}>
                     {this.state.selectedLetter}
@@ -140,7 +143,7 @@ export default class TeamInfo2 extends Component {
                     comment,
                     userId
                   })
-                : alert("필살멘트와 평균나이를 입력해주세요");
+                : Alert.alert("정보를 정확히 입력해주세요");
             }}
           />
         </View>
@@ -153,6 +156,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: 100,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  ageContainer: {
+    flex: 1,
+    width: 150,
+    height: 200,
     alignItems: "center",
     justifyContent: "center"
   },

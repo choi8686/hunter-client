@@ -50,18 +50,19 @@ class InputBars extends Component {
             placeholder="   ID"
             textAlign={"center"}
             leftIcon={{ type: "font-awesome", name: "user" }}
-            containerStyle={{ marginBottom: 20, width: "90%" }}
+            containerStyle={{ marginBottom: 10, width: "90%" }}
             clearButtonMode="always"
             onChangeText={text => changeErr("nickname", "errorNickname", text)}
           />
+          {errorMsg("errorNickname")}
         </View>
-        {errorMsg("errorNickname")}
+
         <View style={styles.textBoxBtnHolder}>
           <Input
             placeholder="   PASSWORD"
             textAlign={"center"}
             leftIcon={{ type: "font-awesome", name: "lock" }}
-            containerStyle={{ marginBottom: 20, width: "90%" }}
+            containerStyle={{ marginBottom: 10, width: "90%" }}
             onChangeText={text => changeErr("password", "errorPassword", text)}
             clearButtonMode="always"
             underlineColorAndroid="transparent"
@@ -82,14 +83,15 @@ class InputBars extends Component {
               style={styles.btnImage}
             />
           </TouchableOpacity>
+          {errorMsg("errorPassword")}
         </View>
-        {errorMsg("errorPassword")}
+
         <View style={styles.textBoxBtnHolder}>
           <Input
             placeholder="  PASSWORD again"
             textAlign={"center"}
             leftIcon={{ type: "font-awesome", name: "lock" }}
-            containerStyle={{ marginBottom: 20, width: "90%" }}
+            containerStyle={{ marginBottom: 10, width: "90%" }}
             onChangeText={text =>
               changeErr("password_CHECK", "errorCheck", text)
             }
@@ -112,8 +114,8 @@ class InputBars extends Component {
               style={styles.btnImage}
             />
           </TouchableOpacity>
+          {errorMsg("errorCheck")}
         </View>
-        {errorMsg("errorCheck")}
       </View>
     );
   }
@@ -145,7 +147,11 @@ export default class SignUp extends Component {
   _errorMsg = check => {
     const state = this.state;
     if (state[check]) {
-      return <Text style={{ color: "white" }}>{state[check]}</Text>;
+      return (
+        <Text style={{ color: "white", textAlign: "center" }}>
+          {state[check]}
+        </Text>
+      );
     }
   };
 
@@ -399,7 +405,7 @@ const styles = StyleSheet.create({
     height: 70,
     width: 35,
     padding: 5,
-    paddingBottom: 25
+    paddingBottom: 13
   },
 
   btnImage: {
