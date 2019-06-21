@@ -342,28 +342,50 @@ export default class StoreScreen extends Component {
               />
               <Animated.View
                 style={{
+                  flex: 1,
                   opacity: this.titleOpacity,
-                  zIndex: 1000,
+                  zIndex: 1200,
                   position: "absolute",
-                  marginTop: "96%",
-                  height: 100,
-                  marginLeft: "5%"
+                  paddingTop: "13%",
+                  height: "100%",
+                  marginLeft: "6%"
                 }}
               >
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      color: "floralwhite",
+                      fontWeight: "bold",
+                      fontSize: 20,
+                      textShadowColor: "rgba(0, 0, 0, 0.5)",
+                      textShadowOffset: { width: -1, height: 1 },
+                      textShadowRadius: 10
+                    }}
+                  >
+                    {this.state.teams[this.state.currentIndex].teamname}
+                  </Text>
+                  <Text
+                    style={{
+                      color: "floralwhite",
+                      fontWeight: "bold",
+                      fontSize: 18,
+                      textShadowColor: "rgba(0, 0, 0, 0.5)",
+                      textShadowOffset: { width: -1, height: 1 },
+                      textShadowRadius: 10
+                    }}
+                  >
+                    {" "}
+                    {this.state.teams[this.state.currentIndex].age}
+                  </Text>
+                </View>
                 <Text
                   style={{
                     color: "floralwhite",
                     fontWeight: "bold",
-                    fontSize: 20
-                  }}
-                >
-                  {this.state.teams[this.state.currentIndex].teamname}
-                </Text>
-                <Text
-                  style={{
-                    color: "floralwhite",
-                    fontWeight: "bold",
-                    fontSize: 15
+                    fontSize: 15,
+                    textShadowColor: "rgba(0, 0, 0, 0.5)",
+                    textShadowOffset: { width: -1, height: 1 },
+                    textShadowRadius: 10
                   }}
                 >
                   {this.state.teams[this.state.currentIndex].comment}

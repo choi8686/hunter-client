@@ -84,7 +84,7 @@ export default class Main extends Component {
           <Title name="  저기 어때 " />
           <Image
             source={require("../../logo/Logo.png")}
-            style={{ height: "13%", width: "13%" }}
+            style={{ height: "15%", width: "15%" }}
           />
         </View>
 
@@ -124,11 +124,13 @@ const styles = StyleSheet.create({
   },
   titleHouse: {
     flex: 0.8,
-    marginTop: "30%",
-    height: 500,
+    marginTop: "20%",
+    height: 800,
+
     flexDirection: "row",
     justifyContent: "space-evenly",
-    color: "white"
+    color: "white",
+    margin: 5
   },
   title: {
     color: "white",
