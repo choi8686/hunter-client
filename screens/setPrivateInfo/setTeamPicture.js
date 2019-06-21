@@ -62,15 +62,14 @@ export default class TeamPicture extends Component {
     teamId: this.props.navigation.state.params.data.teamId
   };
 
-  _uploadImageAsync = async uri => {
+  _uploadImageAsync = async (uri, num) => {
     let apiUrl = `${url}/upload`;
     let uriParts = uri.split(".");
     let fileType = uriParts[uriParts.length - 1];
-
     let formData = new FormData();
     formData.append("photo", {
       uri,
-      name: `photo.${fileType}`,
+      name: `${this.state.teamId}-${num}.${fileType}`,
       type: `image/${fileType}`
     });
 
