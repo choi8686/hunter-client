@@ -735,20 +735,19 @@ const styles = StyleSheet.create({
     marginRight: 15
   },
   scrollBox: {
-    height: 1000,
+    height: 800,
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
     paddingTop: "10%",
-    paddingBottom: "20%",
+    marginBottom: "-7%",
     paddingVertical: 20
   },
   buttonBox: {
     flex: 1,
     flexDirection: "column",
-    marginBottom: "5%",
-    paddingVertical: 10,
-    paddingTop: "5%",
+    paddingVertical: 5,
+    paddingTop: "2%",
     color: "white",
     height: "100%",
     width: "100%"
