@@ -11,7 +11,9 @@ import {
   AsyncStorage
 } from "react-native";
 import { Input, Button } from "react-native-elements";
+// import Constants from "expo-constants";
 import { LinearGradient, Constants } from "expo";
+
 import { url } from "../../url";
 var flag;
 
@@ -112,7 +114,7 @@ export default class SignUp extends Component {
       this.state.errorNickname === "" &&
       this.state.errorPassword === ""
     ) {
-      fetch(`${url}/users/login`, {
+      await fetch(`${url}/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -123,38 +125,46 @@ export default class SignUp extends Component {
         })
       }).then(async res => {
         if (res.ok) {
-          JWT = JSON.parse(res._bodyInit).token;
+          JWT = await res.json();
           console.log("--------login success---------", res.ok);
           flag = true;
-          fetch(`${url}/users/info`, {
+          await fetch(`${url}/users/info`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `JWT ${JWT}`
+              Authorization: `JWT ${JWT.token}`
             }
           }).then(async res => {
-            console.log(JWT, "JWT!!!!!! SignIn.js lines 102");
-
             if (res.ok) {
+              idRes = await res.json();
+              console.log(idRes, "id res !!! 141 lines");
               await this.setState({
-                userId: JSON.parse(res._bodyInit).userInfo.id
+                userId: idRes.userInfo.id
               });
 
-              fetch(`${url}/teams/getUserIdTeam/` + this.state.userId, {
+              await fetch(`${url}/teams/getUserIdTeam/` + this.state.userId, {
                 method: "GET",
                 headers: {
                   "Content-Type": "application/json"
                 }
               }).then(async res => {
+                console.log(res, "res!!!!+++++++++++++++++++++++++++++++");
                 if (res.ok) {
-                  if (JSON.parse(res._bodyInit)) {
-                    console.log(JSON.parse(res._bodyInit));
-                    const teamInfo = JSON.parse(res._bodyInit).teams[0];
+                  teamInfo = await res.json();
 
+                  console.log(
+                    teamInfo.getUserId,
+                    "a!!!!------------------------------------"
+                  );
+
+                  // console.log(teamInfo.getUserID === null, "a!!!!");
+                  if (teamInfo.getUserId !== null) {
+                    teamInfo = teamInfo.getUserId.teams[0];
+                    // if (teamInfo.getUserId !== null) {
+                    console.log("hi");
                     await this.setState({
                       teamInfo: teamInfo
                     });
-
                     await AsyncStorage.setItem(
                       "userToken",
                       "aasertetdbc" +
@@ -198,6 +208,7 @@ export default class SignUp extends Component {
 
   //로그인 성공시, userToken 저장하고 ChooseSex로 보내주는 함수
   _signInAsync = async () => {
+    console.log("시발년아 장난 그만치고 내놔라 ");
     const { userId, teamInfo } = await this.state;
     console.log(teamInfo, "teamInfo!!!!!! SignIn.js 161 lines");
     console.log(userId, "userId!!!!!!!!  SignIn.js 162 lines");
