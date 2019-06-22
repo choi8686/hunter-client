@@ -176,13 +176,18 @@ export default class DistrictScreen extends Component {
   };
 
   _sendToLike = async () => {
-    let getTeamId = await this._getTeamId(
+    console.log(
+      "샌드투라이크 들어온다 새끼야",
       this.state.teams[this.state.currentIndex].userId
     );
 
+    let getTeamId = await this._getTeamId(
+      this.state.teams[this.state.currentIndex].userId
+    );
+    console.log(getTeamId, "getTeamId----------");
     let whoLikeId = loginUser.teamId;
     let toLikeId = getTeamId;
-
+    console.log(whoLikeId, toLikeId, "whoLiked toLiked");
     fetch(`${url}/like`, {
       method: "POST",
       headers: {
@@ -205,8 +210,7 @@ export default class DistrictScreen extends Component {
       }
     })
       .then(result => result.json())
-      .then(data => (teamId = data.teams[0].id));
-
+      .then(data => (teamId = data.getUserId.teams[0].id));
     return teamId;
   };
 
@@ -238,6 +242,10 @@ export default class DistrictScreen extends Component {
 
   //comment랑 teamname을 가져와서 animation안에 띄워준다.
   renderUsers = () => {
+    console.log(
+      this.state.teams,
+      "jongwookjongwookjongwookjongwookjongwookjongwookjongwook"
+    );
     return this.state.teams
       .map((item, i) => {
         // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
@@ -343,7 +351,104 @@ export default class DistrictScreen extends Component {
                 </Text>
               </Animated.View>
             </Animated.View>
-          ) : null;
+          ) : (
+            <Animated.View
+              {...this.PanResponder.panHandlers}
+              key={item.id}
+              style={[
+                this.rotateAndTranslate,
+                {
+                  height: (SCREEN_HEIGHT * 3) / 4,
+                  width: SCREEN_WIDTH,
+                  padding: 10,
+                  paddingBottom: 20,
+                  position: "absolute"
+                }
+              ]}
+            >
+              <Animated.View
+                style={{ opacity: this.likeOpacity, ...styles.likeBorder }}
+              >
+                <Text style={styles.likeText}>LIKE</Text>
+              </Animated.View>
+
+              <Animated.View
+                style={{
+                  opacity: this.dislikeOpacity,
+                  ...styles.dislikeBorder
+                }}
+              >
+                <Text style={styles.dislikeText}>NOPE</Text>
+              </Animated.View>
+
+              <Image
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  width: "100%",
+                  resizeMode: "cover",
+                  borderRadius: 20
+                }}
+                // source={{
+                //   uri: `${item.teamimages[this.state.pictureIndex].imgUrl +
+                //     "?" +
+                //     new Date()}`
+                // }}
+              />
+
+              <Animated.View
+                style={{
+                  flex: 1,
+                  opacity: this.titleOpacity,
+                  zIndex: 1200,
+                  position: "absolute",
+                  paddingTop: "13%",
+                  height: "100%",
+                  marginLeft: "6%"
+                }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      color: "floralwhite",
+                      fontWeight: "bold",
+                      fontSize: 20,
+                      textShadowColor: "rgba(0, 0, 0, 0.5)",
+                      textShadowOffset: { width: -1, height: 1 },
+                      textShadowRadius: 10
+                    }}
+                  >
+                    {this.state.teams[this.state.currentIndex].teamname}
+                  </Text>
+                  <Text
+                    style={{
+                      color: "floralwhite",
+                      fontWeight: "bold",
+                      fontSize: 18,
+                      textShadowColor: "rgba(0, 0, 0, 0.5)",
+                      textShadowOffset: { width: -1, height: 1 },
+                      textShadowRadius: 10
+                    }}
+                  >
+                    {" "}
+                    {this.state.teams[this.state.currentIndex].age}
+                  </Text>
+                </View>
+                <Text
+                  style={{
+                    color: "floralwhite",
+                    fontWeight: "bold",
+                    fontSize: 15,
+                    textShadowColor: "rgba(0, 0, 0, 0.5)",
+                    textShadowOffset: { width: -1, height: 1 },
+                    textShadowRadius: 10
+                  }}
+                >
+                  {this.state.teams[this.state.currentIndex].comment}
+                </Text>
+              </Animated.View>
+            </Animated.View>
+          );
         } else {
           // 맨 윗장을 제외한 나머지. 아직 넘기지 않은 팀의 상태
           return item.teamimages[0] ? (

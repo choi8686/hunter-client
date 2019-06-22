@@ -94,12 +94,11 @@ export default class SettingScreen extends React.Component {
         userId: this.state.userId
       })
     }).then(async res => {
+      console.log(res, "account delete res ????? 97 lines");
       if (res.ok) {
-        console.log(res._bodyInit, "res SettingScreen.js 94 lines");
         console.log("--------Delete Account success---------", res.ok);
         await AsyncStorage.removeItem("userToken");
         console.log(await AsyncStorage.getItem("userToken"), "???????????????");
-
         await this.props.navigation.navigate("SignUp");
       } else {
         Alert.alert("죄송합니다. 잠시 후 다시 시도해주세요.");
