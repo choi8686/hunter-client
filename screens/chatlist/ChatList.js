@@ -1,8 +1,6 @@
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
 import ChatListBox from "../../components/chatlist/ChatListBox";
-import fakeListBox from "../../components/chatlist/ChatListFake";
 import { url } from "../../url";
 
 export default class ChatList extends React.Component {
@@ -10,9 +8,23 @@ export default class ChatList extends React.Component {
     super(props);
 
     this.state = {
-      chatList: []
+      chatList: [],
+      newChat: false
     };
   }
+
+  // changeLastComment = msgData => {
+  //   const updatedChatList = Array.from(this.state.chatList);
+
+  //   for (var partner in updatedChatList) {
+  //     if (partner.uuid === msgData.uuid) {
+  //       partner = { ...partner, chatMessages: msgData };
+  //     }
+  //   }
+  //   this.setState({
+  //     chatList: [...chatList, updatedChatList]
+  //   });
+  // };
 
   _moveToChatroom = (
     myTeamName,
@@ -22,18 +34,38 @@ export default class ChatList extends React.Component {
     uuid,
     avatarURL
   ) => {
+    const { trueNewChat, falseNewChat } = this.props.navigation.state.params;
+
     this.props.navigation.navigate("Chat", {
       myTeamName,
       myTeamId,
       teamName,
       teamId,
       uuid,
-      avatarURL
+      avatarURL,
+      trueNewChat,
+      falseNewChat,
+      trueNewChatList: this.trueNewChatList,
+      falseNewChatList: this.falseNewChatList
+    });
+  };
+
+  trueNewChatList = () => {
+    console.log("trueNewChatList--------------------");
+    this.setState({
+      newChat: true
+    });
+  };
+
+  falseNewChatList = () => {
+    console.log("falseNewChatList--------------------");
+    this.setState({
+      newChat: false
     });
   };
 
   componentDidMount() {
-    const { myTeamId, myTeamName } = this.props.navigation.state.params;
+    const { myTeamId } = this.props.navigation.state.params;
 
     const getHeaders = {
       method: "GET",
@@ -54,34 +86,43 @@ export default class ChatList extends React.Component {
 
   render() {
     console.log(this.state.chatList, "---------------chatList---------------");
-    return (
-      <ScrollView style={styles.chatListContainer}>
-        {this.state.chatList.map((chatBox, idx) => {
-          if (chatBox.status) {
-            return (
-              <ChatListBox
-                myTeamName={this.props.navigation.state.params.myTeamName}
-                teamName={chatBox.otherTeam.teamname}
-                teamId={chatBox.otherTeam.id}
-                myTeamId={chatBox.teamId}
-                conversation={chatBox.otherTeam.comment}
-                uuid={chatBox.uuid}
-                avatarURL={chatBox.otherTeam.teamimages[0].imgUrl}
-                key={idx}
-                moveToChatroom={this._moveToChatroom}
-              />
-            );
-          }
-        })}
-        <Button
-          title="Submit"
-          color="white"
-          onPress={() => {
-            this.props.navigation.navigate("Home", {});
-          }}
-        />
-      </ScrollView>
-    );
+    if (this.state.chatList.length === 0) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text style={{ fontWeight: "100", color: "grey" }}>
+            대화상대가 없다. 좀 더 힘내라 새끼야.
+          </Text>
+          <Text style={{ fontWeight: "100", color: "grey" }}>
+            이러다 또 국밥먹는다
+          </Text>
+        </View>
+      );
+    } else {
+      return (
+        <ScrollView style={styles.chatListContainer}>
+          {this.state.chatList.map((chatBox, idx) => {
+            if (chatBox.status) {
+              return (
+                <ChatListBox
+                  myTeamName={this.props.navigation.state.params.myTeamName}
+                  teamName={chatBox.otherTeam.teamname}
+                  teamId={chatBox.otherTeam.id}
+                  myTeamId={chatBox.teamId}
+                  conversation={chatBox.otherTeam.comment}
+                  uuid={chatBox.uuid}
+                  avatarURL={chatBox.otherTeam.teamimages[0].imgUrl}
+                  key={idx}
+                  moveToChatroom={this._moveToChatroom}
+                  newChat={this.state.newChat}
+                />
+              );
+            }
+          })}
+        </ScrollView>
+      );
+    }
   }
 }
 

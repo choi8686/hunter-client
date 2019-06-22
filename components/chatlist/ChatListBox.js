@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
-import { ListItem } from "react-native-elements";
+import { ListItem, Badge } from "react-native-elements";
 
 class ChatListBox extends React.Component {
   constructor(props) {
@@ -19,37 +19,50 @@ class ChatListBox extends React.Component {
       moveToChatroom
     } = this.props;
     return (
-      <ListItem
-        leftAvatar={{
-          source: { uri: avatarURL },
-          size: "large"
-        }}
-        title={
-          <View>
-            <Text style={styles.title}>{teamName}</Text>
-          </View>
-        }
-        subtitle={
-          <View>
-            <Text numberOfLines={1}>{conversation}</Text>
-          </View>
-        }
-        chevron
-        size="xlarge"
-        friction={90}
-        tension={100}
-        style={styles.chatBoxContainer}
-        onPress={() => {
-          moveToChatroom(
-            myTeamName,
-            myTeamId,
-            teamName,
-            teamId,
-            uuid,
-            avatarURL
-          );
-        }}
-      />
+      <View>
+        <ListItem
+          leftAvatar={{
+            source: { uri: avatarURL },
+            size: "large"
+          }}
+          title={
+            <View>
+              <Text style={styles.title}>{teamName}</Text>
+            </View>
+          }
+          subtitle={
+            <View>
+              <Text numberOfLines={1}>{conversation}</Text>
+            </View>
+          }
+          chevron
+          size="xlarge"
+          friction={90}
+          tension={100}
+          style={styles.chatBoxContainer}
+          onPress={() => {
+            moveToChatroom(
+              myTeamName,
+              myTeamId,
+              teamName,
+              teamId,
+              uuid,
+              avatarURL
+            );
+          }}
+        />
+        {this.props.newChat && (
+          <Badge
+            value="N"
+            status="error"
+            containerStyle={{
+              position: "absolute",
+              top: -4,
+              right: 11
+            }}
+          />
+        )}
+      </View>
     );
   }
 }

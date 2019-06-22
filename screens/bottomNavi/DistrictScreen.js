@@ -176,13 +176,18 @@ export default class DistrictScreen extends Component {
   };
 
   _sendToLike = async () => {
-    let getTeamId = await this._getTeamId(
+    console.log(
+      "샌드투라이크 들어온다 새끼야",
       this.state.teams[this.state.currentIndex].userId
     );
 
+    let getTeamId = await this._getTeamId(
+      this.state.teams[this.state.currentIndex].userId
+    );
+    console.log(getTeamId, "getTeamId----------");
     let whoLikeId = loginUser.teamId;
     let toLikeId = getTeamId;
-
+    console.log(whoLikeId, toLikeId, "whoLiked toLiked");
     fetch(`${url}/like`, {
       method: "POST",
       headers: {
@@ -205,8 +210,7 @@ export default class DistrictScreen extends Component {
       }
     })
       .then(result => result.json())
-      .then(data => (teamId = data.teams[0].id));
-
+      .then(data => (teamId = data.getUserId.teams[0].id));
     return teamId;
   };
 
@@ -238,7 +242,14 @@ export default class DistrictScreen extends Component {
 
   //comment랑 teamname을 가져와서 animation안에 띄워준다.
   renderUsers = () => {
+<<<<<<< HEAD
     console.log(this.state.teams);
+=======
+    console.log(
+      this.state.teams,
+      "jongwookjongwookjongwookjongwookjongwookjongwookjongwook"
+    );
+>>>>>>> 5a1e774219f52f1442995bd6d4c8e98fd53c406d
     return this.state.teams
       .map((item, i) => {
         // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
