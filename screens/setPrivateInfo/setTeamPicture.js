@@ -100,7 +100,7 @@ export default class TeamPicture extends Component {
 
       let image = this.state.image;
       image[num] = pickerResult.uri;
-      this.setState({ image: image });
+      await this.setState({ image: image });
     }
   };
 

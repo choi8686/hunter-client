@@ -11,8 +11,13 @@ import {
   AsyncStorage
 } from "react-native";
 import { Input, Button } from "react-native-elements";
-// import Constants from "expo-constants";
+
+//구버전  Expo
 import { LinearGradient, Constants } from "expo";
+
+//신버전 Expo
+// import Constants from "expo-constants";
+// import { LinearGradient } from "expo-linear-gradient";
 
 import { url } from "../../url";
 var flag;
