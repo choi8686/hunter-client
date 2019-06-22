@@ -11,10 +11,8 @@ import {
   AsyncStorage
 } from "react-native";
 import { Input, Button } from "react-native-elements";
-import {LinearGradient, Constants} from "expo";
 // import Constants from "expo-constants";
-// import { LinearGradient } from "expo-linear-gradient";
-
+import { LinearGradient, Constants } from "expo";
 import { url } from "../../url";
 var flag;
 
@@ -150,17 +148,15 @@ export default class SignUp extends Component {
                 }
               }).then(async res => {
                 console.log(res, "res!!!!");
-
-                // console.log(teamRes, "teamRes");
-
                 if (res.ok) {
                   teamInfo = await res.json();
                   console.log(teamInfo, "a!!!!");
                   // console.log(teamInfo.getUserID === null, "a!!!!");
-                  if (teamInfo.getUserId) {
+                  if (teamInfo !== null) {
+                    // if (teamInfo.getUserId !== null) {
                     console.log("hi");
                     await this.setState({
-                      teamInfo: teamInfo
+                      teamInfo: teamInfo[0]
                     });
                     await AsyncStorage.setItem(
                       "userToken",

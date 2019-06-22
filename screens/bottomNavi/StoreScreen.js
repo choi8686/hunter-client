@@ -334,7 +334,10 @@ export default class StoreScreen extends Component {
                   borderRadius: 20
                 }}
                 source={{
-                  uri: `${item.teamimages[this.state.pictrueIndex].imgUrl}`
+                  uri:
+                    `${item.teamimages[this.state.pictrueIndex].imgUrl}` +
+                    "?" +
+                    new Date()
                 }}
               />
               <Animated.View
@@ -414,7 +417,9 @@ export default class StoreScreen extends Component {
                   resizeMode: "cover",
                   borderRadius: 20
                 }}
-                source={{ uri: `${item.teamimages[0].imgUrl}` }}
+                source={{
+                  uri: `${item.teamimages[0].imgUrl}` + "?" + new Date()
+                }}
               />
             </Animated.View>
           ) : null;

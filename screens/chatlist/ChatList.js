@@ -13,6 +13,21 @@ export default class ChatList extends React.Component {
     };
   }
 
+  // changeLastComment = msgData => {
+
+  //   const updatedChatList = Array.from(this.state.chatList)
+
+  //   for (var partner in updatedChatList) {
+  //     if (partner.uuid === msgData.uuid) {
+  //       partner = { ...partner, chatMessages: msgData };
+  //     }
+  //   }
+
+  //   this.setState({
+  //     chatList : [...chatList, updatedChatList]
+  //   })
+  // };
+
   _moveToChatroom = (
     myTeamName,
     myTeamId,
