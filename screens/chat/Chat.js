@@ -4,6 +4,7 @@ import {
   View,
   YellowBox,
   ScrollView,
+  BackHandler,
   KeyboardAvoidingView
 } from "react-native";
 import { Input, Button } from "react-native-elements";
@@ -11,6 +12,7 @@ import io from "socket.io-client";
 import MessageBox from "../../components/Chat/messageBox";
 import CancelMatchModal from "../../components/Chat/cancelMatchModal";
 import { url } from "../../url";
+import { Ionicons } from "@expo/vector-icons";
 
 //웹소켓 실행시 뜨는 노란색 경고창 무시하는 코드
 //기능적으로 문제 없으므로 무시하도록 함
@@ -19,7 +21,7 @@ YellowBox.ignoreWarnings([
   "Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?"
 ]);
 
-export default class App extends Component {
+export default class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,15 +46,41 @@ export default class App extends Component {
       headerRight: (
         <Button
           title="매칭취소"
+          type="clear"
           titleStyle={{ color: "white" }}
           style={styles.cancelMatch}
           onPress={navigation.getParam("toggleModal")}
+        />
+      ),
+      headerLeft: (
+        <Button
+          icon={
+            <Ionicons name="ios-arrow-round-back" size={30} color="white" />
+          }
+          containerStyle={{ marginLeft: 18 }}
+          iconLeft
+          type="clear"
+          onPress={navigation.getParam("handleBackButton")}
         />
       )
     };
   };
 
+  handleBackButton = async () => {
+    console.log("이야이야이야이야");
+    const {
+      falseNewChat,
+      falseNewChatList
+    } = this.props.navigation.state.params;
+    falseNewChat();
+    falseNewChatList();
+    this.props.navigation.navigate("ChatList");
+  };
+
   componentDidMount() {
+    //안드로이드 backButton 누를 시, 상단바 알람 꺼진다.
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
+
     //ChatList로 부터 받는 navigation Props 값들
     const {
       myTeamId,
@@ -60,8 +88,17 @@ export default class App extends Component {
       teamId,
       teamName,
       avatarURL,
-      uuid
+      uuid,
+      trueNewChat,
+      falseNewChat,
+      trueNewChatList,
+      falseNewChatList
     } = this.props.navigation.state.params;
+
+    //채팅창이 열리면, 상단바에 새로운 채팅 알림이 꺼진다
+    falseNewChat();
+    falseNewChatList();
+
     //넘겨받은 props를 이용해 setState해줌
     this.setState({
       myTeamId,
@@ -82,7 +119,6 @@ export default class App extends Component {
     fetch(`${url}/messages/getMessages/${uuid}`, loadingMsgData)
       .then(res => res.json())
       .then(msgData => {
-        console.log(msgData, "111111111111112333333333123");
         this.setState({ chatMessages: msgData });
       });
 
@@ -92,23 +128,29 @@ export default class App extends Component {
       myTeamName
     };
     this.props.navigation.setParams({ toggleModal: this.toggleModal });
-
+    this.props.navigation.setParams({
+      handleBackButton: this.handleBackButton
+    });
     //-------------socket.io---------------
     //socket.io연결
     this.socket = io(`${url}`);
     //상대방과의 특정룸(uuid)에 join 하도록 emit
     this.socket.emit("joinRoom", data);
     //상대방과의 특정룸(uuid) 연결에 성공하면 console을 띄움
-    this.socket.on("joinRoom", data =>
-      console.log(data.myTeamName + "님이 입장하셨습니다.")
-    );
+    this.socket.on("joinRoom", data => {
+      console.log(data.myTeamName + "님이 입장하셨습니다.");
+    });
     //'매칭취소'를 하게 되면 대화방에서 나가도록 하는 요청
     this.socket.on("leaveRoom", data => {
       console.log(data.myTeamName + " 님이 나가셨습니다");
     });
     //상대방에게 메시지를 보내는 로직
-    this.socket.on("chat message", msgData => {
-      this.setState({ chatMessages: [...this.state.chatMessages, msgData] });
+    this.socket.on("chat message", async msgData => {
+      await trueNewChat();
+      await trueNewChatList(); //새로운 메시지가 오면 상단바에 새로운 채팅 알림이 켜짐
+      await this.setState({
+        chatMessages: [...this.state.chatMessages, msgData]
+      });
     });
   }
 
@@ -136,7 +178,7 @@ export default class App extends Component {
 
     fetch(`${url}/match/cancelMatch/${this.state.uuid}`, cancelMatchReq)
       .then(res => res.json())
-      .then(msgData => this.socket.emit("leaveRoom", cancelData))
+      .then(() => this.socket.emit("leaveRoom", cancelData))
       .then(() => this.props.navigation.navigate("TabNavigator"));
   };
   //Input창 typing 처리
@@ -165,7 +207,6 @@ export default class App extends Component {
   };
 
   render() {
-    console.log(this.state.chatMessages, "서버로 부터 받는 data");
     const chatMessages = this.state.chatMessages.map((msgData, i) => (
       <MessageBox
         key={i}
@@ -204,7 +245,7 @@ export default class App extends Component {
           )}
         </ScrollView>
         {/* Input Box & 보내기버튼 */}
-        <View style={{ flex: 0.1, marginTop: 3 }}>
+        <View style={{ flex: 0.1, marginTop: 7, backgroundColor: "#DCDCDC" }}>
           <View style={{ flex: 1, flexDirection: "row" }}>
             <View style={{ flex: 0.8 }}>
               <Input
