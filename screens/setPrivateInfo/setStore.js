@@ -75,7 +75,6 @@ export default class SetStore extends Component {
   };
 
   _goDistrict = async () => {
-    console.log("gogo pic1");
     const { data } = this.state;
     await this.props.navigation.navigate("SetTeamPicture", { data });
   };
@@ -97,7 +96,7 @@ export default class SetStore extends Component {
         //팀정보를 모두 AsyncStorage에 토큰에 저장한다.
         // 그래야 어플껐다가 재접속해도 데이터베이스에 locationId를 보내주고 그 값을 비교하여 District로 바로 접근할 수 있다.
 
-        const teamInfo = JSON.parse(res._bodyInit);
+        const teamInfo = await res.json();
         console.log(
           teamInfo,
           "teamInfo setStore.js 91 lines~~~~~~~~~~~~~~~~~~~~"
