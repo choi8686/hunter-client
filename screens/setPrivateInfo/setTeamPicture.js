@@ -47,9 +47,9 @@ const NextButton = props => {
 export default class TeamPicture extends Component {
   state = {
     image: {
-      0: null,
-      1: null,
-      2: null
+      0: undefined,
+      1: undefined,
+      2: undefined
     },
     sex: this.props.navigation.state.params.data.sex,
     teamname: this.props.navigation.state.params.data.teamname,
@@ -60,6 +60,23 @@ export default class TeamPicture extends Component {
     districtId: this.props.navigation.state.params.data.districtId,
     storeId: this.props.navigation.state.params.data.storeId,
     teamId: this.props.navigation.state.params.data.teamId
+  };
+
+  _pickImage = async num => {
+    const { status: cameraRollPerm } = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
+
+    if (cameraRollPerm === "granted") {
+      let pickerResult = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [5, 7]
+      });
+
+      let image = this.state.image;
+      image[num] = pickerResult.uri;
+      await this.setState({ image: image });
+    }
   };
 
   _uploadImageAsync = async (uri, num) => {
@@ -85,23 +102,6 @@ export default class TeamPicture extends Component {
     return await fetch(apiUrl, options).then(res =>
       console.log(res, "사진 res다 이놈아 !!!")
     );
-  };
-
-  _pickImage = async num => {
-    const { status: cameraRollPerm } = await Permissions.askAsync(
-      Permissions.CAMERA_ROLL
-    );
-
-    if (cameraRollPerm === "granted") {
-      let pickerResult = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        aspect: [5, 7]
-      });
-
-      let image = this.state.image;
-      image[num] = pickerResult.uri;
-      await this.setState({ image: image });
-    }
   };
 
   _handleImagePicked = async pickerResult => {
@@ -153,7 +153,7 @@ export default class TeamPicture extends Component {
                 대표 사진을 올려주세요
               </Text>
             </View>
-            {firstImage === null ? (
+            {firstImage === undefined ? (
               <TouchableOpacity
                 onPress={() => this._pickImage(0)}
                 lineHeight="300"
@@ -178,7 +178,7 @@ export default class TeamPicture extends Component {
                 매력포인트 사진을 올려주세요
               </Text>
             </View>
-            {secondImage === null ? (
+            {secondImage === undefined ? (
               <TouchableOpacity
                 onPress={() => this._pickImage(1)}
                 lineHeight="300"
@@ -203,7 +203,7 @@ export default class TeamPicture extends Component {
                 우리 팀을 잘 표현한 사진을 올려주세요
               </Text>
             </View>
-            {thirdImage === null ? (
+            {thirdImage === undefined ? (
               <TouchableOpacity
                 onPress={() => this._pickImage(2)}
                 lineHeight="300"

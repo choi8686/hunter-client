@@ -1,7 +1,14 @@
 /////// Alert창 활용법!!!!!
 
 import React, { Component } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Image
+} from "react-native";
 
 import { Constants } from "expo";
 
@@ -12,6 +19,15 @@ export default class App extends Component {
         <TouchableOpacity style={styles.button} onPress={this._showAlert}>
           <Text style={{ fontSize: 32, color: "white" }}>Show Alert!</Text>
         </TouchableOpacity>
+        <View>
+          <Image
+            source={{
+              uri:
+                "file:///Users/iaan/Library/Developer/CoreSimulator/Devices/2DF7D6C3-CA95-4E28-9A58-635E8F62E803/data/Containers/Data/Application/CE6875D5-E076-4947-84B8-B02B6E71E982/Library/Caches/ExponentExperienceData/%2540anonymous%252Fclient-e929a6b2-5ca2-4b09-90c2-393d157386ba/ImagePicker/088A3AA7-3B29-4742-842C-1BAFE793E880.jpg"
+            }}
+            style={{ width: 150, height: 150 }}
+          />
+        </View>
       </View>
     );
   }
