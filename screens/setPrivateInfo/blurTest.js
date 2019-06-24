@@ -7,7 +7,7 @@ import {
   PublisherBanner
 } from "expo";
 
-export default class App extends React.Component {
+export default class AdsMob extends React.Component {
   componentDidMount() {
     AdMobInterstitial.setTestDeviceID("EMULATOR");
     // ALWAYS USE TEST ID for Admob ads

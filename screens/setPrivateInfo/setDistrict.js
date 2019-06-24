@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { Button, ButtonGroup } from "react-native-elements";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -30,11 +30,16 @@ export default class SetDistrict extends Component {
   };
 
   _updateIndex = selectedIndex => {
-    this.setState({
-      selectedIndex,
-      presentDistrict: this.state.buttons[selectedIndex],
-      presentDistrictNum: selectedIndex + 1
-    });
+    // 홍대입구역을 제외한 다른 역도 활성화시, 누르는 index를 지정해주기 위함.
+    if (selectedIndex !== 0) {
+      Alert.alert(" 준비중입니다. ");
+    } else {
+      this.setState({
+        selectedIndex,
+        presentDistrict: this.state.buttons[selectedIndex],
+        presentDistrictNum: selectedIndex + 1
+      });
+    }
   };
 
   componentDidMount = () => {};
