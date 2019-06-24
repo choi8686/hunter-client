@@ -8,7 +8,9 @@ import {
   Alert
 } from "react-native";
 import { Input, Button, Icon } from "react-native-elements";
-import { LinearGradient, Constants } from "expo";
+
+import { LinearGradient } from "expo-linear-gradient";
+import Constants from "expo-constants";
 
 import QuickPicker from "quick-picker";
 

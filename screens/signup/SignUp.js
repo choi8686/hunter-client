@@ -11,7 +11,9 @@ import {
 } from "react-native";
 import { Input, Button } from "react-native-elements";
 
-import { LinearGradient, Constants } from "expo";
+// import { LinearGradient, Constants } from "expo";
+import Constants from "expo-constants";
+import { LinearGradient } from "expo-linear-gradient";
 import { url } from "../../url";
 
 class SignUpTitle extends Component {

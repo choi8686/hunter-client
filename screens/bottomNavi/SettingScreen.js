@@ -9,7 +9,9 @@ import {
   Modal,
   Alert
 } from "react-native";
-import { LinearGradient } from "expo";
+
+import Constants from "expo-constants";
+import { LinearGradient } from "expo-linear-gradient";
 import { Button } from "react-native-elements";
 import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
 import { url } from "../../url";
