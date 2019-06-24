@@ -47,9 +47,9 @@ const NextButton = props => {
 export default class TeamPicture extends Component {
   state = {
     image: {
-      0: null,
-      1: null,
-      2: null
+      0: "https://4week-project-image-upload-test.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg",
+      1: "https://4week-project-image-upload-test.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg",
+      2: "https://4week-project-image-upload-test.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg"
     },
     sex: this.props.navigation.state.params.data.sex,
     teamname: this.props.navigation.state.params.data.teamname,
@@ -117,7 +117,6 @@ export default class TeamPicture extends Component {
       console.log({ uploadResponse });
       console.log({ uploadResult });
       console.log({ e });
-      Alert.alert(" 또안되네시발 ");
     } finally {
       this.props.navigation.navigate("Home");
       console.log("upload!");
