@@ -41,7 +41,7 @@ export default class InputModal extends Component {
                   fontWeight: "bold"
                 }}
               >
-                상대방에게 보낼 메세지를 작성해주세요.
+                메세지 기능은 현재 개발중입니다.
               </Text>
 
               <TextInput
@@ -51,7 +51,7 @@ export default class InputModal extends Component {
                 ref={ref => {
                   this._nameInput = ref;
                 }}
-                placeholder="Full Name"
+                placeholder="아직 개발중인 기능입니다."
                 autoFocus={true}
                 autoCapitalize="words"
                 autoCorrect={true}
@@ -59,6 +59,7 @@ export default class InputModal extends Component {
                 returnKeyType="next"
                 onSubmitEditing={this._next}
                 blurOnSubmit={false}
+                padding="5%"
               />
               <View style={{ flexDirection: "row" }}>
                 <TouchableOpacity onPress={() => this.props.visibleHandler()}>

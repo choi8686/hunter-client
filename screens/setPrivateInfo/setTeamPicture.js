@@ -47,9 +47,9 @@ const NextButton = props => {
 export default class TeamPicture extends Component {
   state = {
     image: {
-      0: undefined,
-      1: undefined,
-      2: undefined
+      0: "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg",
+      1: "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg",
+      2: "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg"
     },
     sex: this.props.navigation.state.params.data.sex,
     teamname: this.props.navigation.state.params.data.teamname,
@@ -60,23 +60,6 @@ export default class TeamPicture extends Component {
     districtId: this.props.navigation.state.params.data.districtId,
     storeId: this.props.navigation.state.params.data.storeId,
     teamId: this.props.navigation.state.params.data.teamId
-  };
-
-  _pickImage = async num => {
-    const { status: cameraRollPerm } = await Permissions.askAsync(
-      Permissions.CAMERA_ROLL
-    );
-
-    if (cameraRollPerm === "granted") {
-      let pickerResult = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        aspect: [5, 7]
-      });
-
-      let image = this.state.image;
-      image[num] = pickerResult.uri;
-      await this.setState({ image: image });
-    }
   };
 
   _uploadImageAsync = async (uri, num) => {
@@ -104,6 +87,23 @@ export default class TeamPicture extends Component {
     );
   };
 
+  _pickImage = async num => {
+    const { status: cameraRollPerm } = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
+
+    if (cameraRollPerm === "granted") {
+      let pickerResult = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [5, 7]
+      });
+
+      let image = this.state.image;
+      image[num] = pickerResult.uri;
+      await this.setState({ image: image });
+    }
+  };
+
   _handleImagePicked = async pickerResult => {
     let uploadResponse, uploadResult;
 
@@ -117,7 +117,6 @@ export default class TeamPicture extends Component {
       console.log({ uploadResponse });
       console.log({ uploadResult });
       console.log({ e });
-      Alert.alert(" 또안되네시발 ");
     } finally {
       this.props.navigation.navigate("Home");
       console.log("upload!");
@@ -153,7 +152,7 @@ export default class TeamPicture extends Component {
                 대표 사진을 올려주세요
               </Text>
             </View>
-            {firstImage === undefined ? (
+            {firstImage === null ? (
               <TouchableOpacity
                 onPress={() => this._pickImage(0)}
                 lineHeight="300"
@@ -178,7 +177,7 @@ export default class TeamPicture extends Component {
                 매력포인트 사진을 올려주세요
               </Text>
             </View>
-            {secondImage === undefined ? (
+            {secondImage === null ? (
               <TouchableOpacity
                 onPress={() => this._pickImage(1)}
                 lineHeight="300"
@@ -203,7 +202,7 @@ export default class TeamPicture extends Component {
                 우리 팀을 잘 표현한 사진을 올려주세요
               </Text>
             </View>
-            {thirdImage === undefined ? (
+            {thirdImage === null ? (
               <TouchableOpacity
                 onPress={() => this._pickImage(2)}
                 lineHeight="300"

@@ -16,6 +16,10 @@ import { url } from "../../url";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 var loginUser = {};
+var defaultUrl =
+  "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg";
+var noTeamUrl =
+  "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_teams.jpg";
 
 export default class DistrictScreen extends Component {
   constructor() {
@@ -141,7 +145,6 @@ export default class DistrictScreen extends Component {
     const getToken = await AsyncStorage.getItem("userToken");
     const userToken = getToken.split("-");
 
-    console.log(getToken, "userToken DistrictScreen.js!!!!!!!! lines 144");
     console.log("-----------------TeamGetOnDistrict-----------------");
 
     loginUser = {
@@ -155,9 +158,7 @@ export default class DistrictScreen extends Component {
       userId: Number(userToken[8]),
       teamId: Number(userToken[9])
     };
-
-    console.log(loginUser);
-    // 토큰에 location.district 의 값을 추가해야 할것 같다.. 혁님 파이팅
+    console.log("로그인유저 정보", loginUser);
     fetch(`${url}/teams/district/${loginUser.districtId}`, {
       method: "GET",
       headers: {
@@ -165,23 +166,36 @@ export default class DistrictScreen extends Component {
       }
     })
       .then(result => result.json())
-      .then(teamList =>
+      .then(teamList => {
+        let filterTeam = teamList.filter(list => {
+          return loginUser.sex !== list.sex;
+        });
         // 접속한 유저와 다른 성별의 팀을 필터하여 setState
         this.setState({
-          teams: teamList.filter(list => {
-            return loginUser.sex !== list.sex;
-          })
-        })
-      );
+          teams: filterTeam
+        });
+      });
+
+    fetch(`${url}/match/${loginUser.teamId}`)
+      .then(res => res.json())
+      .then(data => {
+        for (var i = 0; i < data.length; i++) {
+          console.log(
+            "상대팀ID :",
+            data[i].otherTeam.id + " /",
+            "상대팀Name :",
+            data[i].otherTeam.teamname + " /",
+            "uuid :",
+            data[i].uuid
+          );
+        }
+      });
   };
 
   _sendToLike = async () => {
-    console.log("sendToLike", this.state.teams[this.state.currentIndex].userId);
-
     let getTeamId = await this._getTeamId(
       this.state.teams[this.state.currentIndex].userId
     );
-    console.log(getTeamId, "getTeamId----------");
     let whoLikeId = loginUser.teamId;
     let toLikeId = getTeamId;
     console.log(whoLikeId, toLikeId, "whoLiked toLiked");
@@ -195,7 +209,9 @@ export default class DistrictScreen extends Component {
         toLikeId: toLikeId,
         introText: "같은 매장이면 메세지를 볼 수 있습니다."
       })
-    });
+    })
+      .then(result => result.json())
+      .then(data => console.log(Boolean(data)));
   };
 
   _getTeamId = async userId => {
@@ -212,7 +228,9 @@ export default class DistrictScreen extends Component {
   };
 
   _onChangeIndex = e => {
-    if (
+    if (this.state.currentIndex === this.state.teams.length) {
+      return null;
+    } else if (
       e === "rightArrow" &&
       this.state.pictureIndex <
         this.state.teams[this.state.currentIndex].teamimages.length - 1
@@ -220,9 +238,7 @@ export default class DistrictScreen extends Component {
       this.setState({
         pictureIndex: this.state.pictureIndex + 1
       });
-    }
-
-    if (e === "leftArrow" && this.state.pictureIndex > 0) {
+    } else if (e === "leftArrow" && this.state.pictureIndex > 0) {
       this.setState({
         pictureIndex: this.state.pictureIndex - 1
       });
@@ -239,247 +255,151 @@ export default class DistrictScreen extends Component {
 
   //comment랑 teamname을 가져와서 animation안에 띄워준다.
   renderUsers = () => {
-    // console.log(
-    //   this.state.teams,
-    //   "jongwookjongwookjongwookjongwookjongwookjongwookjongwook"
-    // );
-    return this.state.teams
-      .map((item, i) => {
-        // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
-        if (i < this.state.currentIndex) {
-          // 이미 넘긴 팀의 카드를 보여주지 않는 부분
-          return null;
-        } else if (i === this.state.currentIndex) {
-          // 맨 윗장에 있는 팀의 상태
-          return item.teamimages[0] ? (
-            <Animated.View
-              {...this.PanResponder.panHandlers}
-              key={item.id}
-              style={[
-                this.rotateAndTranslate,
-                {
-                  height: (SCREEN_HEIGHT * 3) / 4,
-                  width: SCREEN_WIDTH,
-                  padding: 10,
-                  paddingBottom: 20,
-                  position: "absolute"
-                }
-              ]}
-            >
+    return this.state.teams.length &&
+      this.state.currentIndex < this.state.teams.length ? (
+      this.state.teams
+        .map((item, i) => {
+          // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
+          if (i < this.state.currentIndex) {
+            // 이미 넘긴 팀의 카드를 보여주지 않는 부분
+            return null;
+          } else if (i === this.state.currentIndex) {
+            // 맨 윗장에 있는 팀의 상태
+            return (
               <Animated.View
-                style={{ opacity: this.likeOpacity, ...styles.likeBorder }}
+                {...this.PanResponder.panHandlers}
+                key={item.id}
+                style={[
+                  this.rotateAndTranslate,
+                  {
+                    height: (SCREEN_HEIGHT * 3) / 4,
+                    width: SCREEN_WIDTH,
+                    padding: 10,
+                    paddingBottom: 20,
+                    position: "absolute"
+                  }
+                ]}
               >
-                <Text style={styles.likeText}>LIKE</Text>
-              </Animated.View>
+                <Animated.View
+                  style={{ opacity: this.likeOpacity, ...styles.likeBorder }}
+                >
+                  <Text style={styles.likeText}>LIKE</Text>
+                </Animated.View>
 
-              <Animated.View
-                style={{
-                  opacity: this.dislikeOpacity,
-                  ...styles.dislikeBorder
-                }}
-              >
-                <Text style={styles.dislikeText}>NOPE</Text>
-              </Animated.View>
-
-              <Image
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  width: "100%",
-                  resizeMode: "cover",
-                  borderRadius: 20
-                }}
-                source={{
-                  uri: `${item.teamimages[this.state.pictureIndex].imgUrl +
-                    "?" +
-                    new Date()}`
-                }}
-              />
-
-              <Animated.View
-                style={{
-                  flex: 1,
-                  opacity: this.titleOpacity,
-                  zIndex: 1200,
-                  position: "absolute",
-                  paddingTop: "13%",
-                  height: "100%",
-                  marginLeft: "6%"
-                }}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      color: "floralwhite",
-                      fontWeight: "bold",
-                      fontSize: 20,
-                      textShadowColor: "rgba(0, 0, 0, 0.5)",
-                      textShadowOffset: { width: -1, height: 1 },
-                      textShadowRadius: 10
-                    }}
-                  >
-                    {this.state.teams[this.state.currentIndex].teamname}
-                  </Text>
-                  <Text
-                    style={{
-                      color: "floralwhite",
-                      fontWeight: "bold",
-                      fontSize: 18,
-                      textShadowColor: "rgba(0, 0, 0, 0.5)",
-                      textShadowOffset: { width: -1, height: 1 },
-                      textShadowRadius: 10
-                    }}
-                  >
-                    {" "}
-                    {this.state.teams[this.state.currentIndex].age}
-                  </Text>
-                </View>
-                <Text
+                <Animated.View
                   style={{
-                    color: "floralwhite",
-                    fontWeight: "bold",
-                    fontSize: 15,
-                    textShadowColor: "rgba(0, 0, 0, 0.5)",
-                    textShadowOffset: { width: -1, height: 1 },
-                    textShadowRadius: 10
+                    opacity: this.dislikeOpacity,
+                    ...styles.dislikeBorder
                   }}
                 >
-                  {this.state.teams[this.state.currentIndex].comment}
-                </Text>
-              </Animated.View>
-            </Animated.View>
-          ) : (
-            <Animated.View
-              {...this.PanResponder.panHandlers}
-              key={item.id}
-              style={[
-                this.rotateAndTranslate,
-                {
-                  height: (SCREEN_HEIGHT * 3) / 4,
-                  width: SCREEN_WIDTH,
-                  padding: 10,
-                  paddingBottom: 20,
-                  position: "absolute"
-                }
-              ]}
-            >
-              <Animated.View
-                style={{ opacity: this.likeOpacity, ...styles.likeBorder }}
-              >
-                <Text style={styles.likeText}>LIKE</Text>
-              </Animated.View>
+                  <Text style={styles.dislikeText}>NOPE</Text>
+                </Animated.View>
 
-              <Animated.View
-                style={{
-                  opacity: this.dislikeOpacity,
-                  ...styles.dislikeBorder
-                }}
-              >
-                <Text style={styles.dislikeText}>NOPE</Text>
-              </Animated.View>
-
-              <Image
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  width: "100%",
-                  resizeMode: "cover",
-                  borderRadius: 20
-                }}
-                // source={{
-                //   uri: `${item.teamimages[this.state.pictureIndex].imgUrl +
-                //     "?" +
-                //     new Date()}`
-                // }}
-              />
-
-              <Animated.View
-                style={{
-                  flex: 1,
-                  opacity: this.titleOpacity,
-                  zIndex: 1200,
-                  position: "absolute",
-                  paddingTop: "13%",
-                  height: "100%",
-                  marginLeft: "6%"
-                }}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      color: "floralwhite",
-                      fontWeight: "bold",
-                      fontSize: 20,
-                      textShadowColor: "rgba(0, 0, 0, 0.5)",
-                      textShadowOffset: { width: -1, height: 1 },
-                      textShadowRadius: 10
+                {item.teamimages.length ? (
+                  <Image
+                    style={{ ...styles.cardImage }}
+                    source={{
+                      uri: `${item.teamimages[this.state.pictureIndex].imgUrl +
+                        "?" +
+                        new Date()}`
                     }}
-                  >
-                    {this.state.teams[this.state.currentIndex].teamname}
-                  </Text>
-                  <Text
-                    style={{
-                      color: "floralwhite",
-                      fontWeight: "bold",
-                      fontSize: 18,
-                      textShadowColor: "rgba(0, 0, 0, 0.5)",
-                      textShadowOffset: { width: -1, height: 1 },
-                      textShadowRadius: 10
-                    }}
-                  >
-                    {" "}
-                    {this.state.teams[this.state.currentIndex].age}
-                  </Text>
-                </View>
-                <Text
+                  />
+                ) : (
+                  <Image
+                    style={{ ...styles.cardImage }}
+                    source={{ uri: `${defaultUrl}` }}
+                  />
+                )}
+
+                <Animated.View
                   style={{
-                    color: "floralwhite",
-                    fontWeight: "bold",
-                    fontSize: 15,
-                    textShadowColor: "rgba(0, 0, 0, 0.5)",
-                    textShadowOffset: { width: -1, height: 1 },
-                    textShadowRadius: 10
+                    flex: 1,
+                    opacity: this.titleOpacity,
+                    zIndex: 1200,
+                    position: "absolute",
+                    paddingTop: "13%",
+                    height: "100%",
+                    marginLeft: "6%"
                   }}
                 >
-                  {this.state.teams[this.state.currentIndex].comment}
-                </Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ ...styles.teamName }}>
+                      {this.state.teams[this.state.currentIndex].teamname}
+                    </Text>
+                    <Text style={{ ...styles.age }}>
+                      {this.state.teams[this.state.currentIndex].age}
+                    </Text>
+                  </View>
+                  <Text style={{ ...styles.comment }}>
+                    {this.state.teams[this.state.currentIndex].comment}
+                  </Text>
+                </Animated.View>
               </Animated.View>
-            </Animated.View>
-          );
-        } else {
-          // 맨 윗장을 제외한 나머지. 아직 넘기지 않은 팀의 상태
-          return item.teamimages[0] ? (
-            <Animated.View
-              key={item.id}
-              style={[
-                {
-                  opacity: this.nextCardOpacity,
-                  transform: [{ scale: this.nextCardScale }],
-                  height: (SCREEN_HEIGHT * 3) / 4,
-                  width: SCREEN_WIDTH,
-                  padding: 10,
-                  paddingBottom: 20,
-                  position: "absolute"
-                }
-              ]}
-            >
-              <Image
-                style={{
-                  flex: 1,
-                  height: null,
-                  width: null,
-                  resizeMode: "cover",
-                  borderRadius: 20
-                }}
-                source={{
-                  uri: `${item.teamimages[0].imgUrl}` + "?" + new Date()
-                }}
-              />
-            </Animated.View>
-          ) : null;
-        }
-      })
-      .reverse();
+            );
+          } else {
+            // 맨 윗장을 제외한 나머지. 아직 넘기지 않은 팀의 상태
+            return (
+              <Animated.View
+                key={item.id}
+                style={[
+                  {
+                    opacity: this.nextCardOpacity,
+                    transform: [{ scale: this.nextCardScale }],
+                    height: (SCREEN_HEIGHT * 3) / 4,
+                    width: SCREEN_WIDTH,
+                    padding: 10,
+                    paddingBottom: 20,
+                    position: "absolute"
+                  }
+                ]}
+              >
+                {item.teamimages.length ? (
+                  <Image
+                    style={{ ...styles.cardImage }}
+                    source={{
+                      uri: `${item.teamimages[0].imgUrl}` + "?" + new Date()
+                    }}
+                  />
+                ) : (
+                  <Image
+                    style={{ ...styles.cardImage }}
+                    source={{ uri: `${defaultUrl}` }}
+                  />
+                )}
+              </Animated.View>
+            );
+          }
+        })
+        .reverse()
+    ) : (
+      <View
+        style={{
+          height: (SCREEN_HEIGHT * 3) / 4,
+          width: SCREEN_WIDTH,
+          justifyContent: "center",
+          paddingTop: "5%",
+          height: "115%"
+        }}
+      >
+        <Image
+          style={{
+            ...styles.cardImage,
+            position: "absolute"
+          }}
+          source={{ uri: `${noTeamUrl}` }}
+        />
+        <Text
+          style={{
+            ...styles.teamName,
+            textAlign: "center",
+            padding: "15%"
+          }}
+        >
+          더 이상 팀이 없거나, 등록된 팀이 없습니다. 좌측 하단의 버튼으로 팀을
+          갱신해 보세요.
+        </Text>
+      </View>
+    );
   };
 
   render() {
@@ -494,16 +414,10 @@ export default class DistrictScreen extends Component {
         >
           {this.renderUsers()}
         </View>
-
         <View style={{ ...styles.featrueIcon }}>
           <Foundation
             name="refresh"
             style={styles.refreshButton}
-            onPress={() => this._onPresRefresh()}
-          />
-          <FontAwesome
-            name="send"
-            style={styles.sendLetter}
             onPress={() => this._onPresRefresh()}
           />
         </View>
@@ -523,38 +437,7 @@ export default class DistrictScreen extends Component {
             onPress={() => this._onChangeIndex("rightArrow")}
           />
         </View>
-        <View>
-          {this.state.modalVisible && (
-            <InputModal visibleHandler={this._visibleHandler} />
-          )}
-        </View>
       </View>
-      // <View style={{ ...styles.backGround }}>
-      //   <View style={{ flex: 0.9, height: "100%", flexDirection: "column" }}>
-      //     {this.renderUsers()}
-      //   </View>
-      //   <View style={styles.arrow}>
-      //     <AntDesign
-      //       id="leftArrow"
-      //       name="leftcircleo"
-      //       style={styles.leftArrow}
-      //       onPress={() => this._onChangeIndex("leftArrow")}
-      //     />
-
-      //     <Ionicons
-      //       name="md-refresh"
-      //       style={styles.refreshButton}
-      //       onPress={() => this._onPresRefresh()}
-      //     />
-
-      //     <AntDesign
-      //       id="rightArrow"
-      //       name="rightcircleo"
-      //       style={styles.rigthArrow}
-      //       onPress={() => this._onChangeIndex("rightArrow")}
-      //     />
-      //   </View>
-      // </View>
     );
   }
 }
@@ -647,5 +530,36 @@ const styles = StyleSheet.create({
   },
   headerRightIcon: {
     marginRight: 15
+  },
+  cardImage: {
+    flex: 1,
+    height: "100%",
+    width: "100%",
+    resizeMode: "cover",
+    borderRadius: 20
+  },
+  teamName: {
+    color: "floralwhite",
+    fontWeight: "bold",
+    fontSize: 20,
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
+  },
+  age: {
+    color: "floralwhite",
+    fontWeight: "bold",
+    fontSize: 18,
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
+  },
+  comment: {
+    color: "floralwhite",
+    fontWeight: "bold",
+    fontSize: 15,
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
   }
 });

@@ -18,8 +18,8 @@ import { Input, Button } from "react-native-elements";
 //신버전 Expo
 import Constants from "expo-constants";
 import { LinearGradient } from "expo-linear-gradient";
-
 import { url } from "../../url";
+
 var flag;
 
 // 제목
@@ -119,6 +119,7 @@ export default class SignUp extends Component {
       this.state.errorNickname === "" &&
       this.state.errorPassword === ""
     ) {
+      console.log(url);
       await fetch(`${url}/users/login`, {
         method: "POST",
         headers: {
