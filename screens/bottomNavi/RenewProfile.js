@@ -1,4 +1,7 @@
 import React from "react";
+
+// import RenewPicture from "./RenewPicture";
+
 import {
   ScrollView,
   View,
@@ -11,7 +14,9 @@ import {
   KeyboardAvoidingView
 } from "react-native";
 
-import { LinearGradient, ImagePicker, Permissions } from "expo";
+import { LinearGradient } from "expo";
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
 import { Input, Button, ButtonGroup } from "react-native-elements";
 import IconBadge from "react-native-icon-badge";
 import { url } from "../../url";
@@ -57,14 +62,17 @@ class RenewPicture extends React.Component {
 
     id: null,
 
-    images: {}
+    images: {
+      0: null,
+      1: null,
+      2: null
+    }
   };
 
   //유저토큰 가져와서 스테이트에 저장
   _getUserToken = async () => {
     userToken = await AsyncStorage.getItem("userToken");
     userTokenArr = userToken.split("-");
-
     await this.setState({
       // sex: userTokenArr[userTokenArr.length - 9],
       // count: userTokenArr[userTokenArr.length - 8],
@@ -95,7 +103,7 @@ class RenewPicture extends React.Component {
             images[index] = ele.imgUrl;
             console.log(
               images,
-              "complete images take in renewProfile.js line 69"
+              "complete images take in renewProfile.js line 99"
             );
             this.setState({
               images: images
@@ -106,21 +114,36 @@ class RenewPicture extends React.Component {
 
   //image 클릭해서 해당 이미지 수정하는 함수
   _pickImage = async num => {
+    console.log("pick!!! Image!!!!");
     const { status: cameraRollPerm } = await Permissions.askAsync(
       Permissions.CAMERA_ROLL
     );
 
     if (cameraRollPerm === "granted") {
+      console.log("picking image@@@@@@@@@");
       pickerResult = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
         aspect: [5, 7]
       });
 
-      let images = this.state.images;
-      images[num] = pickerResult.uri;
-      if (images[num] !== undefined) {
+      console.log(pickerResult, "pickerResult");
+      if (pickerResult.cancelled === false) {
+        let images = this.state.images;
+        console.log("1 ######", images);
+        images[num] = pickerResult.uri;
+
+        console.log("2 ###### ", images);
+
+        // console.log(
+        //   images,
+        //   "images!@*&#(@&#(@&)(@&#)&@)#&)@&)(시발 바뀐 후다 개샊띠들아!@@@"
+        // );
+
         await this.setState({ images: images });
-        this._handleImagePicked(pickerResult, num);
+
+        console.log("3 ###### ", images);
+
+        await this._handleImagePicked(pickerResult, num, images);
       }
     }
   };
@@ -149,29 +172,25 @@ class RenewPicture extends React.Component {
         teamId: this.state.id
       }
     };
+
     return await fetch(apiUrl, options).then(res =>
       console.log("upload response", res)
     );
   };
 
   //이미지 순차적으로 upload실행요청하는 함수
-  _handleImagePicked = async (pickerResult, num) => {
-    console.log(pickerResult, "pickerResult!!!!!@@@@@");
+  _handleImagePicked = async (pickerResult, num, images) => {
     let uploadResponse, uploadResult;
-    try {
-      // if (!pickerResult.cancelled) {
 
-      await this._uploadImageAsync(this.state.images[num], num + 1);
-      // await this._uploadImageAsync(this.state.images[1]);
-      // await this._uploadImageAsync(this.state.images[2]);
-      // }
+    try {
+      if (!pickerResult.cancelled) {
+        await this._uploadImageAsync(this.state.images[num], num + 1);
+      }
     } catch (e) {
       console.log({ uploadResponse });
-      console.log({ uploadResult });
-      console.log({ e });
+
       Alert.alert(" 잠시 후에 다시 시도해주세요. ");
     } finally {
-      // this.props.navigation.navigate("District");
       console.log("upload!");
     }
   };
@@ -187,18 +206,21 @@ class RenewPicture extends React.Component {
 
   render() {
     const { images } = this.state;
+    const firstImage = images[0];
+    const secondImage = images[1];
+    const thirdImage = images[2];
     return (
       <View style={styles.ImagesHouse}>
         <TouchableOpacity onPress={() => this._pickImage(0)}>
           <View>
-            {images[0] !== undefined ? (
+            {firstImage !== null ? (
               <IconBadge
                 MainElement={
                   <Image
                     source={{
                       uri:
                         // "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/1561014040509.png"
-                        images[0] + "?" + new Date()
+                        firstImage + "?" + new Date().getTime()
                     }}
                     style={styles.avatar}
                   />
@@ -230,14 +252,15 @@ class RenewPicture extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this._pickImage(1)}>
           <View>
-            {images[1] !== undefined ? (
+            {secondImage !== null ? (
               <IconBadge
                 MainElement={
                   <Image
+                    // key={Math.random()}
                     source={{
                       uri:
                         // "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/1561014041237.png"
-                        images[1] + "?" + new Date()
+                        secondImage + "?" + new Date().getTime()
                     }}
                     style={styles.avatar}
                   />
@@ -269,14 +292,15 @@ class RenewPicture extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this._pickImage(2)}>
           <View>
-            {images[2] !== undefined ? (
+            {thirdImage !== null ? (
               <IconBadge
                 MainElement={
                   <Image
+                    // key={Math.random()}
                     source={{
                       uri:
                         // "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/1561014041706.png"
-                        images[2] + "?" + new Date()
+                        thirdImage + "?" + new Date().getTime()
                     }}
                     style={styles.avatar}
                   />
@@ -735,20 +759,19 @@ const styles = StyleSheet.create({
     marginRight: 15
   },
   scrollBox: {
-    height: 1000,
+    height: 800,
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
     paddingTop: "10%",
-    paddingBottom: "20%",
+    marginBottom: "-7%",
     paddingVertical: 20
   },
   buttonBox: {
     flex: 1,
     flexDirection: "column",
-    marginBottom: "5%",
-    paddingVertical: 10,
-    paddingTop: "5%",
+    paddingVertical: 5,
+    paddingTop: "2%",
     color: "white",
     height: "100%",
     width: "100%"

@@ -242,10 +242,10 @@ export default class DistrictScreen extends Component {
 
   //comment랑 teamname을 가져와서 animation안에 띄워준다.
   renderUsers = () => {
-    console.log(
-      this.state.teams,
-      "jongwookjongwookjongwookjongwookjongwookjongwookjongwook"
-    );
+    // console.log(
+    //   this.state.teams,
+    //   "jongwookjongwookjongwookjongwookjongwookjongwookjongwook"
+    // );
     return this.state.teams
       .map((item, i) => {
         // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
