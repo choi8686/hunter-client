@@ -9,6 +9,7 @@ import {
   PanResponder,
   AsyncStorage
 } from "react-native";
+
 import InputModal from "./InputModal";
 import {
   SimpleLineIcons,
@@ -470,6 +471,7 @@ export default class StoreScreen extends Component {
             onPress={() => this._onChangeIndex("rightArrow")}
           />
         </View>
+
         <View>
           {this.state.modalVisible && (
             <InputModal visibleHandler={this._visibleHandler} />
