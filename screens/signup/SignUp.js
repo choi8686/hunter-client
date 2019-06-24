@@ -50,7 +50,7 @@ class InputBars extends Component {
             placeholder="   ID"
             textAlign={"center"}
             leftIcon={{ type: "font-awesome", name: "user" }}
-            containerStyle={{ marginBottom: 10, width: "93%" }}
+            containerStyle={{ marginBottom: 10, width: "90%" }}
             clearButtonMode="always"
             onChangeText={text => changeErr("nickname", "errorNickname", text)}
           />
@@ -62,7 +62,7 @@ class InputBars extends Component {
             placeholder="   PASSWORD"
             textAlign={"center"}
             leftIcon={{ type: "font-awesome", name: "lock" }}
-            containerStyle={{ marginBottom: 10, width: "93%" }}
+            containerStyle={{ marginBottom: 10, width: "90%" }}
             onChangeText={text => changeErr("password", "errorPassword", text)}
             clearButtonMode="always"
             underlineColorAndroid="transparent"
@@ -91,7 +91,7 @@ class InputBars extends Component {
             placeholder="  PASSWORD again"
             textAlign={"center"}
             leftIcon={{ type: "font-awesome", name: "lock" }}
-            containerStyle={{ marginBottom: 10, width: "93%" }}
+            containerStyle={{ marginBottom: 10, width: "90%" }}
             onChangeText={text =>
               changeErr("password_CHECK", "errorCheck", text)
             }
@@ -380,13 +380,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 25,
     paddingTop: Platform.OS === "ios" ? 20 : 0
   },
 
   textBoxBtnHolder: {
     height: "40%",
-    width: "100%",
     position: "relative",
     alignSelf: "stretch",
     justifyContent: "center"
