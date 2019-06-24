@@ -24,18 +24,31 @@ YellowBox.ignoreWarnings([
 export default class Chat extends Component {
   constructor(props) {
     super(props);
+
+    _isMounted = false;
+
+    const {
+      myTeamId,
+      myTeamName,
+      teamId,
+      teamName,
+      avatarURL,
+      uuid
+    } = this.props.navigation.state.params;
+
     this.state = {
+      teamName,
+      teamId,
+      avatarURL,
+      myTeamName,
+      myTeamId,
+      uuid,
       chatMessage: "",
       chatMessages: [],
-      teamName: "",
-      teamId: null,
-      avatarURL: "",
-      myTeamName: "",
-      myTeamId: null,
-      uuid: "",
       visibleModal: false
     };
   }
+  //상단탭 옵션
   static navigationOptions = ({ navigation }) => {
     return {
       headerTitle: navigation.getParam("teamName"),
@@ -66,48 +79,28 @@ export default class Chat extends Component {
     };
   };
 
+  //BackButton 옵션(안드로이드 하단 백버튼 && 상단탭 백버튼)
   handleBackButton = async () => {
-    console.log("이야이야이야이야");
-    const {
-      falseNewChat,
-      falseNewChatList
-    } = this.props.navigation.state.params;
-    falseNewChat();
-    falseNewChatList();
-    this.props.navigation.navigate("ChatList");
+    const { falseNewChat } = this.props.navigation.state.params;
+    await falseNewChat();
+    await this.props.navigation.navigate("ChatList");
   };
 
-  componentDidMount() {
-    //안드로이드 backButton 누를 시, 상단바 알람 꺼진다.
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  componentDidMount = async () => {
+    this._isMounted = true;
+    //안드로이드 하단 backButton 누를 시, 상단바 알람 꺼진다.
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
     //ChatList로 부터 받는 navigation Props 값들
-    const {
-      myTeamId,
-      myTeamName,
-      teamId,
-      teamName,
-      avatarURL,
-      uuid,
-      trueNewChat,
-      falseNewChat,
-      trueNewChatList,
-      falseNewChatList
-    } = this.props.navigation.state.params;
+    const { trueNewChat, falseNewChat } = this.props.navigation.state.params;
 
     //채팅창이 열리면, 상단바에 새로운 채팅 알림이 꺼진다
-    falseNewChat();
-    falseNewChatList();
+    await falseNewChat();
 
-    //넘겨받은 props를 이용해 setState해줌
-    this.setState({
-      myTeamId,
-      myTeamName,
-      teamId,
-      teamName,
-      avatarURL,
-      uuid
-    });
     //채팅방 열리자마자, 상대방과의 대화목록 불러 오는 Get요청
     const loadingMsgData = {
       method: "GET",
@@ -116,7 +109,10 @@ export default class Chat extends Component {
       }
     };
 
-    fetch(`${url}/messages/getMessages/${uuid}`, loadingMsgData)
+    await fetch(
+      `${url}/messages/getMessages/${this.state.uuid}`,
+      loadingMsgData
+    )
       .then(res => res.json())
       .then(msgData => {
         this.setState({ chatMessages: msgData });
@@ -124,9 +120,10 @@ export default class Chat extends Component {
 
     //상단바 '매칭취소'버튼을 누를 시 모달(toggleModal)이 열리도록 toggleModal함수와 '매칭취소'버튼 연결해주는 로직
     const data = {
-      uuid,
-      myTeamName
+      uuid: this.state.uuid,
+      myTeamName: this.state.myTeamName
     };
+
     this.props.navigation.setParams({ toggleModal: this.toggleModal });
     this.props.navigation.setParams({
       handleBackButton: this.handleBackButton
@@ -147,12 +144,13 @@ export default class Chat extends Component {
     //상대방에게 메시지를 보내는 로직
     this.socket.on("chat message", async msgData => {
       await trueNewChat();
-      await trueNewChatList(); //새로운 메시지가 오면 상단바에 새로운 채팅 알림이 켜짐
-      await this.setState({
-        chatMessages: [...this.state.chatMessages, msgData]
-      });
+      if (this._isMounted) {
+        await this.setState({
+          chatMessages: [...this.state.chatMessages, msgData]
+        });
+      }
     });
-  }
+  };
 
   //visibleModal Toggle함수
   toggleModal = () => {
@@ -206,8 +204,9 @@ export default class Chat extends Component {
     this.setState({ chatMessage: "" });
   };
 
-  render() {
-    const chatMessages = this.state.chatMessages.map((msgData, i) => (
+  //새로운 대화 들어올 시 scrollView에 맵핑
+  mappingChatMessages = () => {
+    return this.state.chatMessages.map((msgData, i) => (
       <MessageBox
         key={i}
         myTeamIdfromServer={msgData.myTeamId}
@@ -219,24 +218,26 @@ export default class Chat extends Component {
         img={this.state.avatarURL}
       />
     ));
+  };
 
+  render() {
     return (
       <KeyboardAvoidingView
         style={styles.container}
         behavior="padding"
         keyboardShouldPersistTaps="always"
         enabled
-        keyboardVerticalOffset={105}
+        keyboardVerticalOffset={95}
       >
         {/* 채팅메시지 스크롤 뷰 */}
         <ScrollView
-          style={{ flex: 0.9 }}
+          style={{ flex: 0.9, marginBottom: 20 }}
           ref={ref => (this.scrollView = ref)}
           onContentSizeChange={(contentWidth, contentHeight) => {
             this.scrollView.scrollToEnd({ animated: true });
           }}
         >
-          {chatMessages}
+          {this.mappingChatMessages()}
           {this.state.visibleModal && (
             <CancelMatchModal
               toggleModal={this.toggleModal}
@@ -245,31 +246,38 @@ export default class Chat extends Component {
           )}
         </ScrollView>
         {/* Input Box & 보내기버튼 */}
-        <View style={{ flex: 0.1, marginTop: 7, backgroundColor: "#DCDCDC" }}>
-          <View style={{ flex: 1, flexDirection: "row" }}>
-            <View style={{ flex: 0.8 }}>
-              <Input
-                style={{ height: 40, borderWidth: 2 }}
-                autoCorrect={false}
-                value={this.state.chatMessage}
-                multiline={true}
-                editable={true}
-                onChangeText={this.handleMessage}
-              />
-            </View>
-            <View
-              style={{
-                flex: 0.2,
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-            >
-              <Button
-                title="보내기"
-                type="solid"
-                onPress={() => this.submitChatMessage()}
-              />
-            </View>
+        <View
+          style={{
+            flex: 0.1,
+            width: "85%",
+            marginLeft: 20
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: 10
+            }}
+          >
+            <Input
+              containerStyle={{ marginRight: 0 }}
+              inputContainerStyle={{ borderBottomWidth: 1 }}
+              inputStyle={{ paddingLeft: 10 }}
+              autoCorrect={false}
+              value={this.state.chatMessage}
+              multiline={true}
+              editable={true}
+              onChangeText={this.handleMessage}
+            />
+
+            <Button
+              icon={<Ionicons name="ios-send" size={45} color="navy" />}
+              type="clear"
+              onPress={() => this.submitChatMessage()}
+            />
           </View>
         </View>
       </KeyboardAvoidingView>

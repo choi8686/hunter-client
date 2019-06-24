@@ -4,7 +4,6 @@ import {
   createStackNavigator,
   Header
 } from "react-navigation";
-import { View } from "react-native";
 import DistrictScreen from "../screens/bottomNavi/DistrictScreen";
 import StoreScreen from "../screens/bottomNavi/StoreScreen";
 import SettingScreen from "../screens/bottomNavi/SettingScreen";
@@ -118,8 +117,6 @@ const StoreStack = createStackNavigator({
           }}
         />
       ),
-
-      title: "저기어때",
       headerTitleStyle: {
         color: "#FAFBFB"
       }

@@ -5,7 +5,7 @@ import { moderateScale } from "react-native-size-matters";
 const RightMessageBubble = ({ text }) => {
   return (
     <View style={[styles.item, styles.itemOut]}>
-      <View style={[styles.balloon, { backgroundColor: "#1084ff" }]}>
+      <View style={[styles.balloon, { backgroundColor: "#1E90FF" }]}>
         <Text style={{ paddingTop: 5, color: "white", fontSize: 16 }}>
           {text}
         </Text>
