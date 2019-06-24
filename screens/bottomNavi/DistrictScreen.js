@@ -17,9 +17,9 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 var loginUser = {};
 var defaultUrl =
-  "https://4week-project-image-upload-test.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg";
+  "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg";
 var noTeamUrl =
-  "https://4week-project-image-upload-test.s3.ap-northeast-2.amazonaws.com/assets/no_teams.jpg";
+  "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_teams.jpg";
 
 export default class DistrictScreen extends Component {
   constructor() {
@@ -158,9 +158,7 @@ export default class DistrictScreen extends Component {
       userId: Number(userToken[8]),
       teamId: Number(userToken[9])
     };
-
     console.log("로그인유저 정보", loginUser);
-
     fetch(`${url}/teams/district/${loginUser.districtId}`, {
       method: "GET",
       headers: {
@@ -181,7 +179,6 @@ export default class DistrictScreen extends Component {
     fetch(`${url}/match/${loginUser.teamId}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         for (var i = 0; i < data.length; i++) {
           console.log(
             "상대팀ID :",

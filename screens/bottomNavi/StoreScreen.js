@@ -24,9 +24,9 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 var loginUser = {};
 var defaultUrl =
-  "https://4week-project-image-upload-test.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg";
+  "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg";
 var noTeamUrl =
-  "https://4week-project-image-upload-test.s3.ap-northeast-2.amazonaws.com/assets/no_teams.jpg";
+  "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_teams.jpg";
 
 export default class StoreScreen extends Component {
   constructor() {

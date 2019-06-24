@@ -218,9 +218,7 @@ class RenewPicture extends React.Component {
                 MainElement={
                   <Image
                     source={{
-                      uri:
-                        // "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/1561014040509.png"
-                        firstImage + "?" + new Date().getTime()
+                      uri: firstImage + "?" + new Date().getTime()
                     }}
                     style={styles.avatar}
                   />
@@ -258,9 +256,7 @@ class RenewPicture extends React.Component {
                   <Image
                     // key={Math.random()}
                     source={{
-                      uri:
-                        // "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/1561014041237.png"
-                        secondImage + "?" + new Date().getTime()
+                      uri: secondImage + "?" + new Date().getTime()
                     }}
                     style={styles.avatar}
                   />
@@ -298,9 +294,7 @@ class RenewPicture extends React.Component {
                   <Image
                     // key={Math.random()}
                     source={{
-                      uri:
-                        // "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/1561014041706.png"
-                        thirdImage + "?" + new Date().getTime()
+                      uri: thirdImage + "?" + new Date().getTime()
                     }}
                     style={styles.avatar}
                   />
