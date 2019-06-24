@@ -10,7 +10,7 @@ import {
   StyleSheet,
   Button
 } from "react-native";
-import { Constants } from "expo";
+import Constants from "expo-constants";
 
 export default class InputModal extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ export default class InputModal extends Component {
                   fontWeight: "bold"
                 }}
               >
-                상대방에게 보낼 메세지를 작성해주세요.
+                메세지 기능은 현재 개발중입니다.
               </Text>
 
               <TextInput
@@ -51,7 +51,7 @@ export default class InputModal extends Component {
                 ref={ref => {
                   this._nameInput = ref;
                 }}
-                placeholder="Full Name"
+                placeholder="아직 개발중인 기능입니다."
                 autoFocus={true}
                 autoCapitalize="words"
                 autoCorrect={true}
@@ -59,6 +59,7 @@ export default class InputModal extends Component {
                 returnKeyType="next"
                 onSubmitEditing={this._next}
                 blurOnSubmit={false}
+                padding="5%"
               />
               <View style={{ flexDirection: "row" }}>
                 <TouchableOpacity onPress={() => this.props.visibleHandler()}>
@@ -119,8 +120,8 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   inModalStyle: {
-    height: "100%",
-    width: "80%",
+    height: "60%",
+    width: "85%",
     borderColor: "pink",
     borderWidth: 1.5,
     borderRadius: 20,
@@ -144,12 +145,14 @@ const styles = StyleSheet.create({
   input: {
     margin: 10,
     marginBottom: 10,
-    height: 200,
+    height: 160,
     width: 250,
     borderRadius: 4,
+
     borderColor: "#ccc",
     borderWidth: 2,
-    fontSize: 16
+    fontSize: 16,
+    color: "ghostwhite"
   },
   dislikeText: {
     borderWidth: 3,

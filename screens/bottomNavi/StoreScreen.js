@@ -9,6 +9,7 @@ import {
   PanResponder,
   AsyncStorage
 } from "react-native";
+
 import InputModal from "./InputModal";
 import {
   SimpleLineIcons,
@@ -23,6 +24,10 @@ import { url } from "../../url";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 var loginUser = {};
+var defaultUrl =
+  "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_img.jpg";
+var noTeamUrl =
+  "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_teams.jpg";
 
 export default class StoreScreen extends Component {
   constructor() {
@@ -31,7 +36,7 @@ export default class StoreScreen extends Component {
     this.state = {
       teams: [],
       currentIndex: 0,
-      pictrueIndex: 0,
+      pictureIndex: 0,
       modalVisible: false
     };
 
@@ -111,7 +116,7 @@ export default class StoreScreen extends Component {
             this.setState(
               {
                 currentIndex: this.state.currentIndex + 1,
-                pictrueIndex: 0
+                pictureIndex: 0
               },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
@@ -129,7 +134,7 @@ export default class StoreScreen extends Component {
             this.setState(
               {
                 currentIndex: this.state.currentIndex + 1,
-                pictrueIndex: 0
+                pictureIndex: 0
               },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
@@ -158,10 +163,8 @@ export default class StoreScreen extends Component {
     let userToken = await AsyncStorage.getItem("userToken");
     userToken = userToken.split("-");
 
-    // console.log(userToken);
     console.log("-----------------TeamGetOnStore-----------------");
-    // 토큰을 항상 문자열 형태로 가져오기 때문에
-    // 유저 정보를 좀더 심플하게 저장할수는 없을까...?
+
     // 전역에서 loginUser 사용해야하기 때문에 변수타입 선언 안했음
     loginUser = {
       sex: Number(userToken[1]),
@@ -182,16 +185,17 @@ export default class StoreScreen extends Component {
       }
     })
       .then(result => result.json())
-      .then(teamList =>
+      .then(teamList => {
+        let filterTeam = teamList.filter(list => {
+          return loginUser.sex !== list.sex && loginUser.sex === list.storeId;
+        });
         // 접속한 유저와 다른 성별의 팀을 필터하여 setState
         this.setState({
-          teams: teamList.filter(list => {
-            return loginUser.sex !== list.sex;
-          }),
+          teams: filterTeam,
           teamName: loginUser.teamname,
           teamComment: loginUser.comment
-        })
-      );
+        });
+      });
   };
 
   _sendToLike = async () => {
@@ -201,7 +205,8 @@ export default class StoreScreen extends Component {
 
     let whoLikeId = loginUser.teamId;
     let toLikeId = getTeamId;
-    console.log(whoLikeId, toLikeId);
+
+    console.log(whoLikeId, toLikeId, "whoLiked toLiked");
 
     fetch(`${url}/like`, {
       method: "POST",
@@ -225,8 +230,7 @@ export default class StoreScreen extends Component {
       }
     })
       .then(result => result.json())
-      .then(data => (teamId = data.teams[0].id));
-
+      .then(data => (teamId = data.getUserId.teams[0].id));
     return teamId;
   };
 
@@ -237,19 +241,19 @@ export default class StoreScreen extends Component {
   };
 
   _onChangeIndex = e => {
-    if (
+    if (this.state.currentIndex === this.state.teams.length) {
+      return null;
+    } else if (
       e === "rightArrow" &&
-      this.state.pictrueIndex <
+      this.state.pictureIndex <
         this.state.teams[this.state.currentIndex].teamimages.length - 1
     ) {
       this.setState({
-        pictrueIndex: this.state.pictrueIndex + 1
+        pictureIndex: this.state.pictureIndex + 1
       });
-    }
-
-    if (e === "leftArrow" && this.state.pictrueIndex > 0) {
+    } else if (e === "leftArrow" && this.state.pictureIndex > 0) {
       this.setState({
-        pictrueIndex: this.state.pictrueIndex - 1
+        pictureIndex: this.state.pictureIndex - 1
       });
     }
   };
@@ -259,7 +263,7 @@ export default class StoreScreen extends Component {
   //     toValue: { x: -SCREEN_WIDTH - 100, y: -20 }
   //   }).start(() => {
   //     this.setState(
-  //       { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+  //       { currentIndex: this.state.currentIndex + 1, pictureIndex: 0 },
   //       () => {
   //         this.position.setValue({ x: 0, y: 0 });
   //       }
@@ -272,7 +276,7 @@ export default class StoreScreen extends Component {
   //     toValue: { x: SCREEN_WIDTH + 100, y: -20 }
   //   }).start(() => {
   //     this.setState(
-  //       { currentIndex: this.state.currentIndex + 1, pictrueIndex: 0 },
+  //       { currentIndex: this.state.currentIndex + 1, pictureIndex: 0 },
   //       () => {
   //         this.position.setValue({ x: 0, y: 0 });
   //       }
@@ -283,149 +287,154 @@ export default class StoreScreen extends Component {
   _onPresRefresh = () => {
     this.setState({
       currentIndex: 0,
-      pictrueIndex: 0
+      pictureIndex: 0
     });
     this._getTeamsOnStore();
   };
 
   renderUsers = () => {
-    return this.state.teams
-      .map((item, i) => {
-        // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
-        if (i < this.state.currentIndex) {
-          return null;
-        } else if (i === this.state.currentIndex) {
-          return item.teamimages[0] ? (
-            <Animated.View
-              {...this.PanResponder.panHandlers}
-              key={item.id}
-              style={[
-                this.rotateAndTranslate,
-                {
-                  height: (SCREEN_HEIGHT * 3) / 4,
-                  width: SCREEN_WIDTH,
-                  padding: 10,
-                  paddingBottom: 20,
-                  position: "absolute"
-                }
-              ]}
-            >
+    return this.state.teams.length &&
+      this.state.currentIndex < this.state.teams.length ? (
+      this.state.teams
+        .map((item, i) => {
+          // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
+          if (i < this.state.currentIndex) {
+            return null;
+          } else if (i === this.state.currentIndex) {
+            return (
               <Animated.View
-                style={{ opacity: this.likeOpacity, ...styles.likeBorder }}
+                {...this.PanResponder.panHandlers}
+                key={item.id}
+                style={[
+                  this.rotateAndTranslate,
+                  {
+                    height: (SCREEN_HEIGHT * 3) / 4,
+                    width: SCREEN_WIDTH,
+                    padding: 10,
+                    paddingBottom: 20,
+                    position: "absolute"
+                  }
+                ]}
               >
-                <Text style={styles.likeText}>LIKE</Text>
-              </Animated.View>
+                <Animated.View
+                  style={{ opacity: this.likeOpacity, ...styles.likeBorder }}
+                >
+                  <Text style={styles.likeText}>LIKE</Text>
+                </Animated.View>
 
-              <Animated.View
-                style={{
-                  opacity: this.dislikeOpacity,
-                  ...styles.dislikeBorder
-                }}
-              >
-                <Text style={styles.dislikeText}>NOPE</Text>
-              </Animated.View>
-
-              <Image
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  width: "100%",
-                  resizeMode: "cover",
-                  borderRadius: 20
-                }}
-                source={{
-                  uri:
-                    `${item.teamimages[this.state.pictrueIndex].imgUrl}` +
-                    "?" +
-                    new Date()
-                }}
-              />
-              <Animated.View
-                style={{
-                  flex: 1,
-                  opacity: this.titleOpacity,
-                  zIndex: 1200,
-                  position: "absolute",
-                  paddingTop: "13%",
-                  height: "100%",
-                  marginLeft: "6%"
-                }}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      color: "floralwhite",
-                      fontWeight: "bold",
-                      fontSize: 20,
-                      textShadowColor: "rgba(0, 0, 0, 0.5)",
-                      textShadowOffset: { width: -1, height: 1 },
-                      textShadowRadius: 10
-                    }}
-                  >
-                    {this.state.teams[this.state.currentIndex].teamname}
-                  </Text>
-                  <Text
-                    style={{
-                      color: "floralwhite",
-                      fontWeight: "bold",
-                      fontSize: 18,
-                      textShadowColor: "rgba(0, 0, 0, 0.5)",
-                      textShadowOffset: { width: -1, height: 1 },
-                      textShadowRadius: 10
-                    }}
-                  >
-                    {" "}
-                    {this.state.teams[this.state.currentIndex].age}
-                  </Text>
-                </View>
-                <Text
+                <Animated.View
                   style={{
-                    color: "floralwhite",
-                    fontWeight: "bold",
-                    fontSize: 15,
-                    textShadowColor: "rgba(0, 0, 0, 0.5)",
-                    textShadowOffset: { width: -1, height: 1 },
-                    textShadowRadius: 10
+                    opacity: this.dislikeOpacity,
+                    ...styles.dislikeBorder
                   }}
                 >
-                  {this.state.teams[this.state.currentIndex].comment}
-                </Text>
+                  <Text style={styles.dislikeText}>NOPE</Text>
+                </Animated.View>
+
+                {item.teamimages.length ? (
+                  <Image
+                    style={{ ...styles.cardImage }}
+                    source={{
+                      uri: `${item.teamimages[this.state.pictureIndex].imgUrl +
+                        "?" +
+                        new Date()}`
+                    }}
+                  />
+                ) : (
+                  <Image
+                    style={{ ...styles.cardImage }}
+                    source={{ uri: `${defaultUrl}` }}
+                  />
+                )}
+
+                <Animated.View
+                  style={{
+                    flex: 1,
+                    opacity: this.titleOpacity,
+                    zIndex: 1200,
+                    position: "absolute",
+                    paddingTop: "13%",
+                    height: "100%",
+                    marginLeft: "6%"
+                  }}
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ ...styles.teamName }}>
+                      {this.state.teams[this.state.currentIndex].teamname}
+                    </Text>
+                    <Text style={{ ...styles.age }}>
+                      {this.state.teams[this.state.currentIndex].age}
+                    </Text>
+                  </View>
+                  <Text style={{ ...styles.comment }}>
+                    {this.state.teams[this.state.currentIndex].comment}
+                  </Text>
+                </Animated.View>
               </Animated.View>
-            </Animated.View>
-          ) : null;
-        } else {
-          return item.teamimages[0] ? (
-            <Animated.View
-              key={item.id}
-              style={[
-                {
-                  opacity: this.nextCardOpacity,
-                  transform: [{ scale: this.nextCardScale }],
-                  height: (SCREEN_HEIGHT * 3) / 4,
-                  width: SCREEN_WIDTH,
-                  padding: 10,
-                  paddingBottom: 20,
-                  position: "absolute"
-                }
-              ]}
-            >
-              <Image
-                style={{
-                  flex: 1,
-                  height: null,
-                  width: null,
-                  resizeMode: "cover",
-                  borderRadius: 20
-                }}
-                source={{
-                  uri: `${item.teamimages[0].imgUrl}` + "?" + new Date()
-                }}
-              />
-            </Animated.View>
-          ) : null;
-        }
-      })
-      .reverse();
+            );
+          } else {
+            return (
+              <Animated.View
+                key={item.id}
+                style={[
+                  {
+                    opacity: this.nextCardOpacity,
+                    transform: [{ scale: this.nextCardScale }],
+                    height: (SCREEN_HEIGHT * 3) / 4,
+                    width: SCREEN_WIDTH,
+                    padding: 10,
+                    paddingBottom: 20,
+                    position: "absolute"
+                  }
+                ]}
+              >
+                {item.teamimages.length ? (
+                  <Image
+                    style={{ ...styles.cardImage }}
+                    source={{
+                      uri: `${item.teamimages[0].imgUrl}` + "?" + new Date()
+                    }}
+                  />
+                ) : (
+                  <Image
+                    style={{ ...styles.cardImage }}
+                    source={{ uri: `${defaultUrl}` }}
+                  />
+                )}
+              </Animated.View>
+            );
+          }
+        })
+        .reverse()
+    ) : (
+      <View
+        style={{
+          height: (SCREEN_HEIGHT * 3) / 4,
+          width: SCREEN_WIDTH,
+          justifyContent: "center",
+          paddingTop: "5%",
+          height: "115%"
+        }}
+      >
+        <Image
+          style={{
+            ...styles.cardImage,
+            position: "absolute"
+          }}
+          source={{ uri: `${noTeamUrl}` }}
+        />
+        <Text
+          style={{
+            ...styles.teamName,
+            textAlign: "center",
+            padding: "15%"
+          }}
+        >
+          더 이상 팀이 없거나, 등록된 팀이 없습니다. 좌측 하단의 버튼으로 팀을
+          갱신해 보세요.
+        </Text>
+      </View>
+    );
   };
 
   render() {
@@ -470,6 +479,7 @@ export default class StoreScreen extends Component {
             onPress={() => this._onChangeIndex("rightArrow")}
           />
         </View>
+
         <View>
           {this.state.modalVisible && (
             <InputModal visibleHandler={this._visibleHandler} />
@@ -573,5 +583,36 @@ const styles = StyleSheet.create({
   },
   headerRightIcon: {
     marginRight: 15
+  },
+  cardImage: {
+    flex: 1,
+    height: "100%",
+    width: "100%",
+    resizeMode: "cover",
+    borderRadius: 20
+  },
+  teamName: {
+    color: "floralwhite",
+    fontWeight: "bold",
+    fontSize: 20,
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
+  },
+  age: {
+    color: "floralwhite",
+    fontWeight: "bold",
+    fontSize: 18,
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
+  },
+  comment: {
+    color: "floralwhite",
+    fontWeight: "bold",
+    fontSize: 15,
+    textShadowColor: "rgba(0, 0, 0, 0.5)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
   }
 });

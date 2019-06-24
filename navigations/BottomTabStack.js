@@ -14,7 +14,9 @@ import LetterListScreen from "../screens/letterList/LetterList";
 
 import RenewProfileScreen from "../screens/bottomNavi/RenewProfile";
 import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
-import { LinearGradient, constant } from "expo";
+
+import Constants from "expo-constants";
+import { LinearGradient } from "expo-linear-gradient";
 
 //District 스텍
 const DistrictStack = createStackNavigator({

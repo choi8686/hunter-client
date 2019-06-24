@@ -11,7 +11,9 @@ import {
 } from "react-native";
 import { Input, Button } from "react-native-elements";
 
-import { LinearGradient, Constants } from "expo";
+// import { LinearGradient, Constants } from "expo";
+import Constants from "expo-constants";
+import { LinearGradient } from "expo-linear-gradient";
 import { url } from "../../url";
 
 class SignUpTitle extends Component {
@@ -202,8 +204,12 @@ export default class SignUp extends Component {
 
   //id, password 에러 잡아내는 함수 에러 없다면 this._submit함수 실행시켜서 회원가입시도
   _errorMessages = () => {
-    //닉네임은 한글 영문 숫자 포함 4~8글자
-    var regTypeID = /^[a-zA-Z0-9+]{6,11}$/gi;
+    //아이디는 영문대소문자, 숫자, 특수문자 혼합 사용 6~11글자
+    // var regTypeID = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]|.*[0-9]).{6,11}$/;
+
+    //아이디는 이메일 형식
+    var regTypeID = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+
     //비밀번호는 영문 대소문자 및 숫자 또는 특수문자 포함 6-20글자
     var regTypePW = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
     if (this.state.nickname === "") {
@@ -211,7 +217,8 @@ export default class SignUp extends Component {
       flag = false;
     } else if (!regTypeID.test(this.state.nickname)) {
       this.setState(() => ({
-        errorNickname: "아이디는 영문, 숫자 포함 6-10글자입니다"
+        // errorNickname: "아이디는 영문 및 숫자 혹은 특수문자 포함 6-11글자입니다"
+        errorNickname: "이메일을 기입해주세요"
       }));
       flag = false;
     } else {
