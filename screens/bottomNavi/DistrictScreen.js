@@ -176,10 +176,7 @@ export default class DistrictScreen extends Component {
   };
 
   _sendToLike = async () => {
-    console.log(
-      "샌드투라이크 들어온다 새끼야",
-      this.state.teams[this.state.currentIndex].userId
-    );
+    console.log("sendToLike", this.state.teams[this.state.currentIndex].userId);
 
     let getTeamId = await this._getTeamId(
       this.state.teams[this.state.currentIndex].userId

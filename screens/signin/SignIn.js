@@ -13,11 +13,11 @@ import {
 import { Input, Button } from "react-native-elements";
 
 //구버전  Expo
-import { LinearGradient, Constants } from "expo";
+// import { LinearGradient, Constants } from "expo";
 
 //신버전 Expo
-// import Constants from "expo-constants";
-// import { LinearGradient } from "expo-linear-gradient";
+import Constants from "expo-constants";
+import { LinearGradient } from "expo-linear-gradient";
 
 import { url } from "../../url";
 var flag;
@@ -213,7 +213,6 @@ export default class SignUp extends Component {
 
   //로그인 성공시, userToken 저장하고 ChooseSex로 보내주는 함수
   _signInAsync = async () => {
-    console.log("시발년아 장난 그만치고 내놔라 ");
     const { userId, teamInfo } = await this.state;
     console.log(teamInfo, "teamInfo!!!!!! SignIn.js 161 lines");
     console.log(userId, "userId!!!!!!!!  SignIn.js 162 lines");

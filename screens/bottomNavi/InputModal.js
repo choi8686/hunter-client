@@ -10,7 +10,7 @@ import {
   StyleSheet,
   Button
 } from "react-native";
-import { Constants } from "expo";
+import Constants from "expo-constants";
 
 export default class InputModal extends Component {
   constructor(props) {
@@ -119,8 +119,8 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   inModalStyle: {
-    height: "100%",
-    width: "80%",
+    height: "60%",
+    width: "85%",
     borderColor: "pink",
     borderWidth: 1.5,
     borderRadius: 20,
@@ -144,12 +144,14 @@ const styles = StyleSheet.create({
   input: {
     margin: 10,
     marginBottom: 10,
-    height: 200,
+    height: 160,
     width: 250,
     borderRadius: 4,
+
     borderColor: "#ccc",
     borderWidth: 2,
-    fontSize: 16
+    fontSize: 16,
+    color: "ghostwhite"
   },
   dislikeText: {
     borderWidth: 3,
