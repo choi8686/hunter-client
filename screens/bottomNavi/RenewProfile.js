@@ -14,7 +14,6 @@ import {
   KeyboardAvoidingView
 } from "react-native";
 
-import { LinearGradient } from "expo";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import { Input, Button, ButtonGroup } from "react-native-elements";

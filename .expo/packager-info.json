@@ -1,9 +1,9 @@
 {
-  "expoServerPort": 19000,
+  "expoServerPort": null,
   "devToolsPort": 19002,
-  "packagerPort": 19001,
-  "packagerPid": 1628,
-  "expoServerNgrokUrl": "https://cp-4dh.anonymous.hunter-client-new.exp.direct",
-  "packagerNgrokUrl": "https://packager.cp-4dh.anonymous.hunter-client-new.exp.direct",
-  "ngrokPid": 1661
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

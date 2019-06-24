@@ -8,7 +8,9 @@ import {
   Alert
 } from "react-native";
 import { Input, Button, ButtonGroup, Icon } from "react-native-elements";
-import { LinearGradient, Constants } from "expo";
+// import { LinearGradient, Constants } from "expo";
+import { LinearGradient } from "expo-linear-gradient";
+import Constants from "expo-constants";
 
 class Title extends Component {
   render() {

@@ -2,7 +2,7 @@ import React, { Fragment, Component } from "react";
 import { StyleSheet, Text, View, AsyncStorage, Image } from "react-native";
 import { Button } from "react-native-elements";
 import { AntDesign } from "@expo/vector-icons";
-import { LinearGradient } from "expo";
+import { LinearGradient } from "expo-linear-gradient";
 
 class Title extends Component {
   render() {

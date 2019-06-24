@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Button, ButtonGroup } from "react-native-elements";
-import { LinearGradient } from "expo";
+import { LinearGradient } from "expo-linear-gradient";
 
 class Title extends Component {
   render() {

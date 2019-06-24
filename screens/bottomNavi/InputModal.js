@@ -10,7 +10,7 @@ import {
   StyleSheet,
   Button
 } from "react-native";
-import { Constants } from "expo";
+import Constants from "expo-constants";
 
 export default class InputModal extends Component {
   constructor(props) {
