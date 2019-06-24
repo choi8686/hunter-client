@@ -12,6 +12,7 @@ import {
 import { SimpleLineIcons, Foundation, FontAwesome } from "@expo/vector-icons";
 import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
 import { url } from "../../url";
+import io from "socket.io-client";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -22,11 +23,12 @@ var noTeamUrl =
   "https://hunter-bucker.s3.ap-northeast-2.amazonaws.com/assets/no_teams.jpg";
 
 export default class DistrictScreen extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.position = new Animated.ValueXY();
     this.state = {
       teams: [],
+      districtName: "지역",
       currentIndex: 0,
       pictureIndex: 0
     };
@@ -79,7 +81,7 @@ export default class DistrictScreen extends Component {
   //상단탭 부분_우측상단바관리_윤민수
   static navigationOptions = ({ navigation }) => {
     return {
-      headerTitle: "저기어때",
+      headerTitle: navigation.getParam("districtName"),
       headerTitleStyle: {
         color: "#FAFBFB"
       },
@@ -89,6 +91,7 @@ export default class DistrictScreen extends Component {
 
   componentDidMount() {
     this._getTeamsOnDistrict();
+    this.socket = io(`${url}`);
   }
 
   componentWillMount() {
@@ -172,24 +175,15 @@ export default class DistrictScreen extends Component {
         });
         // 접속한 유저와 다른 성별의 팀을 필터하여 setState
         this.setState({
-          teams: filterTeam
+          teams: filterTeam,
+          districtName: teamList[0].district.district
         });
-      });
-
-    fetch(`${url}/match/${loginUser.teamId}`)
-      .then(res => res.json())
-      .then(data => {
-        for (var i = 0; i < data.length; i++) {
-          console.log(
-            "상대팀ID :",
-            data[i].otherTeam.id + " /",
-            "상대팀Name :",
-            data[i].otherTeam.teamname + " /",
-            "uuid :",
-            data[i].uuid
-          );
-        }
-      });
+      })
+      .then(() =>
+        this.props.navigation.setParams({
+          districtName: this.state.districtName
+        })
+      );
   };
 
   _sendToLike = async () => {
@@ -209,9 +203,7 @@ export default class DistrictScreen extends Component {
         toLikeId: toLikeId,
         introText: "같은 매장이면 메세지를 볼 수 있습니다."
       })
-    })
-      .then(result => result.json())
-      .then(data => console.log(Boolean(data)));
+    });
   };
 
   _getTeamId = async userId => {
@@ -403,6 +395,7 @@ export default class DistrictScreen extends Component {
   };
 
   render() {
+    console.log(this.state.districtName, "222222222222222222222222");
     return (
       <View style={{ ...styles.backGround }}>
         <View

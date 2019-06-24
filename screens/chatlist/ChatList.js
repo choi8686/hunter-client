@@ -1,6 +1,7 @@
 import React from "react";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 import ChatListBox from "../../components/chatlist/ChatListBox";
+import NoMatchScreen from "../../components/chatlist/NoMatchScreen";
 import { url } from "../../url";
 
 export default class ChatList extends React.Component {
@@ -12,19 +13,6 @@ export default class ChatList extends React.Component {
       newChat: false
     };
   }
-
-  // changeLastComment = msgData => {
-  //   const updatedChatList = Array.from(this.state.chatList);
-
-  //   for (var partner in updatedChatList) {
-  //     if (partner.uuid === msgData.uuid) {
-  //       partner = { ...partner, chatMessages: msgData };
-  //     }
-  //   }
-  //   this.setState({
-  //     chatList: [...chatList, updatedChatList]
-  //   });
-  // };
 
   _moveToChatroom = (
     myTeamName,
@@ -44,23 +32,7 @@ export default class ChatList extends React.Component {
       uuid,
       avatarURL,
       trueNewChat,
-      falseNewChat,
-      trueNewChatList: this.trueNewChatList,
-      falseNewChatList: this.falseNewChatList
-    });
-  };
-
-  trueNewChatList = () => {
-    console.log("trueNewChatList--------------------");
-    this.setState({
-      newChat: true
-    });
-  };
-
-  falseNewChatList = () => {
-    console.log("falseNewChatList--------------------");
-    this.setState({
-      newChat: false
+      falseNewChat
     });
   };
 
@@ -86,19 +58,14 @@ export default class ChatList extends React.Component {
 
   render() {
     console.log(this.state.chatList, "---------------chatList---------------");
-    if (this.state.chatList.length === 0) {
-      return (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <Text style={{ fontWeight: "100", color: "grey" }}>
-            대화상대가 없다. 좀 더 힘내라 새끼야.
-          </Text>
-          <Text style={{ fontWeight: "100", color: "grey" }}>
-            이러다 또 국밥먹는다
-          </Text>
-        </View>
-      );
+    let statusCount = 0;
+    this.state.chatList.forEach(chatBox => {
+      if (chatBox.status) {
+        statusCount++;
+      }
+    });
+    if (statusCount === 0 || this.state.chatList.length === 0) {
+      return <NoMatchScreen />;
     } else {
       return (
         <ScrollView style={styles.chatListContainer}>

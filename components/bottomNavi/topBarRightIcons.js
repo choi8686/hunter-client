@@ -6,44 +6,22 @@ export default class TopBarRightIcons extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newLetter: false,
       newChat: false
     };
   }
 
-  toggleNewLetter = () => {
-    this.setState({
-      newLetter: !this.state.newLetter
-    });
-  };
-
   trueNewChat = () => {
-    console.log("trueNewChat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
     this.setState({
       newChat: true
     });
   };
 
   falseNewChat = () => {
-    console.log("falseNewChat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
     this.setState({
       newChat: false
     });
   };
 
-  movetoLetterScreen = async () => {
-    let userToken = await AsyncStorage.getItem("userToken");
-    let userTokenArray = userToken.split("-");
-
-    //sex, count, age, comment, teamname, locationId, storeId, userId, teamId
-    const myTeamId = userTokenArray[9];
-    const myTeamName = userTokenArray[5];
-    this.props.navigation.navigate("LetterList", {
-      myTeamId,
-      myTeamName,
-      trueNewLetter: this.trueNewLetter
-    });
-  };
   movetoChatList = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
     let userTokenArray = userToken.split("-");
@@ -59,6 +37,17 @@ export default class TopBarRightIcons extends React.Component {
     });
   };
 
+  openBadge = () => {
+    return (
+      <Badge
+        value="N"
+        textStyle={{ color: "#FF4500", fontWeight: "bold" }}
+        badgeStyle={{ borderWidth: 0, backgroundColor: "white" }}
+        containerStyle={{ position: "absolute", top: -4, right: 13 }}
+      />
+    );
+  };
+
   render() {
     return (
       <View style={{ flexDirection: "row", marginRight: 5 }}>
@@ -71,12 +60,9 @@ export default class TopBarRightIcons extends React.Component {
           {this.state.newLetter && (
             <Badge
               value="N"
-              status="error"
-              containerStyle={{
-                position: "absolute",
-                top: -4,
-                right: 11
-              }}
+              textStyle={{ color: "#FF4500", fontWeight: "bold" }}
+              badgeStyle={{ borderWidth: 0, backgroundColor: "white" }}
+              containerStyle={{ position: "absolute", top: -4, right: 11 }}
             />
           )}
         </TouchableOpacity>
@@ -86,13 +72,8 @@ export default class TopBarRightIcons extends React.Component {
             iconStyle={styles.headerRightIcon}
             name="comment-o"
           />
-          {this.state.newChat && (
-            <Badge
-              value="N"
-              status="error"
-              containerStyle={{ position: "absolute", top: -4, right: 13 }}
-            />
-          )}
+          {console.log(this.state.newChat, "여기는 펄스다")}
+          {this.state.newChat ? this.openBadge() : null}
         </TouchableOpacity>
       </View>
     );
