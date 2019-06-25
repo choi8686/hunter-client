@@ -52,11 +52,11 @@ export default class TopBarRightIcons extends React.Component {
     return (
       <View style={{ flexDirection: "row", marginRight: 5 }}>
         <TouchableOpacity onPress={() => this.movetoLetterScreen()}>
-          <Icon
+          {/* <Icon
             type="font-awesome"
             iconStyle={styles.headerRightIcon}
             name="envelope-o"
-          />
+          /> */}
           {this.state.newLetter && (
             <Badge
               value="N"

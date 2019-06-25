@@ -348,7 +348,7 @@ export default class DistrictScreen extends Component {
                       {this.state.teams[this.state.currentIndex].teamname}
                     </Text>
                     <Text style={{ ...styles.age }}>
-                      {this.state.teams[this.state.currentIndex].age}
+                      {`${this.state.teams[this.state.currentIndex].age}세`}
                     </Text>
                   </View>
                   <Text style={{ ...styles.comment }}>
@@ -569,6 +569,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 10
   },
   age: {
+    paddingLeft: "3%",
     color: "floralwhite",
     fontWeight: "bold",
     fontSize: 18,
