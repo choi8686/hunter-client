@@ -20,6 +20,8 @@ import { Input, Button, ButtonGroup } from "react-native-elements";
 import IconBadge from "react-native-icon-badge";
 import { url } from "../../url";
 
+import * as ImageManipulator from "expo-image-manipulator";
+
 let pickerResult = null;
 
 //그려주기만 하는 RenewProfile =>  RenewPrivateInfo 와 RenewProfile은 setState가 변할때마다 서로 영향을 끼치므로 이것을 배제하기 위해
@@ -125,20 +127,37 @@ class RenewPicture extends React.Component {
         aspect: [5, 7]
       });
 
-      console.log(pickerResult, "pickerResult");
-      if (pickerResult.cancelled === false) {
-        let images = this.state.images;
-        console.log("1 ######", images);
-        images[num] = pickerResult.uri;
+      if (!pickerResult.cancelled) {
+        IMAGE_URI = pickerResult.uri;
 
-        console.log("2 ###### ", images);
+        //그 어떤 파일도 JPG로 바꾸어줌
+        const pictureConverted = await ImageManipulator.manipulateAsync(
+          IMAGE_URI,
+          [{ rotate: 0 }],
+          { compress: 1, format: ImageManipulator.SaveFormat.JPG }
+        );
+
+        let images = this.state.images;
+        images[num] = pictureConverted.uri;
 
         await this.setState({ images: images });
-
-        console.log("3 ###### ", images);
-
-        await this._handleImagePicked(pickerResult, num, images);
+        await this._handleImagePicked(pickerResult, num);
       }
+
+      // console.log(pickerResult, "pickerResult");
+      // if (pickerResult.cancelled === false) {
+      //   let images = this.state.images;
+      //   console.log("1 ######", images);
+      //   images[num] = pickerResult.uri;
+
+      //   console.log("2 ###### ", images);
+
+      //   await this.setState({ images: images });
+
+      //   console.log("3 ###### ", images);
+
+      //   await this._handleImagePicked(pickerResult, num);
+      // }
     }
   };
 
@@ -173,7 +192,7 @@ class RenewPicture extends React.Component {
   };
 
   //이미지 순차적으로 upload실행요청하는 함수
-  _handleImagePicked = async (pickerResult, num, images) => {
+  _handleImagePicked = async (pickerResult, num) => {
     let uploadResponse, uploadResult;
 
     try {
