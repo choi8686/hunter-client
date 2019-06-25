@@ -130,11 +130,10 @@ class RenewPicture extends React.Component {
       if (!pickerResult.cancelled) {
         IMAGE_URI = pickerResult.uri;
 
+        //그 어떤 파일도 JPG로 바꾸어줌
         const pictureConverted = await ImageManipulator.manipulateAsync(
           IMAGE_URI,
-
           [{ rotate: 0 }],
-
           { compress: 1, format: ImageManipulator.SaveFormat.JPG }
         );
 

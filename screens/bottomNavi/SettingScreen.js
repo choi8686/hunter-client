@@ -116,6 +116,19 @@ export default class SettingScreen extends React.Component {
   };
 
   render() {
+    commentArray = [
+      "오늘은 10%입니다. 다른 날 다시오는 것도 좋은 방법...",
+      "오늘은 75%입니다. 25%의 열정이 더해진다면 성공가능한 날! ",
+
+      "오늘은 95%입니다. 5%의 노력이 더해진다면 바로 성공!",
+
+      "오늘은 96%입니다. 4%정도의 노력은 당신에게 아무것도 아니겠지요",
+      "오늘은 97%입니다. 3%의 노력정도는 해봐도 괜찮잖아요",
+      "오늘은 98%입니다. 2%만 노력해보세요",
+      "오늘은 99%입니다. 1%의 영감이 더해진다면 바로 성공!",
+      "오늘은 100%입니다. 지금 바로 가보세요"
+    ];
+    ment = Math.floor(Math.random() * commentArray.length);
     return (
       <View
         style={{
@@ -129,19 +142,6 @@ export default class SettingScreen extends React.Component {
       >
         <TouchableOpacity
           onPress={() => {
-            commentArray = [
-              "오늘은 10%입니다. 다른 날 다시오는 것도 좋은 방법...",
-              "오늘은 75%입니다. 25%의 열정이 더해진다면 성공가능한 날! ",
-
-              "오늘은 95%입니다. 5%의 노력이 더해진다면 바로 성공!",
-
-              "오늘은 96%입니다. 4%정도의 노력은 당신에게 아무것도 아니겠지요",
-              "오늘은 97%입니다. 3%의 노력정도는 해봐도 괜찮잖아요",
-              "오늘은 98%입니다. 2%만 노력해보세요",
-              "오늘은 99%입니다. 1%의 영감이 더해진다면 바로 성공!",
-              "오늘은 100%입니다. 지금 바로 가보세요"
-            ];
-            ment = Math.floor(Math.random() * commentArray.length);
             Alert.alert("오늘의 매칭 운세", commentArray[ment]);
           }}
         >

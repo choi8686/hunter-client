@@ -112,16 +112,10 @@ export default class TeamPicture extends Component {
         IMAGE_URI = pickerResult.uri;
         console.log(IMAGE_URI, "IMAGE_URI");
 
-        // pictureConverted = await ImageManipulator.manipulateAsync(
-        //   IMAGE_URI,
-        //   uri,
-        //   { compress: 1, format: ImageManipulator.SaveFormat.JPG }
-        // );
-        console.log(ImageManipulator.FlipType, "회전각");
+        //그 어떤 파일도 JPG로 바꾸어줌
         const pictureConverted = await ImageManipulator.manipulateAsync(
           IMAGE_URI,
           [{ rotate: 0 }],
-
           { compress: 1, format: ImageManipulator.SaveFormat.JPG }
         );
 
