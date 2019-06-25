@@ -1,11 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
 import {
-  AdMobBanner,
-  AdMobInterstitial,
-  AdMobRewarded,
-  PublisherBanner
-} from "expo";
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  DeviceEventEmitter
+} from "react-native";
+import { AdMobBanner, AdMobInterstitial, AdMobRewarded } from "expo";
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -30,10 +31,35 @@ export default class App extends React.Component {
     AdMobInterstitial.addEventListener("interstitialWillLeaveApplication", () =>
       console.log("interstitialWillLeaveApplication")
     );
+
+    AdMobRewarded.setTestDeviceID("EMULATOR");
+    // ALWAYS USE TEST ID for Admob ads
+    AdMobRewarded.setAdUnitID("ca-app-pub-3940256099942544/1712485313");
+
+    AdMobRewarded.addEventListener("rewardedVideoDidRewardUser", () =>
+      console.log("interstitialDidLoad")
+    );
+    AdMobRewarded.addEventListener("rewardedVideoDidLoad", () =>
+      console.log("interstitialDidLoad")
+    );
+    AdMobRewarded.addEventListener("rewardedVideoDidFailToLoad", () =>
+      console.log("interstitialDidLoad")
+    );
+    AdMobRewarded.addEventListener("rewardedVideoDidOpen", () =>
+      console.log("interstitialDidLoad")
+    );
+    AdMobRewarded.addEventListener("rewardedVideoDidClose", () =>
+      console.log("interstitialDidLoad")
+    );
+    AdMobRewarded.addEventListener("rewardedVideoWillLeaveApplication", () =>
+      console.log("interstitialDidLoad")
+    );
   }
 
   componentWillUnmount() {
+    // remove all event listeners for interstitial/rewarded ads
     AdMobInterstitial.removeAllListeners();
+    AdMobRewarded.removeAllListeners();
   }
 
   bannerError() {
@@ -42,31 +68,46 @@ export default class App extends React.Component {
   }
 
   showInterstitial() {
+    // first - load ads and only then - show
     AdMobInterstitial.requestAd(() => AdMobInterstitial.showAd());
+  }
+
+  showRewarded() {
+    // first - load ads and only then - show
+    AdMobRewarded.requestAd(() => AdMobRewarded.showAd());
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>Open up App.js to start working on your app!</Text>
-        <Button
+        {/* <Button
           title="Interstitial"
           onPress={this.showInterstitial}
           containerViewStyle={styles.interstitialBanner}
+        /> */}
+        <Button
+          title="Rewarded"
+          onPress={this.showRewarded}
+          containerViewStyle={styles.rewardedBanner}
         />
-        <PublisherBanner
+        {/* <AdMobBanner
+          style={styles.bottomBanner}
           bannerSize="fullBanner"
           adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
           testDeviceID="EMULATOR"
-          onDidFailToReceiveAdWithError={this.bannerError}
-          onAdMobDispatchAppEvent={this.adMobEvent}
-        />
+          didFailToReceiveAdWithError={this.bannerError}
+        /> */}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  rewardedBanner: {
+    width: "100%",
+    marginLeft: 0
+  },
   interstitialBanner: {
     width: "100%",
     marginLeft: 0
@@ -82,6 +123,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
+
 // /////// Alert창 활용법!!!!!
 
 // import React, { Component } from "react";

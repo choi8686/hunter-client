@@ -432,8 +432,8 @@ export default class StoreScreen extends Component {
             padding: "15%"
           }}
         >
-          더 이상 팀이 없거나, 등록된 팀이 없습니다. 좌측 하단의 버튼으로 팀을
-          갱신해 보세요.
+          더 이상 팀이 없거나, 등록된 팀이 없습니다. {"\n"} 좌측 하단의 버튼으로
+          팀을 갱신해 보세요.
         </Text>
       </View>
     );
