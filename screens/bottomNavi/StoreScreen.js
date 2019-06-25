@@ -187,7 +187,9 @@ export default class StoreScreen extends Component {
       .then(result => result.json())
       .then(teamList => {
         let filterTeam = teamList.filter(list => {
-          return loginUser.sex !== list.sex && loginUser.sex === list.storeId;
+          return (
+            loginUser.sex !== list.sex && loginUser.storeId === list.storeId
+          );
         });
         // 접속한 유저와 다른 성별의 팀을 필터하여 setState
         this.setState({
