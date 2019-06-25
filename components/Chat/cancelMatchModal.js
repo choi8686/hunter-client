@@ -1,53 +1,80 @@
-import React, { Component } from "react";
-import { Modal, Text, View, Alert, StyleSheet, Button } from "react-native";
-
-export default class CancelMatchModal extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <View>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={true}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}
-        >
-          <View style={styles.modalStyle}>
-            <View style={styles.inModalStyle}>
+import React from "react";
+import { Modal, Text, View, StyleSheet } from "react-native";
+import { Button } from "react-native-elements";
+const CancelMatchModal = ({ teamName, toggleModal, cancelMatch }) => {
+  return (
+    <View>
+      <Modal animationType="fade" transparent={true} visible={true}>
+        <View style={styles.modalStyle}>
+          <View style={styles.inModalStyle}>
+            <View style={{ flex: 0.7 }}>
               <Text
                 style={{
                   color: "white",
-                  fontSize: 15,
-                  fontWeight: "bold",
-                  padding: 15
+                  fontSize: 18,
+                  fontWeight: "bold"
                 }}
               >
-                매치를 취소하고 대화방을 나가시겠습니까?
+                매칭을 취소하시면{" "}
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 20,
+                    color: "white"
+                  }}
+                >
+                  {teamName}
+                </Text>{" "}
+                님과 더 이상 매칭되실 수 없습니다.{"\n"}
+                {"\n"}
+                매칭을 <Text style={{ color: "#ff4500" }}>취소</Text>
+                하시겠습니까?
               </Text>
+            </View>
+            <View
+              style={{
+                flex: 0.3,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 25
+              }}
+            >
               <Button
                 title="네"
-                color="black"
+                type="solid"
+                buttonStyle={{ backgroundColor: "white", borderRadius: 10 }}
+                titleStyle={{
+                  fontSize: 18,
+                  color: "#1E90FF",
+                  fontWeight: "bold"
+                }}
                 alignItems="center"
-                onPress={() => this.props.cancelMatch()}
+                justifyContent="center"
+                containerStyle={{ marginRight: 8, width: 65 }}
+                onPress={() => cancelMatch()}
               />
               <Button
                 title="아니오"
-                color="black"
+                type="solid"
+                buttonStyle={{ backgroundColor: "white", borderRadius: 10 }}
+                titleStyle={{
+                  fontSize: 18,
+                  color: "#1E90FF",
+                  fontWeight: "bold"
+                }}
                 alignItems="center"
-                onPress={() => this.props.toggleModal()}
+                justifyContent="center"
+                containerStyle={{ marginLeft: 8, width: 65 }}
+                onPress={() => toggleModal()}
               />
             </View>
           </View>
-        </Modal>
-      </View>
-    );
-  }
-}
+        </View>
+      </Modal>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   modalStyle: {
@@ -56,14 +83,16 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   inModalStyle: {
-    height: "25%",
+    height: "35%",
+    paddingTop: 25,
+    paddingLeft: 20,
+    paddingRight: 5,
     width: "80%",
-    borderColor: "pink",
-    borderWidth: 1.5,
     borderRadius: 20,
-    borderStyle: "solid",
-    backgroundColor: "rgba(52, 52, 52, 0.7)",
+    backgroundColor: "rgb(119,136,153)",
     alignItems: "center",
     justifyContent: "center"
   }
 });
+
+export default CancelMatchModal;
