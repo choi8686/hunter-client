@@ -14,6 +14,9 @@ import TopBarRightIcons from "../../components/bottomNavi/topBarRightIcons";
 import { url } from "../../url";
 import io from "socket.io-client";
 
+//광고
+import Ads from ".././setPrivateInfo/blurTest";
+
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 var loginUser = {};
@@ -252,6 +255,32 @@ export default class DistrictScreen extends Component {
       this.state.teams
         .map((item, i) => {
           // 스와이프가 인식되면 this.state.currentIndex 1씩 증가
+
+          //  //광고 부분 연구해서 넣기
+          //   if (i === 2) {
+          //     return (
+          //       <Animated.View
+          //         {...this.PanResponder.panHandlers}
+          //         key={item.id}
+          //         style={[
+          //           this.rotateAndTranslate,
+          //           {
+          //             height: (SCREEN_HEIGHT * 3) / 4,
+          //             width: SCREEN_WIDTH,
+          //             padding: 10,
+          //             paddingBottom: 20,
+          //             position: "absolute"
+          //           }
+          //         ]}
+          //       >
+          //         {/* 광고 부분 */}
+          //         <View>
+          //           <Ads key={i * 2} />
+          //         </View>
+          //       </Animated.View>
+          //     );
+          //   }
+
           if (i < this.state.currentIndex) {
             // 이미 넘긴 팀의 카드를 보여주지 않는 부분
             return null;
@@ -387,8 +416,8 @@ export default class DistrictScreen extends Component {
             padding: "15%"
           }}
         >
-          더 이상 팀이 없거나, 등록된 팀이 없습니다. 좌측 하단의 버튼으로 팀을
-          갱신해 보세요.
+          더 이상 팀이 없거나, 등록된 팀이 없습니다.{"\n"} 좌측 하단의 버튼으로
+          팀을 갱신해 보세요.
         </Text>
       </View>
     );

@@ -243,6 +243,7 @@ class RenewPicture extends React.Component {
                 style={styles.avatar}
                 loadingProps={{ size: "small", color: "white" }}
                 underlayColor="transparent"
+                onPress={() => this._pickImage(0)}
               />
             )}
           </View>
@@ -281,6 +282,7 @@ class RenewPicture extends React.Component {
                 style={styles.avatar}
                 loadingProps={{ size: "small", color: "white" }}
                 underlayColor="transparent"
+                onPress={() => this._pickImage(1)}
               />
             )}
           </View>
@@ -319,6 +321,7 @@ class RenewPicture extends React.Component {
                 style={styles.avatar}
                 loadingProps={{ size: "small", color: "white" }}
                 underlayColor="transparent"
+                onPress={() => this._pickImage(2)}
               />
             )}
           </View>

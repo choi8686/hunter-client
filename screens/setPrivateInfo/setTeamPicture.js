@@ -98,9 +98,12 @@ export default class TeamPicture extends Component {
         aspect: [5, 7]
       });
 
-      let image = this.state.image;
-      image[num] = pickerResult.uri;
-      await this.setState({ image: image });
+      console.log(pickerResult.cancelled, "pickerResult.cancelled");
+      if (!pickerResult.cancelled) {
+        let image = this.state.image;
+        image[num] = pickerResult.uri;
+        await this.setState({ image: image });
+      }
     }
   };
 
