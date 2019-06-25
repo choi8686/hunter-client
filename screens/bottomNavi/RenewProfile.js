@@ -133,11 +133,6 @@ class RenewPicture extends React.Component {
 
         console.log("2 ###### ", images);
 
-        // console.log(
-        //   images,
-        //   "images!@*&#(@&#(@&)(@&#)&@)#&)@&)(시발 바뀐 후다 개샊띠들아!@@@"
-        // );
-
         await this.setState({ images: images });
 
         console.log("3 ###### ", images);
@@ -415,7 +410,7 @@ class RenewPrivateInfo extends React.Component {
 
     count.length !== 0 &&
     age.length !== 0 &&
-    Number(age) > 20 &&
+    Number(age) >= 20 &&
     comment.length !== 0 &&
     teamname.length !== 0 &&
     districtId.length !== 0 &&

@@ -112,11 +112,6 @@ export default class SettingScreen extends React.Component {
   _handleLogOut = async () => {
     AsyncStorage.removeItem("userToken");
     let userToken = await AsyncStorage.getItem("userToken");
-    console.log(
-      userToken,
-      "유저토큰 없냐 개새꺄 SettingScreen.js 35 lines !!!!!!!"
-    );
-
     this.props.navigation.navigate("SignIn");
   };
 
