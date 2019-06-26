@@ -7,7 +7,7 @@ const CancelMatchModal = ({ teamName, toggleModal, cancelMatch }) => {
       <Modal animationType="fade" transparent={true} visible={true}>
         <View style={styles.modalStyle}>
           <View style={styles.inModalStyle}>
-            <View style={{ flex: 0.7 }}>
+            <View style={{ flex: 0.6 }}>
               <Text
                 style={{
                   color: "black",

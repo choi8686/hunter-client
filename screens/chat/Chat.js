@@ -1,18 +1,25 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  View,
   YellowBox,
-  ScrollView,
   BackHandler,
-  KeyboardAvoidingView
+  SafeAreaView,
+  ScrollView,
+  TextInput,
+  Platform,
+  View,
+  KeyboardAvoidingView,
+  Dimensions
 } from "react-native";
-import { Input, Button } from "react-native-elements";
+// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+import { Button } from "react-native-elements";
 import io from "socket.io-client";
 import MessageBox from "../../components/Chat/messageBox";
 import CancelMatchModal from "../../components/Chat/cancelMatchModal";
 import { url } from "../../url";
 import { Ionicons } from "@expo/vector-icons";
+
+const { width, height } = Dimensions.get("window");
 
 //웹소켓 실행시 뜨는 노란색 경고창 무시하는 코드
 //기능적으로 문제 없으므로 무시하도록 함
@@ -37,6 +44,7 @@ export default class Chat extends Component {
     } = this.props.navigation.state.params;
 
     this.state = {
+      height: 0,
       teamName,
       teamId,
       avatarURL,
@@ -225,53 +233,54 @@ export default class Chat extends Component {
   render() {
     return (
       <KeyboardAvoidingView
-        style={styles.container}
+        style={styles.keyboardAvoidContainer}
         behavior="padding"
-        keyboardShouldPersistTaps="always"
         enabled
-        keyboardVerticalOffset={95}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 62 : 80}
       >
-        {/* 채팅메시지 스크롤 뷰 */}
-        <ScrollView
-          style={{ flex: 0.9, marginBottom: 2, paddingTop: 5 }}
-          ref={ref => (this.scrollView = ref)}
-          onContentSizeChange={(contentWidth, contentHeight) => {
-            this.scrollView.scrollToEnd({ animated: true });
-          }}
-        >
-          {this.mappingChatMessages()}
-          {this.state.visibleModal && (
-            <CancelMatchModal
-              teamName={this.state.teamName}
-              toggleModal={this.toggleModal}
-              cancelMatch={this.cancelMatch}
-            />
-          )}
-        </ScrollView>
-        {/* Input Box & 보내기버튼 */}
-        <View style={styles.InputButtonContainer}>
-          <Input
-            containerStyle={{ width: "85%", marginLeft: 30 }}
-            inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={{ paddingLeft: 10 }}
-            placeholder="메시지를 입력하세요"
-            placeholderTextColor="#DCDCDC"
-            value={this.state.chatMessage}
-            onChangeText={this.handleMessage}
-          />
-          <Button
-            containerStyle={{ marginRight: 40 }}
-            onPress={this.submitChatMessage}
-            type="clear"
-            icon={
-              <Ionicons
-                name="ios-send"
-                size={40}
-                color={this.state.chatMessage.length > 0 ? "#1E90FF" : "gray"}
+        <SafeAreaView style={{ flex: 1 }}>
+          <ScrollView
+            style={{ flex: 0.9, backgroundColor: "white" }}
+            ref={ref => (this.scrollView = ref)}
+            onContentSizeChange={(contentWidth, contentHeight) => {
+              this.scrollView.scrollToEnd({ animated: true });
+            }}
+          >
+            {this.mappingChatMessages()}
+            {this.state.visibleModal && (
+              <CancelMatchModal
+                teamName={this.state.teamName}
+                toggleModal={this.toggleModal}
+                cancelMatch={this.cancelMatch}
               />
-            }
-          />
-        </View>
+            )}
+          </ScrollView>
+          <View
+            style={[
+              styles.InputButton,
+              Platform.OS === "ios" ? height * 0.1 : height * 0.08
+            ]}
+          >
+            <TextInput
+              style={styles.TextInput}
+              value={this.state.chatMessage}
+              onChangeText={this.handleMessage}
+              placeholder={"메시지를 입력하세요"}
+            />
+            <Button
+              containerStyle={{ flex: 0.2 }}
+              onPress={this.submitChatMessage}
+              type="clear"
+              icon={
+                <Ionicons
+                  name="ios-send"
+                  size={40}
+                  color={this.state.chatMessage.length > 0 ? "#1E90FF" : "gray"}
+                />
+              }
+            />
+          </View>
+        </SafeAreaView>
       </KeyboardAvoidingView>
     );
   }
@@ -279,21 +288,32 @@ export default class Chat extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "white"
+    flex: 1
   },
   cancelMatch: {
     fontWeight: "bold",
     marginRight: 5
   },
-  InputButtonContainer: {
-    flex: 0.1,
+  keyboardAvoidContainer: {
+    flex: 1
+  },
+  InputButton: {
+    borderTopWidth: 1,
+    borderTopColor: "gray",
+    width: "100%",
+    backgroundColor: "white",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
+  },
+  TextInput: {
+    fontSize: 18,
+    flex: 0.8,
+    color: "black",
     width: "100%",
-    borderTopWidth: 0.8,
-    borderColor: "rgb(169,169,169)"
+    backgroundColor: "#fff",
+    paddingLeft: 20,
+    justifyContent: "flex-end",
+    color: "black"
   }
 });
