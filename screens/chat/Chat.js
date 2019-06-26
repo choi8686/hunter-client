@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   TextInput: {
-    fontSize: 13,
+    fontSize: 18,
     flex: 0.8,
     color: "black",
     width: "100%",
