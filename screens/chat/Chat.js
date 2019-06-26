@@ -60,6 +60,7 @@ export default class Chat extends Component {
         <Button
           title="매칭취소"
           type="clear"
+          containerStyle={{ marginRight: 5 }}
           titleStyle={{ color: "white" }}
           style={styles.cancelMatch}
           onPress={navigation.getParam("toggleModal")}
@@ -224,10 +225,7 @@ export default class Chat extends Component {
   render() {
     return (
       <KeyboardAvoidingView
-        style={[
-          styles.container,
-          this.state.visibleModal ? { backgroundColor: "black" } : "white"
-        ]}
+        style={styles.container}
         behavior="padding"
         keyboardShouldPersistTaps="always"
         enabled
@@ -235,7 +233,7 @@ export default class Chat extends Component {
       >
         {/* 채팅메시지 스크롤 뷰 */}
         <ScrollView
-          style={{ flex: 0.9, marginBottom: 2 }}
+          style={{ flex: 0.9, marginBottom: 2, paddingTop: 5 }}
           ref={ref => (this.scrollView = ref)}
           onContentSizeChange={(contentWidth, contentHeight) => {
             this.scrollView.scrollToEnd({ animated: true });
@@ -258,13 +256,20 @@ export default class Chat extends Component {
             inputStyle={{ paddingLeft: 10 }}
             placeholder="메시지를 입력하세요"
             placeholderTextColor="#DCDCDC"
+            value={this.state.chatMessage}
             onChangeText={this.handleMessage}
           />
           <Button
             containerStyle={{ marginRight: 40 }}
-            icon={<Ionicons name="ios-send" size={40} color="#1E90FF" />}
+            onPress={this.submitChatMessage}
             type="clear"
-            onPress={() => this.submitChatMessage()}
+            icon={
+              <Ionicons
+                name="ios-send"
+                size={40}
+                color={this.state.chatMessage.length > 0 ? "#1E90FF" : "gray"}
+              />
+            }
           />
         </View>
       </KeyboardAvoidingView>
@@ -275,7 +280,8 @@ export default class Chat extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: "white"
   },
   cancelMatch: {
     fontWeight: "bold",

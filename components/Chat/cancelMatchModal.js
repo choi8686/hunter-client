@@ -10,9 +10,8 @@ const CancelMatchModal = ({ teamName, toggleModal, cancelMatch }) => {
             <View style={{ flex: 0.7 }}>
               <Text
                 style={{
-                  color: "white",
-                  fontSize: 18,
-                  fontWeight: "bold"
+                  color: "black",
+                  fontSize: 16
                 }}
               >
                 매칭을 취소하시면{" "}
@@ -20,7 +19,7 @@ const CancelMatchModal = ({ teamName, toggleModal, cancelMatch }) => {
                   style={{
                     fontWeight: "bold",
                     fontSize: 20,
-                    color: "white"
+                    color: "black"
                   }}
                 >
                   {teamName}
@@ -43,10 +42,13 @@ const CancelMatchModal = ({ teamName, toggleModal, cancelMatch }) => {
               <Button
                 title="네"
                 type="solid"
-                buttonStyle={{ backgroundColor: "white", borderRadius: 10 }}
+                buttonStyle={{
+                  backgroundColor: "rgb(179, 0, 179)",
+                  borderRadius: 10
+                }}
                 titleStyle={{
                   fontSize: 18,
-                  color: "#1E90FF",
+                  color: "white",
                   fontWeight: "bold"
                 }}
                 alignItems="center"
@@ -57,10 +59,13 @@ const CancelMatchModal = ({ teamName, toggleModal, cancelMatch }) => {
               <Button
                 title="아니오"
                 type="solid"
-                buttonStyle={{ backgroundColor: "white", borderRadius: 10 }}
+                buttonStyle={{
+                  backgroundColor: "rgb(179, 0, 179)",
+                  borderRadius: 10
+                }}
                 titleStyle={{
                   fontSize: 18,
-                  color: "#1E90FF",
+                  color: "white",
                   fontWeight: "bold"
                 }}
                 alignItems="center"
@@ -88,8 +93,10 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 5,
     width: "80%",
-    borderRadius: 20,
-    backgroundColor: "rgb(119,136,153)",
+    borderWidth: 2,
+    borderColor: "rgb(179, 0, 179)",
+    borderRadius: 10,
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center"
   }
