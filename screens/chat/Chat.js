@@ -60,6 +60,7 @@ export default class Chat extends Component {
         <Button
           title="매칭취소"
           type="clear"
+          containerStyle={{ marginRight: 5 }}
           titleStyle={{ color: "white" }}
           style={styles.cancelMatch}
           onPress={navigation.getParam("toggleModal")}
@@ -88,6 +89,7 @@ export default class Chat extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
+    this.toggleModal();
   }
 
   componentDidMount = async () => {
@@ -231,7 +233,7 @@ export default class Chat extends Component {
       >
         {/* 채팅메시지 스크롤 뷰 */}
         <ScrollView
-          style={{ flex: 0.9, marginBottom: 20 }}
+          style={{ flex: 0.9, marginBottom: 2, paddingTop: 5 }}
           ref={ref => (this.scrollView = ref)}
           onContentSizeChange={(contentWidth, contentHeight) => {
             this.scrollView.scrollToEnd({ animated: true });
@@ -240,45 +242,35 @@ export default class Chat extends Component {
           {this.mappingChatMessages()}
           {this.state.visibleModal && (
             <CancelMatchModal
+              teamName={this.state.teamName}
               toggleModal={this.toggleModal}
               cancelMatch={this.cancelMatch}
             />
           )}
         </ScrollView>
         {/* Input Box & 보내기버튼 */}
-        <View
-          style={{
-            flex: 0.1,
-            width: "85%",
-            marginLeft: 20
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 10
-            }}
-          >
-            <Input
-              containerStyle={{ marginRight: 0 }}
-              inputContainerStyle={{ borderBottomWidth: 1 }}
-              inputStyle={{ paddingLeft: 10 }}
-              autoCorrect={false}
-              value={this.state.chatMessage}
-              multiline={true}
-              editable={true}
-              onChangeText={this.handleMessage}
-            />
-
-            <Button
-              icon={<Ionicons name="ios-send" size={45} color="navy" />}
-              type="clear"
-              onPress={() => this.submitChatMessage()}
-            />
-          </View>
+        <View style={styles.InputButtonContainer}>
+          <Input
+            containerStyle={{ width: "85%", marginLeft: 30 }}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputStyle={{ paddingLeft: 10 }}
+            placeholder="메시지를 입력하세요"
+            placeholderTextColor="#DCDCDC"
+            value={this.state.chatMessage}
+            onChangeText={this.handleMessage}
+          />
+          <Button
+            containerStyle={{ marginRight: 40 }}
+            onPress={this.submitChatMessage}
+            type="clear"
+            icon={
+              <Ionicons
+                name="ios-send"
+                size={40}
+                color={this.state.chatMessage.length > 0 ? "#1E90FF" : "gray"}
+              />
+            }
+          />
         </View>
       </KeyboardAvoidingView>
     );
@@ -288,11 +280,20 @@ export default class Chat extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5FCFF",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: "white"
   },
   cancelMatch: {
     fontWeight: "bold",
     marginRight: 5
+  },
+  InputButtonContainer: {
+    flex: 0.1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    borderTopWidth: 0.8,
+    borderColor: "rgb(169,169,169)"
   }
 });
