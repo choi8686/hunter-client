@@ -120,8 +120,8 @@ export default class StoreScreen extends Component {
               },
               () => {
                 this.position.setValue({ x: 0, y: 0 });
-              }
-              // this._sendToLike()
+              },
+              this._sendToLike()
             );
           });
         }
@@ -187,7 +187,9 @@ export default class StoreScreen extends Component {
       .then(result => result.json())
       .then(teamList => {
         let filterTeam = teamList.filter(list => {
-          return loginUser.sex !== list.sex && loginUser.sex === list.storeId;
+          return (
+            loginUser.sex !== list.sex && loginUser.storeId === list.storeId
+          );
         });
         // 접속한 유저와 다른 성별의 팀을 필터하여 setState
         this.setState({
@@ -215,8 +217,7 @@ export default class StoreScreen extends Component {
       },
       body: JSON.stringify({
         whoLikeId: whoLikeId,
-        toLikeId: toLikeId,
-        introText: "우리 15번자리인데 합석하쉴?"
+        toLikeId: toLikeId
       })
     });
   };
@@ -363,7 +364,7 @@ export default class StoreScreen extends Component {
                       {this.state.teams[this.state.currentIndex].teamname}
                     </Text>
                     <Text style={{ ...styles.age }}>
-                      {this.state.teams[this.state.currentIndex].age}
+                      {`${this.state.teams[this.state.currentIndex].age}세`}
                     </Text>
                   </View>
                   <Text style={{ ...styles.comment }}>
@@ -430,8 +431,8 @@ export default class StoreScreen extends Component {
             padding: "15%"
           }}
         >
-          더 이상 팀이 없거나, 등록된 팀이 없습니다. 좌측 하단의 버튼으로 팀을
-          갱신해 보세요.
+          더 이상 팀이 없거나, 등록된 팀이 없습니다. {"\n"} 좌측 하단의 버튼으로
+          팀을 갱신해 보세요.
         </Text>
       </View>
     );
@@ -456,12 +457,12 @@ export default class StoreScreen extends Component {
             style={styles.refreshButton}
             onPress={() => this._onPresRefresh()}
           />
-          <FontAwesome
+          {/* <FontAwesome
             // 쪽지 보내기
             name="send"
             style={styles.sendLetter}
             onPress={() => this._popModal()}
-          />
+          /> */}
         </View>
 
         <View style={{ ...styles.arrow }}>
@@ -600,6 +601,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 10
   },
   age: {
+    paddingLeft: "4%",
     color: "floralwhite",
     fontWeight: "bold",
     fontSize: 18,
