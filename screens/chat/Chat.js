@@ -257,29 +257,12 @@ export default class Chat extends Component {
           </ScrollView>
           <View
             style={[
-              {
-                borderTopWidth: 1,
-                borderTopColor: "gray",
-                width: "100%",
-                backgroundColor: "white",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center"
-              },
+              styles.InputButton,
               Platform.OS === "ios" ? height * 0.1 : height * 0.08
             ]}
           >
             <TextInput
-              style={{
-                fontSize: 13,
-                flex: 0.8,
-                color: "black",
-                width: "100%",
-                backgroundColor: "#fff",
-                paddingLeft: 20,
-                justifyContent: "flex-end",
-                color: "black"
-              }}
+              style={styles.TextInput}
               value={this.state.chatMessage}
               onChangeText={this.handleMessage}
               placeholder={"메시지를 입력하세요"}
@@ -313,5 +296,24 @@ const styles = StyleSheet.create({
   },
   keyboardAvoidContainer: {
     flex: 1
+  },
+  InputButton: {
+    borderTopWidth: 1,
+    borderTopColor: "gray",
+    width: "100%",
+    backgroundColor: "white",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  TextInput: {
+    fontSize: 13,
+    flex: 0.8,
+    color: "black",
+    width: "100%",
+    backgroundColor: "#fff",
+    paddingLeft: 20,
+    justifyContent: "flex-end",
+    color: "black"
   }
 });
